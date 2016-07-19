@@ -3,7 +3,7 @@
 //  BabyTimer
 //
 //  Created by Alexei Laine on 7/20/16.
-//  Copyright © 2016 Jason Toff. All rights reserved.
+//  Copyright © 2016 Alexei Laine. All rights reserved.
 //
 
 import UIKit
