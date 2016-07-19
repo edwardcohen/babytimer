@@ -160,41 +160,41 @@ class ViewController: UIViewController {
         self.view.layoutIfNeeded()
         
         self.star1LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50)) {
+        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
             self.view.layoutIfNeeded()
-        }
+            }, completion: nil)
         self.star2LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50)) {
+        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
             self.view.layoutIfNeeded()
-        }
+            }, completion: nil)
         self.star3LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50)) {
+        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
             self.view.layoutIfNeeded()
-        }
+            }, completion: nil)
         self.star4LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50)) {
+        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
             self.view.layoutIfNeeded()
-        }
+            }, completion: nil)
         self.star5LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50)) {
+        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
             self.view.layoutIfNeeded()
-        }
+            }, completion: nil)
         self.star6LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50)) {
+        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
             self.view.layoutIfNeeded()
-        }
+            }, completion: nil)
         self.star7LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50)) {
+        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
             self.view.layoutIfNeeded()
-        }
+            }, completion: nil)
         self.star8LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50)) {
+        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
             self.view.layoutIfNeeded()
-        }
+            }, completion: nil)
         self.star9LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50)) {
+        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
             self.view.layoutIfNeeded()
-        }
+            }, completion: nil)
     }
     
     func disappearStars() {
