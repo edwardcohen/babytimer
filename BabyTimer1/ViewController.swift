@@ -1,23 +1,26 @@
 //
 //  ViewController.swift
-//  BabyTimer1
+//  BabyTimer
 //
-//  Created by Jason Toff on 5/16/16.
+//  Created by Alexei Laine on 7/20/16.
 //  Copyright © 2016 Jason Toff. All rights reserved.
 //
 
 import UIKit
 import SpriteKit
 import AVFoundation
+import MediaPlayer
 
 class ViewController: UIViewController {
     var timerStarted = false
     var brightMoon = false
     
-    var count = 100
+    var count = 0
     var timer = NSTimer()
     
     var audioPlayer: AVAudioPlayer!
+    var volumeView: UIView!
+    
     @IBOutlet var countDownLabel: UILabel!
     @IBOutlet weak var fiveLabel: UILabel!
     @IBOutlet weak var fifteenLabel: UILabel!
@@ -52,21 +55,67 @@ class ViewController: UIViewController {
     @IBOutlet weak var star2TopConstraint: NSLayoutConstraint!
     @IBOutlet weak var star1TopConstraint: NSLayoutConstraint!
 
-    @IBOutlet weak var volumeSlider: UISlider!
     @IBOutlet weak var timerImage: UIImageView!
     @IBOutlet weak var moonButton: UIButton!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        countDownLabel.text = ""
+        
+        if let sound = NSDataAsset(name: "white_noise") {
+            do {
+                try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try! AVAudioSession.sharedInstance().setActive(true)
+                try audioPlayer = AVAudioPlayer(data: sound.data, fileTypeHint: AVFileTypeMPEGLayer3)
+            } catch {
+                print("error initializing AVAudioPlayer")
+            }
+        }
+        audioPlayer.prepareToPlay()
+        audioPlayer.volume = 0.5
+        
+        
+        let fifteenTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.fifteenAction(_:)))
+        fifteenLabel.addGestureRecognizer(fifteenTap)
+        
+        let fiveTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.fiveAction(_:)))
+        fiveLabel.addGestureRecognizer(fiveTap)
+
+        let wrapperView = UIView(frame: CGRectMake(67, 658, 280, 31))
+        self.view.backgroundColor = UIColor.clearColor()
+        self.view.addSubview(wrapperView)
+        
+        volumeView = MPVolumeView(frame: wrapperView.bounds)
+        wrapperView.addSubview(volumeView)
+        
+        self.countDownLabel.alpha = 0.0
+        self.fifteenLabel.alpha = 0.0
+        self.fiveLabel.alpha = 0.0
+        self.timerImage.alpha = 0.0
+        self.volumeView.alpha = 0.0
+        
+        self.star1.alpha = 0.0
+        self.star2.alpha = 0.0
+        self.star3.alpha = 0.0
+        self.star4.alpha = 0.0
+        self.star5.alpha = 0.0
+        self.star6.alpha = 0.0
+        self.star7.alpha = 0.0
+        self.star8.alpha = 0.0
+        self.star9.alpha = 0.0
+        
+    }
     
     @IBAction func btnMoon(sender: UIButton) {
         if (timerStarted) {
             timer.invalidate()
+            count = 0
+            countDownLabel.text = ""
             timerStarted = false
-        } else {
-            count = 100
-            self.countDownLabel.text = ""
         }
         
         brightMoon = !brightMoon
-        
         updateUI()
     }
 
@@ -197,7 +246,7 @@ class ViewController: UIViewController {
                 self.fifteenLabel.alpha = 1.0
                 self.fiveLabel.alpha = 1.0
                 self.timerImage.alpha = 1.0
-                self.volumeSlider.alpha = 1.0
+                self.volumeView.alpha = 1.0
             }
             flowStars()
             audioPlayer.play()
@@ -208,7 +257,7 @@ class ViewController: UIViewController {
                 self.fifteenLabel.alpha = 0.0
                 self.fiveLabel.alpha = 0.0
                 self.timerImage.alpha = 0.0
-                self.volumeSlider.alpha = 0.0
+                self.volumeView.alpha = 0.0
             }, completion: { finish in
                 let image1:UIImage = UIImage(named: "MoonOff")!;
                 self.moonButton.setImage(image1, forState: UIControlState.Normal)
@@ -218,50 +267,12 @@ class ViewController: UIViewController {
         }
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        if let sound = NSDataAsset(name: "white_noise") {
-            do {
-                try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-                try! AVAudioSession.sharedInstance().setActive(true)
-                try audioPlayer = AVAudioPlayer(data: sound.data, fileTypeHint: AVFileTypeMPEGLayer3)
-            } catch {
-                print("error initializing AVAudioPlayer")
-            }
-        }
-        audioPlayer.prepareToPlay()
-        audioPlayer.volume = 0.5
-        
-        let fifteenTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.fifteenAction(_:)))
-        fifteenLabel.addGestureRecognizer(fifteenTap)
-        
-        let fiveTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.fiveAction(_:)))
-        fiveLabel.addGestureRecognizer(fiveTap)
-
-        self.countDownLabel.alpha = 0.0
-        self.fifteenLabel.alpha = 0.0
-        self.fiveLabel.alpha = 0.0
-        self.timerImage.alpha = 0.0
-        self.volumeSlider.alpha = 0.0
-        
-        self.star1.alpha = 0.0
-        self.star2.alpha = 0.0
-        self.star3.alpha = 0.0
-        self.star4.alpha = 0.0
-        self.star5.alpha = 0.0
-        self.star6.alpha = 0.0
-        self.star7.alpha = 0.0
-        self.star8.alpha = 0.0
-        self.star9.alpha = 0.0
-    }
-    
     func fifteenAction(sender: UITapGestureRecognizer) {
         if (timerStarted) {
             count += 15 * 60
         } else {
+            count = 15 * 60 + 1
             timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
-            audioPlayer.play()
             timerStarted = true
         }
     }
@@ -269,16 +280,13 @@ class ViewController: UIViewController {
     func fiveAction(sender: UITapGestureRecognizer) {
         if (timerStarted) {
             count += 5 * 60
+        } else {
+            count = 5 * 60 + 1
+            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+            timerStarted = true
         }
     }
 
-    @IBAction func volumeSliderAction(slider: UISlider) {
-        if audioPlayer == nil {
-            return
-        }
-        audioPlayer.volume = slider.value
-    }
-    
     func update() {
         if(count > 0) {
             count = count - 1

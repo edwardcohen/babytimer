@@ -1,9 +1,9 @@
 //
 //  AppDelegate.swift
-//  BabyTimer1
+//  BabyTimer
 //
-//  Created by Jason Toff on 5/16/16.
-//  Copyright © 2016 Jason Toff. All rights reserved.
+//  Created by Alexei Laine on 7/20/16.
+//  Copyright © 2016 Alexei Laine. All rights reserved.
 //
 
 import UIKit
