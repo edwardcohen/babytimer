@@ -29,16 +29,16 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Timer" translatesAutoresizingMaskIntoConstraints="NO" id="3Xr-uV-dIV">
-                                <rect key="frame" x="135" y="554" width="144" height="44"/>
+                                <rect key="frame" x="135" y="544" width="144" height="44"/>
                             </imageView>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+5" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="N6M-J8-c6K">
-                                <rect key="frame" x="169" y="568" width="22" height="18"/>
+                                <rect key="frame" x="169" y="558" width="22" height="18"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="18"/>
                                 <color key="textColor" red="0.81328124999999996" green="0.81328124999999996" blue="0.81328124999999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="+15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iyr-ad-EOY">
-                                <rect key="frame" x="217" y="568" width="33" height="18"/>
+                                <rect key="frame" x="217" y="558" width="33" height="18"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="18"/>
                                 <color key="textColor" red="0.81328124999999996" green="0.81328124999999996" blue="0.81328124999999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -140,7 +140,7 @@
                             <constraint firstItem="O3w-fD-8ed" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="WL0-nr-QeW"/>
                             <constraint firstItem="3Bn-73-QST" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="49" id="WUj-lj-f0J"/>
                             <constraint firstItem="Kjq-lE-7iH" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="303" id="a9E-hi-hH1"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="3Xr-uV-dIV" secondAttribute="bottom" constant="138" id="aO0-5o-E7k"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="3Xr-uV-dIV" secondAttribute="bottom" constant="148" id="aO0-5o-E7k"/>
                             <constraint firstItem="UeW-ju-v13" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="252" id="dzM-0b-RnQ"/>
                             <constraint firstItem="cFb-od-4fm" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="277" id="iEU-po-iz0"/>
                             <constraint firstAttribute="trailingMargin" secondItem="O3w-fD-8ed" secondAttribute="trailing" constant="-20" id="iQ5-qn-eeQ"/>

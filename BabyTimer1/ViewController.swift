@@ -274,6 +274,7 @@ class ViewController: UIViewController {
             count = 15 * 60 + 1
             timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
             timerStarted = true
+            update()
         }
     }
 
@@ -284,6 +285,7 @@ class ViewController: UIViewController {
             count = 5 * 60 + 1
             timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
             timerStarted = true
+            update()
         }
     }
 
