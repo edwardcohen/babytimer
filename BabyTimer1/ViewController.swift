@@ -2,8 +2,8 @@
 //  ViewController.swift
 //  BabyTimer
 //
-//  Created by Alexei Laine on 7/20/16.
-//  Copyright © 2016 Alexei Laine. All rights reserved.
+//  Created by Eddie Cohen & Jason Toff on 7/20/16.
+//  Copyright © 2016 zelig. All rights reserved.
 //
 
 import UIKit
