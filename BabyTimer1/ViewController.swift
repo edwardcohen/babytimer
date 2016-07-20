@@ -25,15 +25,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var fiveLabel: UILabel!
     @IBOutlet weak var fifteenLabel: UILabel!
     
-    @IBOutlet weak var star1: UIImageView!
-    @IBOutlet weak var star7: UIImageView!
     @IBOutlet weak var star9: UIImageView!
     @IBOutlet weak var star8: UIImageView!
+    @IBOutlet weak var star7: UIImageView!
     @IBOutlet weak var star6: UIImageView!
     @IBOutlet weak var star5: UIImageView!
     @IBOutlet weak var star4: UIImageView!
     @IBOutlet weak var star3: UIImageView!
     @IBOutlet weak var star2: UIImageView!
+    @IBOutlet weak var star1: UIImageView!
     
     @IBOutlet weak var star9LeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var star8LeadingConstraint: NSLayoutConstraint!
@@ -45,11 +45,11 @@ class ViewController: UIViewController {
     @IBOutlet weak var star2LeadingConstraint: NSLayoutConstraint!
     @IBOutlet weak var star1LeadingConstraint: NSLayoutConstraint!
     
-    @IBOutlet weak var star6TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star5TopConstraint: NSLayoutConstraint!
     @IBOutlet weak var star9TopConstraint: NSLayoutConstraint!
     @IBOutlet weak var star8TopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var star6TopConstraint: NSLayoutConstraint!
     @IBOutlet weak var star7TopConstraint: NSLayoutConstraint!
+    @IBOutlet weak var star5TopConstraint: NSLayoutConstraint!    
     @IBOutlet weak var star4TopConstraint: NSLayoutConstraint!
     @IBOutlet weak var star3TopConstraint: NSLayoutConstraint!
     @IBOutlet weak var star2TopConstraint: NSLayoutConstraint!
