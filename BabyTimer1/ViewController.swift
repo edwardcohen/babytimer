@@ -57,7 +57,7 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var timerImage: UIImageView!
     @IBOutlet weak var moonButton: UIButton!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -240,19 +240,22 @@ class ViewController: UIViewController {
         if (brightMoon) {
             let image1:UIImage = UIImage(named: "MoonOn")!;
             self.moonButton.setImage(image1, forState: UIControlState.Normal)
-            UIView.animateWithDuration(0.5) {
+            UIView.animateWithDuration(0.5, animations: {
                 self.moonButton.alpha = 1.0
+                self.moonButton.transform = CGAffineTransformMakeScale(1.15, 1.15)
                 self.countDownLabel.alpha = 1.0
                 self.fifteenLabel.alpha = 1.0
                 self.fiveLabel.alpha = 1.0
                 self.timerImage.alpha = 1.0
                 self.volumeView.alpha = 1.0
-            }
+            }, completion: nil
+            )
             flowStars()
             audioPlayer.play()
         } else {
             UIView.animateWithDuration(0.5, animations: {
                 self.moonButton.alpha = 0.27
+                self.moonButton.transform = CGAffineTransformIdentity
                 self.countDownLabel.alpha = 0.0
                 self.fifteenLabel.alpha = 0.0
                 self.fiveLabel.alpha = 0.0
@@ -276,6 +279,7 @@ class ViewController: UIViewController {
             timerStarted = true
             update()
         }
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
 
     func fiveAction(sender: UITapGestureRecognizer) {
@@ -287,6 +291,7 @@ class ViewController: UIViewController {
             timerStarted = true
             update()
         }
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
 
     func update() {
