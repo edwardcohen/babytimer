@@ -146,7 +146,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 1E3404AD1CEA9E44002805BD /* Build configuration list for PBXProject "BabyTime" */;
+			buildConfigurationList = 1E3404AD1CEA9E44002805BD /* Build configuration list for PBXProject "Goodnight Moon" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -331,7 +331,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1E3404AD1CEA9E44002805BD /* Build configuration list for PBXProject "BabyTime" */ = {
+		1E3404AD1CEA9E44002805BD /* Build configuration list for PBXProject "Goodnight Moon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1E3404D81CEA9E45002805BD /* Debug */,
