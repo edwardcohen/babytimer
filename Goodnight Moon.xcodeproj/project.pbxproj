@@ -25,7 +25,7 @@
 
 /* Begin PBXFileReference section */
 		0C4671D7E24F39E9CE9271B2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
-		1E3404B21CEA9E44002805BD /* BabyTime.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BabyTime.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E3404B21CEA9E44002805BD /* Goodnight.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Goodnight.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E3404B51CEA9E44002805BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1E3404B71CEA9E44002805BD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1E3404BA1CEA9E44002805BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -76,7 +76,7 @@
 		1E3404B31CEA9E44002805BD /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1E3404B21CEA9E44002805BD /* BabyTime.app */,
+				1E3404B21CEA9E44002805BD /* Goodnight.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,7 +128,7 @@
 			);
 			name = BabyTime;
 			productName = BabyTimer1;
-			productReference = 1E3404B21CEA9E44002805BD /* BabyTime.app */;
+			productReference = 1E3404B21CEA9E44002805BD /* Goodnight.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -304,7 +304,7 @@
 				INFOPLIST_FILE = BabyTimer1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = zelig.BabyTime;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Goodnight;
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -322,7 +322,7 @@
 				INFOPLIST_FILE = BabyTimer1/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = zelig.BabyTime;
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = Goodnight;
 				SWIFT_OBJC_BRIDGING_HEADER = "Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
