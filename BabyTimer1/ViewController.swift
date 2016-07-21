@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     var count = 0
     var timer = NSTimer()
     
+    var flowTimer = NSTimer()
+    
     var audioPlayer: AVAudioPlayer!
     var volumeView: UIView!
     
@@ -235,6 +237,8 @@ class ViewController: UIViewController {
         UIView.animateWithDuration(0.5) {
             self.view.layoutIfNeeded()
         }
+        
+        flowTimer.invalidate()
     }
     
     func updateUI() {
@@ -251,6 +255,7 @@ class ViewController: UIViewController {
                 self.volumeView.alpha = 1.0
             }, completion: nil
             )
+            flowTimer = NSTimer.scheduledTimerWithTimeInterval(50, target: self, selector: #selector(flowStars), userInfo: nil, repeats: true)
             flowStars()
             audioPlayer.play()
         } else {
