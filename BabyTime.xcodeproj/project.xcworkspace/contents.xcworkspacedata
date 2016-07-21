@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:BabyTimer1.xcodeproj">
+      location = "self:/Users/developer/Documents/babytimer/BabyTime.xcodeproj">
    </FileRef>
 </Workspace>

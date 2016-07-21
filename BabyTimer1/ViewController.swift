@@ -72,6 +72,7 @@ class ViewController: UIViewController {
                 print("error initializing AVAudioPlayer")
             }
         }
+        audioPlayer.numberOfLoops = -1
         audioPlayer.prepareToPlay()
         audioPlayer.volume = 0.5
         

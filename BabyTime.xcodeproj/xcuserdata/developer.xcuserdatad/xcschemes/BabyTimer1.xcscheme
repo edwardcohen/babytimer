@@ -53,9 +53,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1E3404B11CEA9E44002805BD"
-            BuildableName = "BabyTimer1.app"
-            BlueprintName = "BabyTimer1"
-            ReferencedContainer = "container:Baby Timer.xcodeproj">
+            BuildableName = "BabyTime.app"
+            BlueprintName = "BabyTime"
+            ReferencedContainer = "container:BabyTime.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -76,9 +76,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1E3404B11CEA9E44002805BD"
-            BuildableName = "BabyTimer1.app"
-            BlueprintName = "BabyTimer1"
-            ReferencedContainer = "container:Baby Timer.xcodeproj">
+            BuildableName = "BabyTime.app"
+            BlueprintName = "BabyTime"
+            ReferencedContainer = "container:BabyTime.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
