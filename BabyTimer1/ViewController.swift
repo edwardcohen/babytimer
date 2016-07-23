@@ -23,6 +23,8 @@ class ViewController: UIViewController {
     var audioPlayer: AVAudioPlayer!
     var volumeView: UIView!
     
+    @IBOutlet weak var backgroundView: UIView!
+
     @IBOutlet var countDownLabel: UILabel!
     @IBOutlet weak var fiveLabel: UILabel!
     @IBOutlet weak var fifteenLabel: UILabel!
@@ -78,6 +80,8 @@ class ViewController: UIViewController {
         audioPlayer.prepareToPlay()
         audioPlayer.volume = 0.5
         
+        let backgroundTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.backgroundAction(_:)))
+        backgroundView.addGestureRecognizer(backgroundTap)
         
         let fifteenTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.fifteenAction(_:)))
         fifteenLabel.addGestureRecognizer(fifteenTap)
@@ -273,6 +277,12 @@ class ViewController: UIViewController {
             })
             disappearStars()
             audioPlayer.stop()
+        }
+    }
+
+    func backgroundAction(sender: UITapGestureRecognizer) {
+        if (!brightMoon) {
+            audioPlayer.play()
         }
     }
     

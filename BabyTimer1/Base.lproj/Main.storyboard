@@ -10,7 +10,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="BabyTime" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Goodnight" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -152,6 +152,7 @@
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina55"/>
                     <connections>
+                        <outlet property="backgroundView" destination="8bC-Xf-vdC" id="6kh-Bj-xar"/>
                         <outlet property="countDownLabel" destination="P8j-Ud-u7I" id="qHN-oR-KPu"/>
                         <outlet property="fifteenLabel" destination="Iyr-ad-EOY" id="1lb-Jm-FS2"/>
                         <outlet property="fiveLabel" destination="N6M-J8-c6K" id="ggl-lY-xrM"/>
