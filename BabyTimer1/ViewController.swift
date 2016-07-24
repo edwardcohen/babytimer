@@ -89,15 +89,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func btnMoon(sender: UIButton) {
-        if (timerStarted) {
-            timer.invalidate()
-            count = 0
-            countDownLabel.text = ""
-            timerStarted = false
-        }
-        
-        brightMoon = !brightMoon
-        updateUI()
+        updateState()
     }
 
     func getStarPos() -> (posX: CGFloat, posY: CGFloat) {
@@ -142,7 +134,15 @@ class ViewController: UIViewController {
         )
     }
     
-    func updateUI() {
+    func updateState() {
+        if (timerStarted) {
+            timer.invalidate()
+            count = 0
+            countDownLabel.text = ""
+            timerStarted = false
+        }
+        brightMoon = !brightMoon
+        
         if (brightMoon) {
             let image1:UIImage = UIImage(named: "MoonOn")!;
             self.moonButton.setImage(image1, forState: UIControlState.Normal)
@@ -187,7 +187,7 @@ class ViewController: UIViewController {
 
     func backgroundAction(sender: UITapGestureRecognizer) {
         if (!brightMoon) {
-            audioPlayer.play()
+            updateState()
         }
     }
     
