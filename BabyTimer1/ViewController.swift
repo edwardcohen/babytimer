@@ -83,13 +83,14 @@ class ViewController: UIViewController {
         self.timerImage.alpha = 0.0
         self.volumeView.alpha = 0.0
         
+        self.moonButton.layer.zPosition = 1
     }
     
     @IBAction func btnMoon(sender: UIButton) {
         updateState()
     }
 
-    @IBAction func btnFive(sender: UIButton) {
+    func fiveAction() {
         if (timerStarted) {
             count += 5 * 60
         } else {
@@ -99,6 +100,10 @@ class ViewController: UIViewController {
             update()
         }
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
+    
+    @IBAction func btnFive(sender: UIButton) {
+        fiveAction()
     }
     
     @IBAction func btnFifteen(sender: UIButton) {
@@ -117,6 +122,7 @@ class ViewController: UIViewController {
         self.fifteenButton.alpha = 1.0
         self.fiveButton.alpha = 1.0
         self.timerButton.alpha = 0.0
+        fiveAction()
     }
     
     func getStarPos() -> (posX: CGFloat, posY: CGFloat) {
