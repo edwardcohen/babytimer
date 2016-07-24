@@ -48,7 +48,6 @@ class ViewController: UIViewController {
             motionManager.deviceMotionUpdateInterval = 0.05
             motionManager.startDeviceMotionUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data: CMDeviceMotion?, error: NSError?) -> Void in
                 self.rotation = CGFloat(atan2(data!.gravity.x, data!.gravity.z))
-                print ("Rotation=\(self.rotation)")
                 })
             }
             
