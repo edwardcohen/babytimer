@@ -35,6 +35,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var fiveButton: UIButton!
     @IBOutlet weak var fifteenButton: UIButton!
     
+    @IBOutlet weak var timerButton: UIButton!
+    
     var starList = [UIImageView]()
     
     var rotation: CGFloat!
@@ -78,6 +80,7 @@ class ViewController: UIViewController {
         self.countDownLabel.alpha = 0.0
         self.fifteenButton.alpha = 0.0
         self.fiveButton.alpha = 0.0
+        self.timerButton.alpha = 0.0
         self.timerImage.alpha = 0.0
         self.volumeView.alpha = 0.0
         
@@ -109,6 +112,12 @@ class ViewController: UIViewController {
             update()
         }
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
+    
+    @IBAction func btnTimer(sender: UIButton) {
+        self.fifteenButton.alpha = 1.0
+        self.fiveButton.alpha = 1.0
+        self.timerButton.alpha = 0.0
     }
     
     func getStarPos() -> (posX: CGFloat, posY: CGFloat) {
@@ -169,8 +178,7 @@ class ViewController: UIViewController {
                 self.moonButton.alpha = 1.0
                 self.moonButton.transform = CGAffineTransformMakeScale(1.15, 1.15)
                 self.countDownLabel.alpha = 1.0
-                self.fifteenButton.alpha = 1.0
-                self.fiveButton.alpha = 1.0
+                self.timerButton.alpha = 1.0
                 self.timerImage.alpha = 1.0
                 self.volumeView.alpha = 1.0
             }, completion: nil
@@ -191,6 +199,7 @@ class ViewController: UIViewController {
                 self.moonButton.alpha = 0.27
                 self.moonButton.transform = CGAffineTransformIdentity
                 self.countDownLabel.alpha = 0.0
+                self.timerButton.alpha = 0.0
                 self.fifteenButton.alpha = 0.0
                 self.fiveButton.alpha = 0.0
                 self.timerImage.alpha = 0.0
