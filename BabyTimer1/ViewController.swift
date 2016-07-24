@@ -7,9 +7,9 @@
 //
 
 import UIKit
-import SpriteKit
 import AVFoundation
 import MediaPlayer
+import CoreMotion
 
 class ViewController: UIViewController {
     var timerStarted = false
@@ -22,6 +22,8 @@ class ViewController: UIViewController {
     
     var audioPlayer: AVAudioPlayer!
     var volumeView: UIView!
+
+    let motionManager = CMMotionManager()
     
     @IBOutlet weak var backgroundView: UIView!
 
@@ -29,42 +31,24 @@ class ViewController: UIViewController {
     @IBOutlet weak var fiveLabel: UILabel!
     @IBOutlet weak var fifteenLabel: UILabel!
     
-    @IBOutlet weak var star9: UIImageView!
-    @IBOutlet weak var star8: UIImageView!
-    @IBOutlet weak var star7: UIImageView!
-    @IBOutlet weak var star6: UIImageView!
-    @IBOutlet weak var star5: UIImageView!
-    @IBOutlet weak var star4: UIImageView!
-    @IBOutlet weak var star3: UIImageView!
-    @IBOutlet weak var star2: UIImageView!
-    @IBOutlet weak var star1: UIImageView!
-    
-    @IBOutlet weak var star9LeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star8LeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star7LeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star6LeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star5LeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star4LeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star3LeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star2LeadingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star1LeadingConstraint: NSLayoutConstraint!
-    
-    @IBOutlet weak var star9TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star8TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star6TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star7TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star5TopConstraint: NSLayoutConstraint!    
-    @IBOutlet weak var star4TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star3TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star2TopConstraint: NSLayoutConstraint!
-    @IBOutlet weak var star1TopConstraint: NSLayoutConstraint!
-
     @IBOutlet weak var timerImage: UIImageView!
     @IBOutlet weak var moonButton: UIButton!
 
+    var starList = [UIImageView]()
+    
+    var rotation: CGFloat!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if motionManager.deviceMotionAvailable {
+            motionManager.deviceMotionUpdateInterval = 0.05
+            motionManager.startDeviceMotionUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data: CMDeviceMotion?, error: NSError?) -> Void in
+                self.rotation = CGFloat(atan2(data!.gravity.x, data!.gravity.z))
+                print ("Rotation=\(self.rotation)")
+                })
+            }
+            
         countDownLabel.text = ""
         
         if let sound = NSDataAsset(name: "white_noise") {
@@ -102,16 +86,6 @@ class ViewController: UIViewController {
         self.timerImage.alpha = 0.0
         self.volumeView.alpha = 0.0
         
-        self.star1.alpha = 0.0
-        self.star2.alpha = 0.0
-        self.star3.alpha = 0.0
-        self.star4.alpha = 0.0
-        self.star5.alpha = 0.0
-        self.star6.alpha = 0.0
-        self.star7.alpha = 0.0
-        self.star8.alpha = 0.0
-        self.star9.alpha = 0.0
-        
     }
     
     @IBAction func btnMoon(sender: UIButton) {
@@ -134,115 +108,38 @@ class ViewController: UIViewController {
     }
     
     func flowStars() {
-        self.star1.layer.removeAllAnimations()
-        self.star2.layer.removeAllAnimations()
-        self.star3.layer.removeAllAnimations()
-        self.star4.layer.removeAllAnimations()
-        self.star5.layer.removeAllAnimations()
-        self.star6.layer.removeAllAnimations()
-        self.star7.layer.removeAllAnimations()
-        self.star8.layer.removeAllAnimations()
-        self.star9.layer.removeAllAnimations()
+        var speed: CGFloat = 0
+        switch rotation {
+        case CGFloat(-M_PI) ... CGFloat(-M_PI_2):
+            speed = -(rotation + CGFloat(M_PI))
+        case CGFloat(-M_PI_2) ... CGFloat(0):
+            speed = rotation
+        case CGFloat(0) ... CGFloat(M_PI_2):
+            speed = rotation
+        case CGFloat(M_PI_2) ... CGFloat(M_PI):
+            speed = CGFloat(M_PI) - rotation
+        default:
+            print("Unexpected value")
+        }
         
-        (self.star1LeadingConstraint.constant, self.star1TopConstraint.constant) = getStarPos()
-        (self.star2LeadingConstraint.constant, self.star2TopConstraint.constant) = getStarPos()
-        (self.star3LeadingConstraint.constant, self.star3TopConstraint.constant) = getStarPos()
-        (self.star4LeadingConstraint.constant, self.star4TopConstraint.constant) = getStarPos()
-        (self.star5LeadingConstraint.constant, self.star5TopConstraint.constant) = getStarPos()
-        (self.star6LeadingConstraint.constant, self.star6TopConstraint.constant) = getStarPos()
-        (self.star7LeadingConstraint.constant, self.star7TopConstraint.constant) = getStarPos()
-        (self.star8LeadingConstraint.constant, self.star8TopConstraint.constant) = getStarPos()
-        (self.star9LeadingConstraint.constant, self.star9TopConstraint.constant) = getStarPos()
-        
-        self.star1.alpha = 1.0
-        self.star2.alpha = 1.0
-        self.star3.alpha = 1.0
-        self.star4.alpha = 1.0
-        self.star5.alpha = 1.0
-        self.star6.alpha = 1.0
-        self.star7.alpha = 1.0
-        self.star8.alpha = 1.0
-        self.star9.alpha = 1.0
-
-        self.view.layoutIfNeeded()
-        
-        self.star1LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
-            self.view.layoutIfNeeded()
-            }, completion: nil)
-        self.star2LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
-            self.view.layoutIfNeeded()
-            }, completion: nil)
-        self.star3LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
-            self.view.layoutIfNeeded()
-            }, completion: nil)
-        self.star4LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
-            self.view.layoutIfNeeded()
-            }, completion: nil)
-        self.star5LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
-            self.view.layoutIfNeeded()
-            }, completion: nil)
-        self.star6LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
-            self.view.layoutIfNeeded()
-            }, completion: nil)
-        self.star7LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
-            self.view.layoutIfNeeded()
-            }, completion: nil)
-        self.star8LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
-            self.view.layoutIfNeeded()
-            }, completion: nil)
-        self.star9LeadingConstraint.constant = arc4random_uniform(2)==0 ? UIScreen.mainScreen().bounds.width+50 : -50
-        UIView.animateWithDuration(Double(arc4random_uniform(50)+50), delay: 0, options: .CurveLinear, animations: {
-            self.view.layoutIfNeeded()
-            }, completion: nil)
+        for star in starList {
+            star.frame.origin.x += 3.0 * star.frame.height/20 * speed
+            if star.frame.origin.x > UIScreen.mainScreen().bounds.width {
+                star.frame.origin.x = 0
+            } else if star.frame.origin.x < 0 {
+                star.frame.origin.x = UIScreen.mainScreen().bounds.width
+            }
+        }
     }
     
     func disappearStars() {
-        self.star1TopConstraint.constant = -50
-        UIView.animateWithDuration(0.5) {
-            self.view.layoutIfNeeded()
-        }
-        self.star2TopConstraint.constant = -50
-        UIView.animateWithDuration(0.5) {
-            self.view.layoutIfNeeded()
-        }
-        self.star3TopConstraint.constant = -50
-        UIView.animateWithDuration(0.5) {
-            self.view.layoutIfNeeded()
-        }
-        self.star4TopConstraint.constant = -50
-        UIView.animateWithDuration(0.5) {
-            self.view.layoutIfNeeded()
-        }
-        self.star5TopConstraint.constant = -50
-        UIView.animateWithDuration(0.5) {
-            self.view.layoutIfNeeded()
-        }
-        self.star6TopConstraint.constant = -50
-        UIView.animateWithDuration(0.5) {
-            self.view.layoutIfNeeded()
-        }
-        self.star7TopConstraint.constant = -50
-        UIView.animateWithDuration(0.5) {
-            self.view.layoutIfNeeded()
-        }
-        self.star8TopConstraint.constant = -50
-        UIView.animateWithDuration(0.5) {
-            self.view.layoutIfNeeded()
-        }
-        self.star9TopConstraint.constant = -50
-        UIView.animateWithDuration(0.5) {
-            self.view.layoutIfNeeded()
-        }
-        
         flowTimer.invalidate()
+        UIView.animateWithDuration(0.5, animations: {
+            for star in self.starList {
+                star.transform = CGAffineTransformMakeTranslation(0, -30-star.frame.origin.y)
+            }
+        }, completion: nil
+        )
     }
     
     func updateUI() {
@@ -259,8 +156,16 @@ class ViewController: UIViewController {
                 self.volumeView.alpha = 1.0
             }, completion: nil
             )
-            flowTimer = NSTimer.scheduledTimerWithTimeInterval(50, target: self, selector: #selector(flowStars), userInfo: nil, repeats: true)
-            flowStars()
+            starList.removeAll()
+            for _ in 1...10 {
+                let star = UIImageView(image: UIImage(named: "Star"))
+                let (x,y) = getStarPos()
+                let size = 10+CGFloat(arc4random_uniform(10))
+                star.frame = CGRectMake(x, y, size, size)
+                self.view.addSubview(star)
+                starList.append(star)
+            }
+            flowTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(flowStars), userInfo: nil, repeats: true)
             audioPlayer.play()
         } else {
             UIView.animateWithDuration(0.5, animations: {
