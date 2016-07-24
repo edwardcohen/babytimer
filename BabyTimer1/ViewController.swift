@@ -28,12 +28,13 @@ class ViewController: UIViewController {
     @IBOutlet weak var backgroundView: UIView!
 
     @IBOutlet var countDownLabel: UILabel!
-    @IBOutlet weak var fiveLabel: UILabel!
-    @IBOutlet weak var fifteenLabel: UILabel!
     
     @IBOutlet weak var timerImage: UIImageView!
     @IBOutlet weak var moonButton: UIButton!
 
+    @IBOutlet weak var fiveButton: UIButton!
+    @IBOutlet weak var fifteenButton: UIButton!
+    
     var starList = [UIImageView]()
     
     var rotation: CGFloat!
@@ -67,12 +68,6 @@ class ViewController: UIViewController {
         let backgroundTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.backgroundAction(_:)))
         backgroundView.addGestureRecognizer(backgroundTap)
         
-        let fifteenTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.fifteenAction(_:)))
-        fifteenLabel.addGestureRecognizer(fifteenTap)
-        
-        let fiveTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.fiveAction(_:)))
-        fiveLabel.addGestureRecognizer(fiveTap)
-
         let wrapperView = UIView(frame: CGRectMake(67, 658, 280, 31))
         self.view.backgroundColor = UIColor.clearColor()
         self.view.addSubview(wrapperView)
@@ -81,8 +76,8 @@ class ViewController: UIViewController {
         wrapperView.addSubview(volumeView)
         
         self.countDownLabel.alpha = 0.0
-        self.fifteenLabel.alpha = 0.0
-        self.fiveLabel.alpha = 0.0
+        self.fifteenButton.alpha = 0.0
+        self.fiveButton.alpha = 0.0
         self.timerImage.alpha = 0.0
         self.volumeView.alpha = 0.0
         
@@ -92,6 +87,30 @@ class ViewController: UIViewController {
         updateState()
     }
 
+    @IBAction func btnFive(sender: UIButton) {
+        if (timerStarted) {
+            count += 5 * 60
+        } else {
+            count = 5 * 60 + 1
+            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+            timerStarted = true
+            update()
+        }
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
+    
+    @IBAction func btnFifteen(sender: UIButton) {
+        if (timerStarted) {
+            count += 15 * 60
+        } else {
+            count = 15 * 60 + 1
+            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+            timerStarted = true
+            update()
+        }
+        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+    }
+    
     func getStarPos() -> (posX: CGFloat, posY: CGFloat) {
         let screenSize = UIScreen.mainScreen().bounds
         let randomXPos = CGFloat(arc4random_uniform(UInt32(screenSize.width)))
@@ -150,8 +169,8 @@ class ViewController: UIViewController {
                 self.moonButton.alpha = 1.0
                 self.moonButton.transform = CGAffineTransformMakeScale(1.15, 1.15)
                 self.countDownLabel.alpha = 1.0
-                self.fifteenLabel.alpha = 1.0
-                self.fiveLabel.alpha = 1.0
+                self.fifteenButton.alpha = 1.0
+                self.fiveButton.alpha = 1.0
                 self.timerImage.alpha = 1.0
                 self.volumeView.alpha = 1.0
             }, completion: nil
@@ -172,8 +191,8 @@ class ViewController: UIViewController {
                 self.moonButton.alpha = 0.27
                 self.moonButton.transform = CGAffineTransformIdentity
                 self.countDownLabel.alpha = 0.0
-                self.fifteenLabel.alpha = 0.0
-                self.fiveLabel.alpha = 0.0
+                self.fifteenButton.alpha = 0.0
+                self.fiveButton.alpha = 0.0
                 self.timerImage.alpha = 0.0
                 self.volumeView.alpha = 0.0
             }, completion: { finish in
@@ -191,30 +210,6 @@ class ViewController: UIViewController {
         }
     }
     
-    func fifteenAction(sender: UITapGestureRecognizer) {
-        if (timerStarted) {
-            count += 15 * 60
-        } else {
-            count = 15 * 60 + 1
-            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
-            timerStarted = true
-            update()
-        }
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-    }
-
-    func fiveAction(sender: UITapGestureRecognizer) {
-        if (timerStarted) {
-            count += 5 * 60
-        } else {
-            count = 5 * 60 + 1
-            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
-            timerStarted = true
-            update()
-        }
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
-    }
-
     func update() {
         if(count > 0) {
             count = count - 1
