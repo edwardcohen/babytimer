@@ -90,39 +90,32 @@ class ViewController: UIViewController {
         updateState()
     }
 
-    func fiveAction() {
+    func timerAction(min: Int) {
         if (timerStarted) {
-            count += 5 * 60
+            count += min * 60
         } else {
-            count = 5 * 60 + 1
+            count = min * 60 + 1
             timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
             timerStarted = true
+            audioPlayer.play()
             update()
         }
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     
     @IBAction func btnFive(sender: UIButton) {
-        fiveAction()
+        timerAction(5)
     }
     
     @IBAction func btnFifteen(sender: UIButton) {
-        if (timerStarted) {
-            count += 15 * 60
-        } else {
-            count = 15 * 60 + 1
-            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
-            timerStarted = true
-            update()
-        }
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+        timerAction(15)
     }
     
     @IBAction func btnTimer(sender: UIButton) {
         self.fifteenButton.alpha = 1.0
         self.fiveButton.alpha = 1.0
         self.timerButton.alpha = 0.0
-        fiveAction()
+        timerAction(5)
     }
     
     func getStarPos() -> (posX: CGFloat, posY: CGFloat) {
@@ -228,6 +221,11 @@ class ViewController: UIViewController {
         if(count > 0) {
             count = count - 1
             countDownLabel.text = String(format: "%02d:%02d", count/60, count%60)
+        } else {
+            countDownLabel.text = ""
+            audioPlayer.stop()
+            timerStarted = false
+            timer.invalidate()
         }
     }
 
