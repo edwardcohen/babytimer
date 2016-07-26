@@ -222,10 +222,7 @@ class ViewController: UIViewController {
             count = count - 1
             countDownLabel.text = String(format: "%02d:%02d", count/60, count%60)
         } else {
-            countDownLabel.text = ""
-            audioPlayer.stop()
-            timerStarted = false
-            timer.invalidate()
+            updateState()
         }
     }
 
