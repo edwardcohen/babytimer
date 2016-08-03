@@ -21,6 +21,7 @@ class ViewController: UIViewController {
     var flowTimer = NSTimer()
     
     var audioPlayer: AVAudioPlayer!
+    var fader: iiFaderForAvAudioPlayer!
     var volumeView: UIView!
 
     let motionManager = CMMotionManager()
@@ -66,6 +67,8 @@ class ViewController: UIViewController {
         audioPlayer.prepareToPlay()
         audioPlayer.volume = 0.5
         
+        fader = iiFaderForAvAudioPlayer(player: audioPlayer)
+        
         let backgroundTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.backgroundAction(_:)))
         backgroundView.addGestureRecognizer(backgroundTap)
         
@@ -97,7 +100,6 @@ class ViewController: UIViewController {
             count = min * 60 + 1
             timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
             timerStarted = true
-            audioPlayer.play()
             update()
         }
         AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
@@ -192,6 +194,10 @@ class ViewController: UIViewController {
             }
             flowTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(flowStars), userInfo: nil, repeats: true)
             audioPlayer.play()
+            let newVolume = audioPlayer.volume
+            fader.fade(fromVolume: 0, toVolume: Double(audioPlayer.volume), duration: 1, velocity: 0) { finished in
+                self.audioPlayer.volume = newVolume
+            }
         } else {
             UIView.animateWithDuration(0.5, animations: {
                 self.moonButton.alpha = 0.27
@@ -207,7 +213,12 @@ class ViewController: UIViewController {
                 self.moonButton.setImage(image1, forState: UIControlState.Normal)
             })
             disappearStars()
-            audioPlayer.stop()
+            fader.stop()
+            let oldVolume = audioPlayer.volume
+            fader.fade(fromVolume: Double(audioPlayer.volume), toVolume: 0, duration: 1, velocity: 0) { finished in
+                self.audioPlayer.volume = oldVolume
+                self.audioPlayer.stop()
+            }
         }
     }
 

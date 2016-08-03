@@ -14,6 +14,7 @@
 		1E3404C01CEA9E44002805BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E3404BE1CEA9E44002805BD /* LaunchScreen.storyboard */; };
 		4EC59BAFCFBEE64B025769DF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FB4D9F8CD806A030B0C2FBB /* CoreMedia.framework */; };
 		66D0A204781FA3A91A3C6E8A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C4671D7E24F39E9CE9271B2 /* SystemConfiguration.framework */; };
+		8B05CAB71D517A620019BC30 /* iiFaderForAvAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CAB61D517A620019BC30 /* iiFaderForAvAudioPlayer.swift */; };
 		9BA50A64E0B65F0E60DA8070 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0AB2C2AA2AA71EEFDD97179 /* QuartzCore.framework */; };
 		9F9E9C9C853D1D51898CD9E7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B70AB388B8404463261FDB87 /* AVFoundation.framework */; };
 		A35CEBC6AFD0D829C6766C66 /* BuddyBuildSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC37A8FA2AE76305B70464B /* BuddyBuildSDK.framework */; };
@@ -36,6 +37,7 @@
 		4FB4D9F8CD806A030B0C2FBB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		5D5C5BB73C3A2FA28C726C01 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		746C804EBF89D0876D551453 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		8B05CAB61D517A620019BC30 /* iiFaderForAvAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iiFaderForAvAudioPlayer.swift; sourceTree = "<group>"; };
 		B70AB388B8404463261FDB87 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BBC37A8FA2AE76305B70464B /* BuddyBuildSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuddyBuildSDK.framework; sourceTree = "<group>"; };
 		D20969AD4F08A984BB47F98F /* Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -86,6 +88,7 @@
 			children = (
 				1E3404B51CEA9E44002805BD /* AppDelegate.swift */,
 				1E3404B71CEA9E44002805BD /* ViewController.swift */,
+				8B05CAB61D517A620019BC30 /* iiFaderForAvAudioPlayer.swift */,
 				1E3404B91CEA9E44002805BD /* Main.storyboard */,
 				1E3404BC1CEA9E44002805BD /* Assets.xcassets */,
 				1E3404BE1CEA9E44002805BD /* LaunchScreen.storyboard */,
@@ -187,6 +190,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B05CAB71D517A620019BC30 /* iiFaderForAvAudioPlayer.swift in Sources */,
 				1E3404B81CEA9E44002805BD /* ViewController.swift in Sources */,
 				1E3404B61CEA9E44002805BD /* AppDelegate.swift in Sources */,
 			);
