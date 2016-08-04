@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Appsee
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         BuddyBuildSDK.setup()
+        Appsee.start("580faca6704d44b6815c5985a3c96f62")
         
         // Override point for customization after application launch.
         return true

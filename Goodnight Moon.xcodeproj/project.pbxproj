@@ -18,6 +18,7 @@
 		9BA50A64E0B65F0E60DA8070 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0AB2C2AA2AA71EEFDD97179 /* QuartzCore.framework */; };
 		9F9E9C9C853D1D51898CD9E7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B70AB388B8404463261FDB87 /* AVFoundation.framework */; };
 		A35CEBC6AFD0D829C6766C66 /* BuddyBuildSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC37A8FA2AE76305B70464B /* BuddyBuildSDK.framework */; };
+		BABC558880A63B471E07546D /* Pods_BabyTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33B812D4C179D377C57F3AED /* Pods_BabyTime.framework */; };
 		C3033421129CD9FCFBDB43B6 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0890E4BFCD8738CB60E6030 /* AssetsLibrary.framework */; };
 		DC1BB9B3F6F6FE4B4383947E /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 746C804EBF89D0876D551453 /* CoreVideo.framework */; };
 		DD55241EC5DC087192B34394 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5C5BB73C3A2FA28C726C01 /* CoreText.framework */; };
@@ -33,9 +34,12 @@
 		1E3404BC1CEA9E44002805BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E3404BF1CEA9E44002805BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1E3404C11CEA9E44002805BD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		33B812D4C179D377C57F3AED /* Pods_BabyTime.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BabyTime.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E75E94BEAF968A60BC750DC /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		4A5BF2A6A937980E113DAE66 /* Pods-BabyTime.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyTime.release.xcconfig"; path = "Pods/Target Support Files/Pods-BabyTime/Pods-BabyTime.release.xcconfig"; sourceTree = "<group>"; };
 		4FB4D9F8CD806A030B0C2FBB /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		5D5C5BB73C3A2FA28C726C01 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		5DD0FCD0F63A6C8D2E22279A /* Pods-BabyTime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyTime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BabyTime/Pods-BabyTime.debug.xcconfig"; sourceTree = "<group>"; };
 		746C804EBF89D0876D551453 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		8B05CAB61D517A620019BC30 /* iiFaderForAvAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iiFaderForAvAudioPlayer.swift; sourceTree = "<group>"; };
 		B70AB388B8404463261FDB87 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -59,6 +63,7 @@
 				9F9E9C9C853D1D51898CD9E7 /* AVFoundation.framework in Frameworks */,
 				4EC59BAFCFBEE64B025769DF /* CoreMedia.framework in Frameworks */,
 				DC1BB9B3F6F6FE4B4383947E /* CoreVideo.framework in Frameworks */,
+				BABC558880A63B471E07546D /* Pods_BabyTime.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -72,6 +77,7 @@
 				1E3404B31CEA9E44002805BD /* Products */,
 				75E1E0A8720B449724798C31 /* Frameworks */,
 				D20969AD4F08A984BB47F98F /* Bridging-Header.h */,
+				657A9D4F3903AE5F08944296 /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -98,6 +104,15 @@
 			path = BabyTimer1;
 			sourceTree = "<group>";
 		};
+		657A9D4F3903AE5F08944296 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5DD0FCD0F63A6C8D2E22279A /* Pods-BabyTime.debug.xcconfig */,
+				4A5BF2A6A937980E113DAE66 /* Pods-BabyTime.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 		75E1E0A8720B449724798C31 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -110,6 +125,7 @@
 				B70AB388B8404463261FDB87 /* AVFoundation.framework */,
 				4FB4D9F8CD806A030B0C2FBB /* CoreMedia.framework */,
 				746C804EBF89D0876D551453 /* CoreVideo.framework */,
+				33B812D4C179D377C57F3AED /* Pods_BabyTime.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -121,9 +137,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1E3404DA1CEA9E45002805BD /* Build configuration list for PBXNativeTarget "BabyTime" */;
 			buildPhases = (
+				0AEBCC45B790E58E23FFBF48 /* [CP] Check Pods Manifest.lock */,
 				1E3404AE1CEA9E44002805BD /* Sources */,
 				1E3404AF1CEA9E44002805BD /* Frameworks */,
 				1E3404B01CEA9E44002805BD /* Resources */,
+				36940626444DB1EC9BFE1AF0 /* [CP] Embed Pods Frameworks */,
+				617443BB1452FD464B7E8F6F /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -184,6 +203,54 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		0AEBCC45B790E58E23FFBF48 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		36940626444DB1EC9BFE1AF0 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BabyTime/Pods-BabyTime-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		617443BB1452FD464B7E8F6F /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-BabyTime/Pods-BabyTime-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1E3404AE1CEA9E44002805BD /* Sources */ = {
@@ -303,6 +370,7 @@
 		};
 		1E3404DB1CEA9E45002805BD /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5DD0FCD0F63A6C8D2E22279A /* Pods-BabyTime.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
@@ -321,6 +389,7 @@
 		};
 		1E3404DC1CEA9E45002805BD /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4A5BF2A6A937980E113DAE66 /* Pods-BabyTime.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
