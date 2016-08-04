@@ -40,7 +40,7 @@ class ViewController: UIViewController {
     
     var starList = [UIImageView]()
     
-    var rotation: CGFloat!
+    var rotation: CGFloat = CGFloat(M_PI)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +87,8 @@ class ViewController: UIViewController {
         self.volumeView.alpha = 0.0
         
         self.moonButton.layer.zPosition = 1
+        
+        updateState()
     }
     
     @IBAction func btnMoon(sender: UIButton) {
