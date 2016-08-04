@@ -102,7 +102,7 @@ class ViewController: UIViewController {
             timerStarted = true
             update()
         }
-        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
+//        AudioServicesPlayAlertSound(SystemSoundID(kSystemSoundID_Vibrate))
     }
     
     @IBAction func btnFive(sender: UIButton) {
