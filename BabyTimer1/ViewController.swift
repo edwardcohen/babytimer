@@ -72,7 +72,7 @@ class ViewController: UIViewController {
         let backgroundTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.backgroundAction(_:)))
         backgroundView.addGestureRecognizer(backgroundTap)
         
-        let wrapperView = UIView(frame: CGRectMake(67, 658, 280, 31))
+        let wrapperView = UIView(frame: CGRectMake((UIScreen.mainScreen().bounds.width-280)/2, UIScreen.mainScreen().bounds.height-80, 280, 30))
         self.view.backgroundColor = UIColor.clearColor()
         self.view.addSubview(wrapperView)
         
