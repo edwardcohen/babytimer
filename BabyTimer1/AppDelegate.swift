@@ -14,13 +14,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    var shortcutItem: UIApplicationShortcutItem?
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         BuddyBuildSDK.setup()
         Appsee.start("580faca6704d44b6815c5985a3c96f62")
         
-        // Override point for customization after application launch.
-        return true
+        var performShortcutDelegate = true
+        
+        if let shortcutItem = launchOptions?[UIApplicationLaunchOptionsShortcutItemKey] as? UIApplicationShortcutItem {
+            print("Application launched via shortcut")
+            self.shortcutItem = shortcutItem
+            
+            performShortcutDelegate = false
+        }
+
+        return performShortcutDelegate
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -38,11 +47,43 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        print("Application did become active")
+        
+        guard let shortcut = shortcutItem else { return }
+        
+        print("- Shortcut property has been set")
+        
+        handleShortcut(shortcut)
+        
+        self.shortcutItem = nil
     }
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    }
+    
+    func handleShortcut(shortcutItem: UIApplicationShortcutItem) -> Bool {
+        var succeeded = false
+        
+        if shortcutItem.type == (NSBundle.mainBundle().bundleIdentifier!+".FiveMinutes") {
+            print("- Handling \(shortcutItem.type)")
+            let viewController = self.window!.rootViewController as! ViewController
+            if !viewController.brightMoon { viewController.updateState() }
+            viewController.timerAction(5)
+            succeeded = true
+        } else if shortcutItem.type == (NSBundle.mainBundle().bundleIdentifier!+".FifteenMinutes") {
+            print("- Handling \(shortcutItem.type)")
+            let viewController = self.window!.rootViewController as! ViewController
+            if !viewController.brightMoon { viewController.updateState() }
+            viewController.timerAction(15)
+            succeeded = true
+        }
+        
+        return succeeded
+    }
+    
+    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+        completionHandler(handleShortcut(shortcutItem))
     }
 
 
