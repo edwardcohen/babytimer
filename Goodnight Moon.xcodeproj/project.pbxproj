@@ -8,13 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		1E3404B61CEA9E44002805BD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3404B51CEA9E44002805BD /* AppDelegate.swift */; };
-		1E3404B81CEA9E44002805BD /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3404B71CEA9E44002805BD /* ViewController.swift */; };
+		1E3404B81CEA9E44002805BD /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E3404B71CEA9E44002805BD /* MainViewController.swift */; };
 		1E3404BB1CEA9E44002805BD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E3404B91CEA9E44002805BD /* Main.storyboard */; };
 		1E3404BD1CEA9E44002805BD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E3404BC1CEA9E44002805BD /* Assets.xcassets */; };
 		1E3404C01CEA9E44002805BD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E3404BE1CEA9E44002805BD /* LaunchScreen.storyboard */; };
 		4EC59BAFCFBEE64B025769DF /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4FB4D9F8CD806A030B0C2FBB /* CoreMedia.framework */; };
 		66D0A204781FA3A91A3C6E8A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C4671D7E24F39E9CE9271B2 /* SystemConfiguration.framework */; };
 		8B05CAB71D517A620019BC30 /* iiFaderForAvAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CAB61D517A620019BC30 /* iiFaderForAvAudioPlayer.swift */; };
+		8B3476151D5CF3560003A531 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3476141D5CF3560003A531 /* SettingViewController.swift */; };
 		9BA50A64E0B65F0E60DA8070 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0AB2C2AA2AA71EEFDD97179 /* QuartzCore.framework */; };
 		9F9E9C9C853D1D51898CD9E7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B70AB388B8404463261FDB87 /* AVFoundation.framework */; };
 		A35CEBC6AFD0D829C6766C66 /* BuddyBuildSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC37A8FA2AE76305B70464B /* BuddyBuildSDK.framework */; };
@@ -29,7 +30,7 @@
 		0C4671D7E24F39E9CE9271B2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		1E3404B21CEA9E44002805BD /* Goodnig.ht.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Goodnig.ht.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E3404B51CEA9E44002805BD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		1E3404B71CEA9E44002805BD /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		1E3404B71CEA9E44002805BD /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		1E3404BA1CEA9E44002805BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		1E3404BC1CEA9E44002805BD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1E3404BF1CEA9E44002805BD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -42,6 +43,7 @@
 		5DD0FCD0F63A6C8D2E22279A /* Pods-BabyTime.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-BabyTime.debug.xcconfig"; path = "Pods/Target Support Files/Pods-BabyTime/Pods-BabyTime.debug.xcconfig"; sourceTree = "<group>"; };
 		746C804EBF89D0876D551453 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		8B05CAB61D517A620019BC30 /* iiFaderForAvAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iiFaderForAvAudioPlayer.swift; sourceTree = "<group>"; };
+		8B3476141D5CF3560003A531 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		B70AB388B8404463261FDB87 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BBC37A8FA2AE76305B70464B /* BuddyBuildSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuddyBuildSDK.framework; sourceTree = "<group>"; };
 		D20969AD4F08A984BB47F98F /* Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -93,7 +95,8 @@
 			isa = PBXGroup;
 			children = (
 				1E3404B51CEA9E44002805BD /* AppDelegate.swift */,
-				1E3404B71CEA9E44002805BD /* ViewController.swift */,
+				1E3404B71CEA9E44002805BD /* MainViewController.swift */,
+				8B3476141D5CF3560003A531 /* SettingViewController.swift */,
 				8B05CAB61D517A620019BC30 /* iiFaderForAvAudioPlayer.swift */,
 				1E3404B91CEA9E44002805BD /* Main.storyboard */,
 				1E3404BC1CEA9E44002805BD /* Assets.xcassets */,
@@ -258,8 +261,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B05CAB71D517A620019BC30 /* iiFaderForAvAudioPlayer.swift in Sources */,
-				1E3404B81CEA9E44002805BD /* ViewController.swift in Sources */,
+				1E3404B81CEA9E44002805BD /* MainViewController.swift in Sources */,
 				1E3404B61CEA9E44002805BD /* AppDelegate.swift in Sources */,
+				8B3476151D5CF3560003A531 /* SettingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

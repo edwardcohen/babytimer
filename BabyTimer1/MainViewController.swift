@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  MainViewController.swift
 //  BabyTimer
 //
 //  Created by Eddie Cohen & Jason Toff on 7/20/16.
@@ -11,7 +11,7 @@ import AVFoundation
 import MediaPlayer
 import CoreMotion
 
-class ViewController: UIViewController {
+class MainViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     var timerStarted = false
     var brightMoon = false
     
@@ -37,6 +37,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var fifteenButton: UIButton!
     
     @IBOutlet weak var timerButton: UIButton!
+    @IBOutlet var settingButton: UIButton!
     
     var starList = [UIImageView]()
     
@@ -69,7 +70,7 @@ class ViewController: UIViewController {
         
         fader = iiFaderForAvAudioPlayer(player: audioPlayer)
         
-        let backgroundTap = UITapGestureRecognizer(target: self, action: #selector(ViewController.backgroundAction(_:)))
+        let backgroundTap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.backgroundAction(_:)))
         backgroundView.addGestureRecognizer(backgroundTap)
         
         let wrapperView = UIView(frame: CGRectMake((UIScreen.mainScreen().bounds.width-280)/2, UIScreen.mainScreen().bounds.height-80, 280, 30))
@@ -95,6 +96,19 @@ class ViewController: UIViewController {
         updateState()
     }
 
+    @IBAction func btnSetting(sender: UIButton) {
+        let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewControllerWithIdentifier("SettingViewController") as! SettingViewController
+        vc.modalPresentationStyle = UIModalPresentationStyle.Popover
+        vc.preferredContentSize = CGSizeMake(325, 350)
+        let popover: UIPopoverPresentationController = vc.popoverPresentationController!
+        popover.permittedArrowDirections = .Any
+        popover.delegate = self
+        popover.sourceView = sender
+        popover.sourceRect = CGRect(x: 20, y: 20, width: 1, height: 1)
+        presentViewController(vc, animated: true, completion:nil)
+    }
+    
     func timerAction(min: Int) {
         if (timerStarted) {
             count += min * 60
@@ -239,6 +253,10 @@ class ViewController: UIViewController {
         }
     }
 
+    func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .None
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
     }
@@ -246,6 +264,4 @@ class ViewController: UIViewController {
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
-
 }
-

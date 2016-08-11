@@ -67,15 +67,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         if shortcutItem.type == (NSBundle.mainBundle().bundleIdentifier!+".FiveMinutes") {
             print("- Handling \(shortcutItem.type)")
-            let viewController = self.window!.rootViewController as! ViewController
-            if !viewController.brightMoon { viewController.updateState() }
-            viewController.timerAction(5)
+            let mainViewController = self.window!.rootViewController as! MainViewController
+            if !mainViewController.brightMoon { mainViewController.updateState() }
+            mainViewController.timerAction(5)
             succeeded = true
         } else if shortcutItem.type == (NSBundle.mainBundle().bundleIdentifier!+".FifteenMinutes") {
             print("- Handling \(shortcutItem.type)")
-            let viewController = self.window!.rootViewController as! ViewController
-            if !viewController.brightMoon { viewController.updateState() }
-            viewController.timerAction(15)
+            let mainViewController = self.window!.rootViewController as! MainViewController
+            if !mainViewController.brightMoon { mainViewController.updateState() }
+            mainViewController.timerAction(15)
             succeeded = true
         }
         
