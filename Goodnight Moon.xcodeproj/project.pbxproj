@@ -16,6 +16,8 @@
 		66D0A204781FA3A91A3C6E8A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0C4671D7E24F39E9CE9271B2 /* SystemConfiguration.framework */; };
 		8B05CAB71D517A620019BC30 /* iiFaderForAvAudioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B05CAB61D517A620019BC30 /* iiFaderForAvAudioPlayer.swift */; };
 		8B3476151D5CF3560003A531 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3476141D5CF3560003A531 /* SettingViewController.swift */; };
+		8B3476181D5CFFBC0003A531 /* BabyTime.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8B3476161D5CFFBC0003A531 /* BabyTime.xcdatamodeld */; };
+		8B34761C1D5D00500003A531 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B34761A1D5D00500003A531 /* Setting.swift */; };
 		9BA50A64E0B65F0E60DA8070 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0AB2C2AA2AA71EEFDD97179 /* QuartzCore.framework */; };
 		9F9E9C9C853D1D51898CD9E7 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B70AB388B8404463261FDB87 /* AVFoundation.framework */; };
 		A35CEBC6AFD0D829C6766C66 /* BuddyBuildSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBC37A8FA2AE76305B70464B /* BuddyBuildSDK.framework */; };
@@ -44,6 +46,8 @@
 		746C804EBF89D0876D551453 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		8B05CAB61D517A620019BC30 /* iiFaderForAvAudioPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = iiFaderForAvAudioPlayer.swift; sourceTree = "<group>"; };
 		8B3476141D5CF3560003A531 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
+		8B3476171D5CFFBC0003A531 /* BabyTime.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = BabyTime.xcdatamodel; sourceTree = "<group>"; };
+		8B34761A1D5D00500003A531 /* Setting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		B70AB388B8404463261FDB87 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		BBC37A8FA2AE76305B70464B /* BuddyBuildSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuddyBuildSDK.framework; sourceTree = "<group>"; };
 		D20969AD4F08A984BB47F98F /* Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
@@ -97,6 +101,8 @@
 				1E3404B51CEA9E44002805BD /* AppDelegate.swift */,
 				1E3404B71CEA9E44002805BD /* MainViewController.swift */,
 				8B3476141D5CF3560003A531 /* SettingViewController.swift */,
+				8B3476161D5CFFBC0003A531 /* BabyTime.xcdatamodeld */,
+				8B34761A1D5D00500003A531 /* Setting.swift */,
 				8B05CAB61D517A620019BC30 /* iiFaderForAvAudioPlayer.swift */,
 				1E3404B91CEA9E44002805BD /* Main.storyboard */,
 				1E3404BC1CEA9E44002805BD /* Assets.xcassets */,
@@ -260,6 +266,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B3476181D5CFFBC0003A531 /* BabyTime.xcdatamodeld in Sources */,
+				8B34761C1D5D00500003A531 /* Setting.swift in Sources */,
 				8B05CAB71D517A620019BC30 /* iiFaderForAvAudioPlayer.swift in Sources */,
 				1E3404B81CEA9E44002805BD /* MainViewController.swift in Sources */,
 				1E3404B61CEA9E44002805BD /* AppDelegate.swift in Sources */,
@@ -432,6 +440,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		8B3476161D5CFFBC0003A531 /* BabyTime.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				8B3476171D5CFFBC0003A531 /* BabyTime.xcdatamodel */,
+			);
+			currentVersion = 8B3476171D5CFFBC0003A531 /* BabyTime.xcdatamodel */;
+			path = BabyTime.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 1E3404AA1CEA9E44002805BD /* Project object */;
 }

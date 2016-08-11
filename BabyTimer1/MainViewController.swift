@@ -1,6 +1,6 @@
 //
 //  MainViewController.swift
-//  BabyTimer
+//  Goodnight Moon
 //
 //  Created by Eddie Cohen & Jason Toff on 7/20/16.
 //  Copyright © 2016 zelig. All rights reserved.
@@ -10,6 +10,7 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 import CoreMotion
+import CoreData
 
 class MainViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     var timerStarted = false
@@ -45,6 +46,8 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        loadSetting()
         
         if motionManager.deviceMotionAvailable {
             motionManager.deviceMotionUpdateInterval = 0.05
@@ -255,6 +258,23 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
 
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
         return .None
+    }
+    
+    func loadSetting() {
+        if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+            let fetchRequest = NSFetchRequest(entityName: "Setting")
+            
+            do {
+                let settings = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Setting]
+                let setting = settings.first
+                if setting != nil {
+                    brightMoon = !setting!.playOnLaunch.boolValue
+                }
+            } catch {
+                print(error)
+                return
+            }
+        }
     }
     
     override func didReceiveMemoryWarning() {
