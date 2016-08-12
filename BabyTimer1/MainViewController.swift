@@ -13,6 +13,8 @@ import CoreMotion
 import CoreData
 
 class MainViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+    var setting: Setting!
+    
     var timerStarted = false
     var brightMoon = false
     
@@ -39,11 +41,12 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     
     @IBOutlet weak var timerButton: UIButton!
     @IBOutlet var settingButton: UIButton!
+    @IBOutlet var fadeOutButton: UIButton!
     
     var starList = [UIImageView]()
     
     var rotation: CGFloat = CGFloat(M_PI)
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -110,6 +113,16 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         popover.sourceView = sender
         popover.sourceRect = CGRect(x: 20, y: 20, width: 1, height: 1)
         presentViewController(vc, animated: true, completion:nil)
+    }
+    
+    @IBAction func buttonFadeOut() {
+        fader.stop()
+        let oldVolume = audioPlayer.volume
+        fader.fade(fromVolume: Double(audioPlayer.volume), toVolume: 0, duration: setting.fadeTime.doubleValue, velocity: 0) { finished in
+            self.audioPlayer.volume = oldVolume
+            self.audioPlayer.stop()
+        }
+
     }
     
     func timerAction(min: Int) {
@@ -200,6 +213,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 self.timerButton.alpha = 1.0
                 self.timerImage.alpha = 1.0
                 self.volumeView.alpha = 1.0
+                self.fadeOutButton.alpha = 1.0
             }, completion: nil
             )
             starList.removeAll()
@@ -227,6 +241,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 self.fiveButton.alpha = 0.0
                 self.timerImage.alpha = 0.0
                 self.volumeView.alpha = 0.0
+                self.fadeOutButton.alpha = 0.0
             }, completion: { finish in
                 let image1:UIImage = UIImage(named: "MoonOff")!;
                 self.moonButton.setImage(image1, forState: UIControlState.Normal)
@@ -234,7 +249,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             disappearStars()
             fader.stop()
             let oldVolume = audioPlayer.volume
-            fader.fade(fromVolume: Double(audioPlayer.volume), toVolume: 0, duration: 1, velocity: 0) { finished in
+            fader.fade(fromVolume: Double(audioPlayer.volume), toVolume: 0, duration: 15, velocity: 0) { finished in
                 self.audioPlayer.volume = oldVolume
                 self.audioPlayer.stop()
             }
@@ -266,9 +281,11 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             
             do {
                 let settings = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Setting]
-                let setting = settings.first
-                if setting != nil {
-                    brightMoon = !setting!.playOnLaunch.boolValue
+                setting = settings.first
+                if setting == nil {
+                    setting = NSEntityDescription.insertNewObjectForEntityForName("Setting", inManagedObjectContext: managedObjectContext) as? Setting
+                    setting!.playOnLaunch = NSNumber(bool: true)
+                    setting!.fadeTime = 60
                 }
             } catch {
                 print(error)

@@ -71,6 +71,16 @@
                                     <action selector="btnSetting:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qom-Up-S70"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="right" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H6K-dM-C3k">
+                                <rect key="frame" x="331" y="30" width="63" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                <state key="normal" title="Fade Out">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonFadeOut" destination="BYZ-38-t0r" eventType="touchUpInside" id="l1E-in-NMJ"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
@@ -89,7 +99,9 @@
                             <constraint firstItem="N6M-J8-c6K" firstAttribute="centerY" secondItem="3Xr-uV-dIV" secondAttribute="centerY" id="Mcq-dR-rm3"/>
                             <constraint firstItem="O3w-fD-8ed" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="topMargin" id="WL0-nr-QeW"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="3Xr-uV-dIV" secondAttribute="bottom" constant="148" id="aO0-5o-E7k"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="H6K-dM-C3k" secondAttribute="trailing" id="elk-2M-W2K"/>
                             <constraint firstAttribute="trailingMargin" secondItem="O3w-fD-8ed" secondAttribute="trailing" constant="-20" id="iQ5-qn-eeQ"/>
+                            <constraint firstItem="H6K-dM-C3k" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="lnx-Uh-0a0"/>
                             <constraint firstItem="vhM-dr-Aba" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="10" id="orE-5k-kPg"/>
                             <constraint firstItem="O3w-fD-8ed" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="-20" id="r7U-S2-qbO"/>
                         </constraints>
@@ -98,6 +110,7 @@
                     <connections>
                         <outlet property="backgroundView" destination="8bC-Xf-vdC" id="6kh-Bj-xar"/>
                         <outlet property="countDownLabel" destination="P8j-Ud-u7I" id="qHN-oR-KPu"/>
+                        <outlet property="fadeOutButton" destination="H6K-dM-C3k" id="5ZV-mM-2hv"/>
                         <outlet property="fifteenButton" destination="Iyr-ad-EOY" id="syb-6y-oGI"/>
                         <outlet property="fiveButton" destination="N6M-J8-c6K" id="2fm-ET-t6z"/>
                         <outlet property="moonButton" destination="AUy-HY-cjP" id="Su9-i4-5eo"/>
@@ -140,11 +153,16 @@
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1 Minute" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wbc-eJ-o30">
-                                <rect key="frame" x="241" y="92" width="68" height="22"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PF6-3j-4cO" userLabel="Fade Time Button">
+                                <rect key="frame" x="241" y="86" width="68" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
-                            </label>
+                                <state key="normal" title="1 Minute">
+                                    <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonFadeTime" destination="3kl-3c-dh9" eventType="touchUpInside" id="BQP-iO-5aV"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer Default" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CbD-aj-MH9" userLabel="Timer Default Label">
                                 <rect key="frame" x="16" y="144" width="110" height="22"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
@@ -190,14 +208,14 @@
                             <constraint firstItem="CbD-aj-MH9" firstAttribute="top" secondItem="gGB-oC-ZEK" secondAttribute="bottom" constant="30" id="QyR-RF-qSB"/>
                             <constraint firstItem="vgo-q5-m3d" firstAttribute="centerY" secondItem="CbD-aj-MH9" secondAttribute="centerY" id="TiC-nJ-Ugh"/>
                             <constraint firstItem="WeA-Es-tgI" firstAttribute="centerY" secondItem="8za-YP-J3r" secondAttribute="centerY" id="Tmp-fR-W8e"/>
+                            <constraint firstItem="PF6-3j-4cO" firstAttribute="centerY" secondItem="gGB-oC-ZEK" secondAttribute="centerY" id="XmF-tz-Db2"/>
                             <constraint firstItem="8za-YP-J3r" firstAttribute="top" secondItem="QTx-TO-v9g" secondAttribute="bottom" constant="20" id="esZ-7z-aXX"/>
                             <constraint firstAttribute="leadingMargin" secondItem="IFG-ET-KoG" secondAttribute="leading" id="fJC-SK-LX9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WeA-Es-tgI" secondAttribute="trailing" id="fae-nD-rwQ"/>
-                            <constraint firstItem="wbc-eJ-o30" firstAttribute="centerY" secondItem="gGB-oC-ZEK" secondAttribute="centerY" id="h7Z-oF-wNK"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vgo-q5-m3d" secondAttribute="trailing" id="nVb-LI-44D"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="wbc-eJ-o30" secondAttribute="trailing" id="o3r-ch-hug"/>
                             <constraint firstItem="NhU-Ja-yeI" firstAttribute="top" secondItem="IFG-ET-KoG" secondAttribute="bottom" constant="10" id="rlh-FU-U0U"/>
                             <constraint firstAttribute="leadingMargin" secondItem="bav-43-VlO" secondAttribute="leading" id="rue-Pa-a37"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="PF6-3j-4cO" secondAttribute="trailing" id="t1E-Tt-cy2"/>
                             <constraint firstItem="aFM-qu-kpe" firstAttribute="centerY" secondItem="bav-43-VlO" secondAttribute="centerY" id="tTp-Fc-1TR"/>
                             <constraint firstItem="gGB-oC-ZEK" firstAttribute="top" secondItem="8za-YP-J3r" secondAttribute="bottom" constant="30" id="v6A-cH-hYF"/>
                         </constraints>
@@ -207,6 +225,7 @@
                     <size key="freeformSize" width="325" height="335"/>
                     <connections>
                         <outlet property="aboutButton" destination="IFG-ET-KoG" id="CYA-Xc-jwA"/>
+                        <outlet property="fadeTimeButton" destination="PF6-3j-4cO" id="wfC-S1-qjA"/>
                         <outlet property="playOnLaunchSwitch" destination="WeA-Es-tgI" id="ZPv-ZS-8ez"/>
                     </connections>
                 </viewController>

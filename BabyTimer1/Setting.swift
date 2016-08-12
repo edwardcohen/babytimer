@@ -12,4 +12,5 @@ import CoreData
 
 class Setting: NSManagedObject {
     @NSManaged var playOnLaunch: NSNumber!
+    @NSManaged var fadeTime: NSNumber!
 }
