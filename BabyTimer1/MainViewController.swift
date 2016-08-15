@@ -61,7 +61,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             
         countDownLabel.text = ""
         
-        if let sound = NSDataAsset(name: "white_noise") {
+        if let sound = NSDataAsset(name: "White Noise") {
             do {
                 try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
                 try! AVAudioSession.sharedInstance().setActive(true)
@@ -213,6 +213,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 self.timerButton.alpha = 1.0
                 self.timerImage.alpha = 1.0
                 self.volumeView.alpha = 1.0
+                self.settingButton.alpha = 0.0
                 self.fadeOutButton.alpha = 1.0
             }, completion: nil
             )
@@ -241,6 +242,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 self.fiveButton.alpha = 0.0
                 self.timerImage.alpha = 0.0
                 self.volumeView.alpha = 0.0
+                self.settingButton.alpha = 1.0
                 self.fadeOutButton.alpha = 0.0
             }, completion: { finish in
                 let image1:UIImage = UIImage(named: "MoonOff")!;
@@ -249,7 +251,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             disappearStars()
             fader.stop()
             let oldVolume = audioPlayer.volume
-            fader.fade(fromVolume: Double(audioPlayer.volume), toVolume: 0, duration: 15, velocity: 0) { finished in
+            fader.fade(fromVolume: Double(audioPlayer.volume), toVolume: 0, duration: 1, velocity: 0) { finished in
                 self.audioPlayer.volume = oldVolume
                 self.audioPlayer.stop()
             }
@@ -286,6 +288,8 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                     setting = NSEntityDescription.insertNewObjectForEntityForName("Setting", inManagedObjectContext: managedObjectContext) as? Setting
                     setting!.playOnLaunch = NSNumber(bool: true)
                     setting!.fadeTime = 60
+                    setting!.timerDefault = 5
+                    setting!.soundName = "White Noise"
                 }
             } catch {
                 print(error)

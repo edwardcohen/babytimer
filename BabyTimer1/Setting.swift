@@ -13,4 +13,6 @@ import CoreData
 class Setting: NSManagedObject {
     @NSManaged var playOnLaunch: NSNumber!
     @NSManaged var fadeTime: NSNumber!
+    @NSManaged var timerDefault: NSNumber!
+    @NSManaged var soundName: NSString!
 }

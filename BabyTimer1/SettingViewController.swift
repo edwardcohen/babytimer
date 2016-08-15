@@ -13,16 +13,18 @@ class SettingViewController: UIViewController {
     @IBOutlet var aboutButton: UIButton!
     @IBOutlet var playOnLaunchSwitch: UISwitch!
     @IBOutlet var fadeTimeButton: UIButton!
+    @IBOutlet var timerDefaultButton: UIButton!
+    @IBOutlet var soundButton: UIButton!
     
     var setting: Setting?
     
     var fadeTimes = [60: "1 Minute", 15: "15 Seconds"]
+    var timerDefaults = [5: "5 Minutes", 15: "15 Minutes"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         loadSetting()
-        
     }
     
     @IBAction func btnAbout() {
@@ -83,6 +85,57 @@ class SettingViewController: UIViewController {
         
         presentViewController(fadeTimeMenu, animated: true, completion: nil)
     }
+
+    @IBAction func buttonTimerDefault() {
+        let timerMenu = UIAlertController(title: nil, message: "Select Timer Default", preferredStyle: .ActionSheet)
+        let timers = Array(timerDefaults.keys)
+        for timer in timers {
+            let timerAction = UIAlertAction(title: timerDefaults[timer], style: .Default, handler: { action in
+                if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+                    self.setting!.timerDefault = timer
+                    do {
+                        try managedObjectContext.save()
+                        self.timerDefaultButton.setTitle(self.timerDefaults[timer], forState: UIControlState.Normal)
+                    } catch {
+                        print(error)
+                        return
+                    }
+                }
+            })
+            timerMenu.addAction(timerAction)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        timerMenu.addAction(cancelAction)
+        
+        presentViewController(timerMenu, animated: true, completion: nil)
+    }
+    
+    @IBAction func buttonSound() {
+        let soundMenu = UIAlertController(title: nil, message: "Select Noise Sound", preferredStyle: .ActionSheet)
+        
+        let soundNames = ["Brown Noise", "Grey Noise", "Pink Noise", "White Noise"]
+        for soundName in soundNames {
+            let soundAction = UIAlertAction(title: soundName, style: .Default, handler: { action in
+                if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+                    self.setting!.soundName = soundName
+                    do {
+                        try managedObjectContext.save()
+                        self.soundButton.setTitle(soundName, forState: UIControlState.Normal)
+                    } catch {
+                        print(error)
+                        return
+                    }
+                }
+            })
+            soundMenu.addAction(soundAction)
+        }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        soundMenu.addAction(cancelAction)
+        
+        presentViewController(soundMenu, animated: true, completion: nil)
+    }
     
     func loadSetting() {
         if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
@@ -95,10 +148,14 @@ class SettingViewController: UIViewController {
                     setting = NSEntityDescription.insertNewObjectForEntityForName("Setting", inManagedObjectContext: managedObjectContext) as? Setting
                     setting!.playOnLaunch = NSNumber(bool: true)
                     setting!.fadeTime = 60
+                    setting!.timerDefault = 5
+                    setting!.soundName = "White Noise"
                 }
                 
                 playOnLaunchSwitch.on = setting!.playOnLaunch.boolValue
                 fadeTimeButton.setTitle(fadeTimes[setting!.fadeTime.integerValue], forState: UIControlState.Normal)
+                timerDefaultButton.setTitle(timerDefaults[setting!.timerDefault.integerValue], forState: UIControlState.Normal)
+                soundButton.setTitle(String(setting!.soundName), forState: UIControlState.Normal)
             } catch {
                 print(error)
                 return

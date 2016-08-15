@@ -3,8 +3,10 @@
     <entity name="Setting" representedClassName=".Setting" syncable="YES">
         <attribute name="fadeTime" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
         <attribute name="playOnLaunch" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="soundName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="timerDefault" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Setting" positionX="-63" positionY="-18" width="128" height="75"/>
+        <element name="Setting" positionX="-63" positionY="-18" width="128" height="105"/>
     </elements>
 </model>
