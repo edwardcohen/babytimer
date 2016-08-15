@@ -227,11 +227,10 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 starList.append(star)
             }
             flowTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(flowStars), userInfo: nil, repeats: true)
-            audioPlayer.play()
-            let newVolume = audioPlayer.volume
-            fader.fade(fromVolume: 0, toVolume: Double(audioPlayer.volume), duration: 1, velocity: 0) { finished in
-                self.audioPlayer.volume = newVolume
+            fader.fade(fromVolume: 0, toVolume: Double(AVAudioSession.sharedInstance().outputVolume), duration: 1, velocity: 0) { finished in
+                self.audioPlayer.volume = AVAudioSession.sharedInstance().outputVolume
             }
+            audioPlayer.play()
         } else {
             UIView.animateWithDuration(0.5, animations: {
                 self.moonButton.alpha = 0.27
@@ -250,9 +249,8 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             })
             disappearStars()
             fader.stop()
-            let oldVolume = audioPlayer.volume
-            fader.fade(fromVolume: Double(audioPlayer.volume), toVolume: 0, duration: 1, velocity: 0) { finished in
-                self.audioPlayer.volume = oldVolume
+            fader.fade(fromVolume: Double(AVAudioSession.sharedInstance().outputVolume), toVolume: 0, duration: 1, velocity: 0) { finished in
+                self.audioPlayer.volume = AVAudioSession.sharedInstance().outputVolume
                 self.audioPlayer.stop()
             }
         }
