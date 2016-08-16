@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-class SettingViewController: UIViewController {
+class SettingViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     @IBOutlet var aboutButton: UIButton!
     @IBOutlet var playOnLaunchSwitch: UISwitch!
     @IBOutlet var fadeTimeButton: UIButton!

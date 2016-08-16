@@ -11,6 +11,7 @@ import AVFoundation
 import MediaPlayer
 import CoreMotion
 import CoreData
+import MediaPlayer
 
 class MainViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     var setting: Setting!
@@ -25,7 +26,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     
     var audioPlayer: AVAudioPlayer!
     var fader: iiFaderForAvAudioPlayer!
-    var volumeView: UIView!
+    @IBOutlet var volumeView: MPVolumeView!
 
     let motionManager = CMMotionManager()
     
@@ -52,6 +53,8 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         
         loadSetting()
         
+        initAudioPlayer()
+        
         if motionManager.deviceMotionAvailable {
             motionManager.deviceMotionUpdateInterval = 0.05
             motionManager.startDeviceMotionUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data: CMDeviceMotion?, error: NSError?) -> Void in
@@ -59,32 +62,8 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 })
             }
             
-        countDownLabel.text = ""
-        
-        if let sound = NSDataAsset(name: "White Noise") {
-            do {
-                try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-                try! AVAudioSession.sharedInstance().setActive(true)
-                try audioPlayer = AVAudioPlayer(data: sound.data, fileTypeHint: AVFileTypeMPEGLayer3)
-            } catch {
-                print("error initializing AVAudioPlayer")
-            }
-        }
-        audioPlayer.numberOfLoops = -1
-        audioPlayer.prepareToPlay()
-        audioPlayer.volume = 0.5
-        
-        fader = iiFaderForAvAudioPlayer(player: audioPlayer)
-        
         let backgroundTap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.backgroundAction(_:)))
         backgroundView.addGestureRecognizer(backgroundTap)
-        
-        let wrapperView = UIView(frame: CGRectMake((UIScreen.mainScreen().bounds.width-280)/2, UIScreen.mainScreen().bounds.height-80, 280, 30))
-        self.view.backgroundColor = UIColor.clearColor()
-        self.view.addSubview(wrapperView)
-        
-        volumeView = MPVolumeView(frame: wrapperView.bounds)
-        wrapperView.addSubview(volumeView)
         
         self.countDownLabel.alpha = 0.0
         self.fifteenButton.alpha = 0.0
@@ -96,6 +75,23 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         self.moonButton.layer.zPosition = 1
         
         updateState()
+    }
+    
+    func initAudioPlayer() {
+        if let sound = NSDataAsset(name: setting.soundName as String) {
+            do {
+                try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+                try! AVAudioSession.sharedInstance().setActive(true)
+                try audioPlayer = AVAudioPlayer(data: sound.data, fileTypeHint: AVFileTypeMPEGLayer3)
+            } catch {
+                print("error initializing AVAudioPlayer")
+            }
+        }
+        audioPlayer.numberOfLoops = -1
+        audioPlayer.prepareToPlay()
+        audioPlayer.volume = AVAudioSession.sharedInstance().outputVolume
+        
+        fader = iiFaderForAvAudioPlayer(player: audioPlayer)
     }
     
     @IBAction func btnMoon(sender: UIButton) {
@@ -112,9 +108,13 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         popover.delegate = self
         popover.sourceView = sender
         popover.sourceRect = CGRect(x: 20, y: 20, width: 1, height: 1)
-        presentViewController(vc, animated: true, completion:nil)
+        presentViewController(vc, animated: true, completion: nil)
     }
     
+    func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
+        loadSetting()
+        initAudioPlayer()
+    }
     @IBAction func buttonFadeOut() {
         fader.stop()
         let oldVolume = audioPlayer.volume
@@ -129,6 +129,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         if (timerStarted) {
             count += min * 60
         } else {
+            countDownLabel.alpha = 1.0
             count = min * 60 + 1
             timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
             timerStarted = true
@@ -149,7 +150,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         self.fifteenButton.alpha = 1.0
         self.fiveButton.alpha = 1.0
         self.timerButton.alpha = 0.0
-        timerAction(5)
+        timerAction(setting.timerDefault.integerValue)
     }
     
     func getStarPos() -> (posX: CGFloat, posY: CGFloat) {
@@ -198,7 +199,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         if (timerStarted) {
             timer.invalidate()
             count = 0
-            countDownLabel.text = ""
+            countDownLabel.alpha = 0.0
             timerStarted = false
         }
         brightMoon = !brightMoon
@@ -209,7 +210,6 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             UIView.animateWithDuration(0.5, animations: {
                 self.moonButton.alpha = 1.0
                 self.moonButton.transform = CGAffineTransformMakeScale(1.15, 1.15)
-                self.countDownLabel.alpha = 1.0
                 self.timerButton.alpha = 1.0
                 self.timerImage.alpha = 1.0
                 self.volumeView.alpha = 1.0
