@@ -178,7 +178,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         }
         
         for star in starList {
-            star.frame.origin.x += 3.0 * star.frame.height/20 * speed
+            star.frame.origin.x += 1.0 * star.frame.height/20 * speed
             if star.frame.origin.x > UIScreen.mainScreen().bounds.width {
                 star.frame.origin.x = 0
             } else if star.frame.origin.x < 0 {
