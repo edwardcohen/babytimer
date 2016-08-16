@@ -18,6 +18,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     
     var timerStarted = false
     var brightMoon = false
+    var fadingStarted = false
     
     var count = 0
     var timer = NSTimer()
@@ -92,7 +93,11 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     }
     
     @IBAction func btnMoon(sender: UIButton) {
-        updateState()
+        if brightMoon && !fadingStarted {
+            fadeMoon()
+        } else {
+            updateState()
+        }
     }
 
     @IBAction func btnSetting(sender: UIButton) {
@@ -192,6 +197,35 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         )
     }
     
+    func fadeMoon() {
+        fadingStarted = true
+        
+        self.timerButton.alpha = 0.0
+        self.fifteenButton.alpha = 0.0
+        self.fiveButton.alpha = 0.0
+        self.timerImage.alpha = 0.0
+
+        UIView.animateWithDuration(setting.fadeTime.doubleValue, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
+            self.moonButton.alpha = 0.27
+            self.moonButton.transform = CGAffineTransformIdentity
+            }, completion: { finish in
+                self.moonButton.setImage(UIImage(named: "MoonOff"), forState: UIControlState.Normal)
+        })
+        fader.stop()
+        fader.fade(fromVolume: Double(AVAudioSession.sharedInstance().outputVolume), toVolume: 0, duration: setting.fadeTime.doubleValue, velocity: 0) { finished in
+            self.audioPlayer.volume = 0
+            self.audioPlayer.stop()
+        }
+        
+        countDownLabel.alpha = 1.0
+        count = setting.fadeTime.integerValue
+        timer.invalidate()
+        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+        timerStarted = true
+        update()
+
+    }
+    
     func updateState() {
         if (timerStarted) {
             timer.invalidate()
@@ -202,8 +236,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         brightMoon = !brightMoon
         
         if (brightMoon) {
-            let image1:UIImage = UIImage(named: "MoonOn")!;
-            self.moonButton.setImage(image1, forState: UIControlState.Normal)
+            self.moonButton.setImage(UIImage(named: "MoonOn"), forState: UIControlState.Normal)
             UIView.animateWithDuration(0.5, animations: {
                 self.moonButton.alpha = 1.0
                 self.moonButton.transform = CGAffineTransformMakeScale(1.15, 1.15)
@@ -228,6 +261,10 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             }
             audioPlayer.play()
         } else {
+            fadingStarted = false
+            moonButton.layer.removeAllAnimations()
+            self.moonButton.setImage(UIImage(named: "MoonOn"), forState: UIControlState.Normal)
+            self.moonButton.alpha = 1.0
             UIView.animateWithDuration(0.5, animations: {
                 self.moonButton.alpha = 0.27
                 self.moonButton.transform = CGAffineTransformIdentity
@@ -239,13 +276,12 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 self.volumeView.alpha = 0.0
                 self.settingButton.alpha = 1.0
             }, completion: { finish in
-                let image1:UIImage = UIImage(named: "MoonOff")!;
-                self.moonButton.setImage(image1, forState: UIControlState.Normal)
+                self.moonButton.setImage(UIImage(named: "MoonOff"), forState: UIControlState.Normal)
             })
             disappearStars()
             fader.stop()
             fader.fade(fromVolume: Double(AVAudioSession.sharedInstance().outputVolume), toVolume: 0, duration: 1, velocity: 0) { finished in
-                self.audioPlayer.volume = AVAudioSession.sharedInstance().outputVolume
+                self.audioPlayer.volume = 0
                 self.audioPlayer.stop()
             }
         }
