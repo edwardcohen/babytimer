@@ -46,11 +46,21 @@
                                 <color key="textColor" red="0.81328124999999996" green="0.81328124999999996" blue="0.81328124999999996" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" alpha="0.27000000000000002" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AUy-HY-cjP">
+                                <rect key="frame" x="83" y="160" width="289" height="316"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="AUy-HY-cjP" secondAttribute="height" multiplier="210:230" id="yU9-pf-gpJ"/>
+                                </constraints>
+                                <state key="normal" image="MoonOff"/>
+                                <connections>
+                                    <action selector="btnMoon:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tx1-ej-6UC"/>
+                                </connections>
+                            </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Timer" translatesAutoresizingMaskIntoConstraints="NO" id="3Xr-uV-dIV">
-                                <rect key="frame" x="135" y="592" width="144" height="44"/>
+                                <rect key="frame" x="135" y="582" width="144" height="44"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOU-hL-mMK" userLabel="Timer Button">
-                                <rect key="frame" x="135" y="592" width="144" height="44"/>
+                                <rect key="frame" x="135" y="582" width="144" height="44"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="20"/>
                                 <state key="normal" title="Timer" backgroundImage="Timer">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -60,7 +70,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="N6M-J8-c6K" userLabel="Five Button">
-                                <rect key="frame" x="161" y="599" width="30" height="30"/>
+                                <rect key="frame" x="161" y="589" width="30" height="30"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="18"/>
                                 <state key="normal" title="+5"/>
                                 <connections>
@@ -68,21 +78,11 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" contentHorizontalAlignment="center" contentVerticalAlignment="center" showsTouchWhenHighlighted="YES" lineBreakMode="tailTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iyr-ad-EOY" userLabel="Fifteen Button">
-                                <rect key="frame" x="217" y="599" width="33" height="30"/>
+                                <rect key="frame" x="217" y="589" width="33" height="30"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="18"/>
                                 <state key="normal" title="+15"/>
                                 <connections>
                                     <action selector="btnFifteen:" destination="BYZ-38-t0r" eventType="touchUpInside" id="VtW-Km-5Bu"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" alpha="0.27000000000000002" contentMode="scaleAspectFit" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AUy-HY-cjP">
-                                <rect key="frame" x="83" y="160" width="289" height="316"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="AUy-HY-cjP" secondAttribute="height" multiplier="210:230" id="yU9-pf-gpJ"/>
-                                </constraints>
-                                <state key="normal" image="MoonOff"/>
-                                <connections>
-                                    <action selector="btnMoon:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tx1-ej-6UC"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BEX-Tq-rvm" customClass="MPVolumeView">
@@ -95,7 +95,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="O3w-fD-8ed" secondAttribute="bottom" id="2vl-cJ-ZY8"/>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="3Xr-uV-dIV" secondAttribute="bottom" constant="100" id="4ot-Cz-YyF"/>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="3Xr-uV-dIV" secondAttribute="bottom" constant="110" id="4ot-Cz-YyF"/>
                             <constraint firstItem="Iyr-ad-EOY" firstAttribute="centerY" secondItem="3Xr-uV-dIV" secondAttribute="centerY" id="50X-IE-Xpo"/>
                             <constraint firstItem="P8j-Ud-u7I" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="6oJ-cb-Ife"/>
                             <constraint firstItem="hOU-hL-mMK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8MX-AP-JKI"/>
