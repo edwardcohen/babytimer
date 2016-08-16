@@ -20,6 +20,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     
     var fadeTimes = [60: "1 Minute", 15: "15 Seconds"]
     var timerDefaults = [5: "5 Minutes", 15: "15 Minutes"]
+    let soundNames = ["Brown Noise", "Grey Noise", "Pink Noise", "Waterfall", "White Noise"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,34 +53,23 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     @IBAction func buttonFadeTime() {
         let fadeTimeMenu = UIAlertController(title: nil, message: "Select Fade Time", preferredStyle: .ActionSheet)
 
-        let oneMinAction = UIAlertAction(title: "1 Minute", style: .Default, handler: { action in
-            if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-                self.setting!.fadeTime = 60
-                do {
-                    try managedObjectContext.save()
-                    self.fadeTimeButton.setTitle(self.fadeTimes[self.setting!.fadeTime.integerValue], forState: UIControlState.Normal)
-                } catch {
-                    print(error)
-                    return
+        let times = Array(fadeTimes.keys)
+        for time in times {
+            let timeAction = UIAlertAction(title: fadeTimes[time], style: .Default, handler: { action in
+                if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+                    self.setting!.fadeTime = time
+                    do {
+                        try managedObjectContext.save()
+                        self.fadeTimeButton.setTitle(self.fadeTimes[self.setting!.fadeTime.integerValue], forState: UIControlState.Normal)
+                    } catch {
+                        print(error)
+                        return
+                    }
                 }
-            }
-        })
-        fadeTimeMenu.addAction(oneMinAction)
+            })
+            fadeTimeMenu.addAction(timeAction)
+        }
 
-        let fifteenSecAction = UIAlertAction(title: "15 Seconds", style: .Default, handler: { action in
-            if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-                self.setting!.fadeTime = 15
-                do {
-                    try managedObjectContext.save()
-                    self.fadeTimeButton.setTitle(self.fadeTimes[self.setting!.fadeTime.integerValue], forState: UIControlState.Normal)
-                } catch {
-                    print(error)
-                    return
-                }
-            }
-        })
-        fadeTimeMenu.addAction(fifteenSecAction)
-        
         let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
         fadeTimeMenu.addAction(cancelAction)
         
@@ -88,6 +78,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
 
     @IBAction func buttonTimerDefault() {
         let timerMenu = UIAlertController(title: nil, message: "Select Timer Default", preferredStyle: .ActionSheet)
+        
         let timers = Array(timerDefaults.keys)
         for timer in timers {
             let timerAction = UIAlertAction(title: timerDefaults[timer], style: .Default, handler: { action in
@@ -113,8 +104,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     
     @IBAction func buttonSound() {
         let soundMenu = UIAlertController(title: nil, message: "Select Noise Sound", preferredStyle: .ActionSheet)
-        
-        let soundNames = ["Brown Noise", "Grey Noise", "Pink Noise", "White Noise"]
+
         for soundName in soundNames {
             let soundAction = UIAlertAction(title: soundName, style: .Default, handler: { action in
                 if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
