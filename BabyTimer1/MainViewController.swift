@@ -40,7 +40,6 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     
     @IBOutlet weak var timerButton: UIButton!
     @IBOutlet var settingButton: UIButton!
-    @IBOutlet var fadeOutButton: UIButton!
     
     var starList = [UIImageView]()
     
@@ -212,7 +211,6 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 self.timerImage.alpha = 1.0
                 self.volumeView.alpha = 1.0
                 self.settingButton.alpha = 0.0
-                self.fadeOutButton.alpha = 1.0
             }, completion: nil
             )
             starList.removeAll()
@@ -240,7 +238,6 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 self.timerImage.alpha = 0.0
                 self.volumeView.alpha = 0.0
                 self.settingButton.alpha = 1.0
-                self.fadeOutButton.alpha = 0.0
             }, completion: { finish in
                 let image1:UIImage = UIImage(named: "MoonOff")!;
                 self.moonButton.setImage(image1, forState: UIControlState.Normal)
