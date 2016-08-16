@@ -30,8 +30,6 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
 
     let motionManager = CMMotionManager()
     
-    @IBOutlet weak var backgroundView: UIView!
-
     @IBOutlet var countDownLabel: UILabel!
     
     @IBOutlet weak var timerImage: UIImageView!
@@ -62,8 +60,8 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 })
             }
             
-        let backgroundTap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.backgroundAction(_:)))
-        backgroundView.addGestureRecognizer(backgroundTap)
+//        let backgroundTap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.backgroundAction(_:)))
+//        backgroundView.addGestureRecognizer(backgroundTap)
         
         self.countDownLabel.alpha = 0.0
         self.fifteenButton.alpha = 0.0
