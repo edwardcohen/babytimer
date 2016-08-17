@@ -117,15 +117,6 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         loadSetting()
         initAudioPlayer()
     }
-    @IBAction func buttonFadeOut() {
-        fader.stop()
-        let oldVolume = audioPlayer.volume
-        fader.fade(fromVolume: Double(audioPlayer.volume), toVolume: 0, duration: setting.fadeTime.doubleValue, velocity: 0) { finished in
-            self.audioPlayer.volume = oldVolume
-            self.audioPlayer.stop()
-        }
-
-    }
     
     func timerAction(min: Int) {
         if (timerStarted) {
@@ -261,7 +252,6 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             }
             audioPlayer.play()
         } else {
-            fadingStarted = false
             moonButton.layer.removeAllAnimations()
             self.moonButton.setImage(UIImage(named: "MoonOn"), forState: UIControlState.Normal)
             self.moonButton.alpha = 1.0
@@ -279,10 +269,14 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 self.moonButton.setImage(UIImage(named: "MoonOff"), forState: UIControlState.Normal)
             })
             disappearStars()
-            fader.stop()
-            fader.fade(fromVolume: Double(AVAudioSession.sharedInstance().outputVolume), toVolume: 0, duration: 1, velocity: 0) { finished in
-                self.audioPlayer.volume = 0
-                self.audioPlayer.stop()
+            
+            if fadingStarted {
+                fader.stop()
+                fader.fade(fromVolume: Double(AVAudioSession.sharedInstance().outputVolume), toVolume: 0, duration: 1, velocity: 0) { finished in
+                    self.audioPlayer.volume = 0
+                    self.audioPlayer.stop()
+                }
+                fadingStarted = false
             }
         }
     }
@@ -299,6 +293,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
 //            countDownLabel.text = String(format: "%02d:%02d", count/60, count%60)
             countDownLabel.text = String(count)
         } else {
+            fadingStarted = false
             updateState()
         }
     }
