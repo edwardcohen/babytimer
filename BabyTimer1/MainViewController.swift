@@ -51,7 +51,15 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         
         loadSetting()
         
+        UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+        
         initAudioPlayer()
+        
+        let commandCenter = MPRemoteCommandCenter.sharedCommandCenter()
+        commandCenter.playCommand.enabled = true
+        commandCenter.playCommand.addTarget(self, action: #selector(MainViewController.playCommandSelector))
+        commandCenter.pauseCommand.enabled = true
+        commandCenter.pauseCommand.addTarget(self, action: #selector(MainViewController.pauseCommandSelector))
         
         if motionManager.deviceMotionAvailable {
             motionManager.deviceMotionUpdateInterval = 0.05
@@ -60,9 +68,6 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 })
             }
             
-//        let backgroundTap = UITapGestureRecognizer(target: self, action: #selector(MainViewController.backgroundAction(_:)))
-//        backgroundView.addGestureRecognizer(backgroundTap)
-        
         self.countDownLabel.alpha = 0.0
         self.fifteenButton.alpha = 0.0
         self.fiveButton.alpha = 0.0
@@ -94,6 +99,14 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         fader = iiFaderForAvAudioPlayer(player: audioPlayer)
     }
     
+    func playCommandSelector() {
+        audioPlayer.play()
+    }
+
+    func pauseCommandSelector() {
+        audioPlayer.pause()
+    }
+
     @IBAction func btnMoon(sender: UIButton) {
         if brightMoon && !fadingStarted {
             fadeMoon()

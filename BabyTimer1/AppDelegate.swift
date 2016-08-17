@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationDidBecomeActive(application: UIApplication) {
         print("Application did become active")
         
+        // Shortcut
         guard let shortcut = shortcutItem else { return }
         
         print("- Shortcut property has been set")
