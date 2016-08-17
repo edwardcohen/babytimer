@@ -296,7 +296,8 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     func update() {
         if(count > 0) {
             count = count - 1
-            countDownLabel.text = String(format: "%02d:%02d", count/60, count%60)
+//            countDownLabel.text = String(format: "%02d:%02d", count/60, count%60)
+            countDownLabel.text = String(count)
         } else {
             updateState()
         }
