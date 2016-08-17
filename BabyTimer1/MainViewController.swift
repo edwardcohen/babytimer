@@ -69,6 +69,8 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         self.timerButton.alpha = 0.0
         self.timerImage.alpha = 0.0
         self.volumeView.alpha = 0.0
+
+        self.volumeView.showsRouteButton = false
         
         self.moonButton.layer.zPosition = 1
         
