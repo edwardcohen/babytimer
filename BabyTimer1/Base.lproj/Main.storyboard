@@ -46,10 +46,10 @@
                                     <action selector="btnMoon:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tx1-ej-6UC"/>
                                 </connections>
                             </button>
-                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Timer" translatesAutoresizingMaskIntoConstraints="NO" id="3Xr-uV-dIV">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Timer" translatesAutoresizingMaskIntoConstraints="NO" id="3Xr-uV-dIV">
                                 <rect key="frame" x="135" y="567" width="144" height="44"/>
                             </imageView>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOU-hL-mMK" userLabel="Timer Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hOU-hL-mMK" userLabel="Timer Button">
                                 <rect key="frame" x="135" y="567" width="144" height="44"/>
                                 <fontDescription key="fontDescription" name="Courier" family="Courier" pointSize="20"/>
                                 <state key="normal" title="Timer" backgroundImage="Timer">
@@ -150,29 +150,27 @@
                                     <action selector="switchPlayOnLaunch" destination="3kl-3c-dh9" eventType="valueChanged" id="r89-sP-03F"/>
                                 </connections>
                             </switch>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fade Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGB-oC-ZEK" userLabel="Fade Time Label">
-                                <rect key="frame" x="16" y="92" width="84" height="22"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cBB-DM-R13" userLabel="Timer Label">
+                                <rect key="frame" x="16" y="92" width="47" height="22"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <color key="textColor" red="0.13725490196078433" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.13725490200000001" green="0.13725490200000001" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PF6-3j-4cO" userLabel="Fade Time Button">
-                                <rect key="frame" x="241" y="86" width="68" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
-                                <state key="normal" title="1 Minute">
-                                    <color key="titleColor" red="0.074509803921568626" green="0.11372549019607843" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ebb-m8-uph" userLabel="Timer Switch">
+                                <rect key="frame" x="260" y="88" width="51" height="31"/>
+                                <color key="onTintColor" red="0.074509803920000006" green="0.1137254902" blue="0.46666666670000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
-                                    <action selector="buttonFadeTime" destination="3kl-3c-dh9" eventType="touchUpInside" id="BQP-iO-5aV"/>
+                                    <action selector="switchPlayOnLaunch" destination="3kl-3c-dh9" eventType="valueChanged" id="ST4-oI-PSj"/>
+                                    <action selector="switchShowTimer" destination="3kl-3c-dh9" eventType="touchUpInside" id="Y7J-Jv-SFe"/>
                                 </connections>
-                            </button>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer Default" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CbD-aj-MH9" userLabel="Timer Default Label">
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Timer Default" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CbD-aj-MH9" userLabel="Timer Default Label">
                                 <rect key="frame" x="16" y="144" width="110" height="22"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" red="0.13725490200000001" green="0.13725490200000001" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yeM-g6-0vh" userLabel="Timer Default Button">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yeM-g6-0vh" userLabel="Timer Default Button">
                                 <rect key="frame" x="229" y="138" width="80" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="5 Minutes">
@@ -182,14 +180,30 @@
                                     <action selector="buttonTimerDefault" destination="3kl-3c-dh9" eventType="touchUpInside" id="Bap-W8-FfR"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Fade Time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gGB-oC-ZEK" userLabel="Fade Time Label">
+                                <rect key="frame" x="16" y="196" width="84" height="22"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <color key="textColor" red="0.13725490196078433" green="0.13725490196078433" blue="0.13725490196078433" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PF6-3j-4cO" userLabel="Fade Time Button">
+                                <rect key="frame" x="241" y="190" width="68" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <state key="normal" title="1 Minute">
+                                    <color key="titleColor" red="0.074509803921568626" green="0.11372549019607843" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonFadeTime" destination="3kl-3c-dh9" eventType="touchUpInside" id="BQP-iO-5aV"/>
+                                </connections>
+                            </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sound" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bav-43-VlO" userLabel="Sound Label">
-                                <rect key="frame" x="16" y="144" width="53" height="22"/>
+                                <rect key="frame" x="16" y="248" width="53" height="22"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <color key="textColor" red="0.13725490200000001" green="0.13725490200000001" blue="0.13725490200000001" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5Ie-nQ-FcA" userLabel="Sound Button">
-                                <rect key="frame" x="211" y="138" width="98" height="34"/>
+                                <rect key="frame" x="211" y="242" width="98" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <state key="normal" title="White Noise">
                                     <color key="titleColor" red="0.074509803921568626" green="0.11372549019607843" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
@@ -213,23 +227,27 @@
                         <constraints>
                             <constraint firstItem="bav-43-VlO" firstAttribute="top" secondItem="CbD-aj-MH9" secondAttribute="bottom" constant="30" id="16p-n4-A2D"/>
                             <constraint firstAttribute="leadingMargin" secondItem="CbD-aj-MH9" secondAttribute="leading" id="3YS-KS-1qk"/>
+                            <constraint firstItem="cBB-DM-R13" firstAttribute="top" secondItem="8za-YP-J3r" secondAttribute="bottom" constant="30" id="49Q-Kn-HPN"/>
                             <constraint firstAttribute="leadingMargin" secondItem="gGB-oC-ZEK" secondAttribute="leading" id="6dW-bA-pRu"/>
                             <constraint firstItem="yeM-g6-0vh" firstAttribute="centerY" secondItem="CbD-aj-MH9" secondAttribute="centerY" id="8zP-VC-KsH"/>
                             <constraint firstItem="5Ie-nQ-FcA" firstAttribute="centerY" secondItem="bav-43-VlO" secondAttribute="centerY" id="9p1-Yd-FS4"/>
-                            <constraint firstItem="bav-43-VlO" firstAttribute="top" secondItem="gGB-oC-ZEK" secondAttribute="bottom" constant="30" id="I0H-vt-Usy"/>
+                            <constraint firstItem="gGB-oC-ZEK" firstAttribute="top" secondItem="CbD-aj-MH9" secondAttribute="bottom" constant="30" id="Go7-Nl-MoQ"/>
                             <constraint firstAttribute="leadingMargin" secondItem="8za-YP-J3r" secondAttribute="leading" id="JTA-q1-ucM"/>
                             <constraint firstAttribute="trailingMargin" secondItem="5Ie-nQ-FcA" secondAttribute="trailing" id="M4P-aD-r8n"/>
-                            <constraint firstItem="CbD-aj-MH9" firstAttribute="top" secondItem="gGB-oC-ZEK" secondAttribute="bottom" constant="30" id="QyR-RF-qSB"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Ebb-m8-uph" secondAttribute="trailing" id="P7j-Gb-yXa"/>
+                            <constraint firstItem="Ebb-m8-uph" firstAttribute="centerY" secondItem="cBB-DM-R13" secondAttribute="centerY" id="Sax-Kf-bU5"/>
                             <constraint firstItem="WeA-Es-tgI" firstAttribute="centerY" secondItem="8za-YP-J3r" secondAttribute="centerY" id="Tmp-fR-W8e"/>
                             <constraint firstItem="PF6-3j-4cO" firstAttribute="centerY" secondItem="gGB-oC-ZEK" secondAttribute="centerY" id="XmF-tz-Db2"/>
                             <constraint firstItem="8za-YP-J3r" firstAttribute="top" secondItem="QTx-TO-v9g" secondAttribute="bottom" constant="20" id="esZ-7z-aXX"/>
                             <constraint firstAttribute="leadingMargin" secondItem="IFG-ET-KoG" secondAttribute="leading" id="fJC-SK-LX9"/>
                             <constraint firstAttribute="trailingMargin" secondItem="WeA-Es-tgI" secondAttribute="trailing" id="fae-nD-rwQ"/>
+                            <constraint firstItem="cBB-DM-R13" firstAttribute="leading" secondItem="Jq1-OG-Hru" secondAttribute="leadingMargin" id="lLE-9g-r8G"/>
                             <constraint firstAttribute="trailingMargin" secondItem="yeM-g6-0vh" secondAttribute="trailing" id="nUv-98-Thn"/>
+                            <constraint firstItem="bav-43-VlO" firstAttribute="top" secondItem="gGB-oC-ZEK" secondAttribute="bottom" constant="30" id="qa7-Pb-uCK"/>
                             <constraint firstItem="NhU-Ja-yeI" firstAttribute="top" secondItem="IFG-ET-KoG" secondAttribute="bottom" constant="10" id="rlh-FU-U0U"/>
                             <constraint firstAttribute="leadingMargin" secondItem="bav-43-VlO" secondAttribute="leading" id="rue-Pa-a37"/>
                             <constraint firstAttribute="trailingMargin" secondItem="PF6-3j-4cO" secondAttribute="trailing" id="t1E-Tt-cy2"/>
-                            <constraint firstItem="gGB-oC-ZEK" firstAttribute="top" secondItem="8za-YP-J3r" secondAttribute="bottom" constant="30" id="v6A-cH-hYF"/>
+                            <constraint firstItem="CbD-aj-MH9" firstAttribute="top" secondItem="cBB-DM-R13" secondAttribute="bottom" constant="30" id="zhd-LL-frX"/>
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
@@ -244,6 +262,7 @@
                         <outlet property="aboutButton" destination="IFG-ET-KoG" id="CYA-Xc-jwA"/>
                         <outlet property="fadeTimeButton" destination="PF6-3j-4cO" id="wfC-S1-qjA"/>
                         <outlet property="playOnLaunchSwitch" destination="WeA-Es-tgI" id="ZPv-ZS-8ez"/>
+                        <outlet property="showTimerSwitch" destination="Ebb-m8-uph" id="NyM-Is-LqW"/>
                         <outlet property="soundButton" destination="5Ie-nQ-FcA" id="vzo-24-SXr"/>
                         <outlet property="timerDefaultButton" destination="yeM-g6-0vh" id="B2q-hS-aom"/>
                     </connections>

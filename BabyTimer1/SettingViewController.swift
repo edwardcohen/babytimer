@@ -12,8 +12,9 @@ import CoreData
 class SettingViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     @IBOutlet var aboutButton: UIButton!
     @IBOutlet var playOnLaunchSwitch: UISwitch!
-    @IBOutlet var fadeTimeButton: UIButton!
+    @IBOutlet var showTimerSwitch: UISwitch!
     @IBOutlet var timerDefaultButton: UIButton!
+    @IBOutlet var fadeTimeButton: UIButton!
     @IBOutlet var soundButton: UIButton!
     
     var setting: Setting?
@@ -21,7 +22,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     var fadeTimes = [60: "1 Minute", 15: "15 Seconds"]
     var timerDefaults = [5: "5 Minutes", 15: "15 Minutes"]
 //    let soundNames = ["Brown Noise", "Grey Noise", "Pink Noise", "Waterfall", "White Noise"]
-    let soundNames = ["White Noise", "Waterfall"]
+    let soundNames = ["White Noise", "Waterfall", "Ambient"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,18 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     @IBAction func switchPlayOnLaunch() {
         if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
             setting!.playOnLaunch = NSNumber(bool: playOnLaunchSwitch.on)
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print(error)
+                return
+            }
+        }
+    }
+
+    @IBAction func switchShowTimer() {
+        if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+            setting!.showTimer = NSNumber(bool: showTimerSwitch.on)
             do {
                 try managedObjectContext.save()
             } catch {
@@ -138,14 +151,16 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 if setting == nil {
                     setting = NSEntityDescription.insertNewObjectForEntityForName("Setting", inManagedObjectContext: managedObjectContext) as? Setting
                     setting!.playOnLaunch = NSNumber(bool: true)
-                    setting!.fadeTime = 60
+                    setting!.showTimer = NSNumber(bool: true)
                     setting!.timerDefault = 5
+                    setting!.fadeTime = 60
                     setting!.soundName = "White Noise"
                 }
                 
                 playOnLaunchSwitch.on = setting!.playOnLaunch.boolValue
-                fadeTimeButton.setTitle(fadeTimes[setting!.fadeTime.integerValue], forState: UIControlState.Normal)
+                showTimerSwitch.on = setting!.showTimer.boolValue
                 timerDefaultButton.setTitle(timerDefaults[setting!.timerDefault.integerValue], forState: UIControlState.Normal)
+                fadeTimeButton.setTitle(fadeTimes[setting!.fadeTime.integerValue], forState: UIControlState.Normal)
                 soundButton.setTitle(String(setting!.soundName), forState: UIControlState.Normal)
             } catch {
                 print(error)

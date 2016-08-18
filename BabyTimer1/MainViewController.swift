@@ -246,8 +246,10 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             UIView.animateWithDuration(0.5, animations: {
                 self.moonButton.alpha = 1.0
                 self.moonButton.transform = CGAffineTransformMakeScale(1.15, 1.15)
-                self.timerButton.alpha = 1.0
-                self.timerImage.alpha = 1.0
+                if self.setting.showTimer.boolValue {
+                    self.timerButton.alpha = 1.0
+                    self.timerImage.alpha = 1.0
+                }
                 self.volumeView.alpha = 1.0
                 self.settingButton.alpha = 0.0
             }, completion: nil
@@ -327,6 +329,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 if setting == nil {
                     setting = NSEntityDescription.insertNewObjectForEntityForName("Setting", inManagedObjectContext: managedObjectContext) as? Setting
                     setting!.playOnLaunch = NSNumber(bool: true)
+                    setting!.showTimer = NSNumber(bool: true)
                     setting!.fadeTime = 60
                     setting!.timerDefault = 5
                     setting!.soundName = "White Noise"
