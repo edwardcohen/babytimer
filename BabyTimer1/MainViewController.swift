@@ -79,7 +79,9 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         
         self.moonButton.layer.zPosition = 1
         
-        updateState()
+        if setting.playOnLaunch.boolValue {
+            updateState()
+        }
     }
     
     func initAudioPlayer() {
