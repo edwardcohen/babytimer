@@ -13,6 +13,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     @IBOutlet var aboutButton: UIButton!
     @IBOutlet var playOnLaunchSwitch: UISwitch!
     @IBOutlet var showTimerSwitch: UISwitch!
+    @IBOutlet var timerDefaultLabel: UILabel!
     @IBOutlet var timerDefaultButton: UIButton!
     @IBOutlet var fadeTimeButton: UIButton!
     @IBOutlet var soundButton: UIButton!
@@ -62,6 +63,8 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 return
             }
         }
+        timerDefaultButton.hidden = !showTimerSwitch.on
+        timerDefaultLabel.hidden = !showTimerSwitch.on
     }
     
     @IBAction func buttonFadeTime() {
@@ -159,6 +162,8 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 
                 playOnLaunchSwitch.on = setting!.playOnLaunch.boolValue
                 showTimerSwitch.on = setting!.showTimer.boolValue
+                timerDefaultButton.hidden = !showTimerSwitch.on
+                timerDefaultLabel.hidden = !showTimerSwitch.on
                 timerDefaultButton.setTitle(timerDefaults[setting!.timerDefault.integerValue], forState: UIControlState.Normal)
                 fadeTimeButton.setTitle(fadeTimes[setting!.fadeTime.integerValue], forState: UIControlState.Normal)
                 soundButton.setTitle(String(setting!.soundName), forState: UIControlState.Normal)

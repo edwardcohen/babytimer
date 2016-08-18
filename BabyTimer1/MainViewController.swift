@@ -87,11 +87,18 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     func initAudioPlayer() {
         if let sound = NSDataAsset(name: setting.soundName as String) {
             do {
-                try! AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
-                try! AVAudioSession.sharedInstance().setActive(true)
+                let session = AVAudioSession.sharedInstance()
+                try session.setCategory(AVAudioSessionCategoryPlayback)
+                do {
+                    try session.overrideOutputAudioPort(AVAudioSessionPortOverride.Speaker)
+                } catch {
+                    print(error)
+                }
+                try session.setActive(true)
+
                 try audioPlayer = AVAudioPlayer(data: sound.data, fileTypeHint: AVFileTypeMPEGLayer3)
             } catch {
-                print("error initializing AVAudioPlayer")
+                print(error)
             }
         }
         audioPlayer.numberOfLoops = -1
