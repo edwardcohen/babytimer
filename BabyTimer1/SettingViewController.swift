@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import AVFoundation
 
 class SettingViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     @IBOutlet var aboutButton: UIButton!
@@ -17,6 +18,8 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     @IBOutlet var timerDefaultButton: UIButton!
     @IBOutlet var fadeTimeButton: UIButton!
     @IBOutlet var soundButton: UIButton!
+    
+    var audioPlayer: AVAudioPlayer!
     
     var setting: Setting?
     
@@ -29,6 +32,28 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
         super.viewDidLoad()
         
         loadSetting()
+    }
+    
+    func initAudioPlayer() {
+        if let sound = NSDataAsset(name: setting!.soundName as String) {
+            do {
+                let session = AVAudioSession.sharedInstance()
+                try session.setCategory(AVAudioSessionCategoryPlayback)
+                do {
+                    try session.overrideOutputAudioPort(AVAudioSessionPortOverride.Speaker)
+                } catch {
+                    print(error)
+                }
+                try session.setActive(true)
+                
+                try audioPlayer = AVAudioPlayer(data: sound.data, fileTypeHint: AVFileTypeMPEGLayer3)
+            } catch {
+                print(error)
+            }
+        }
+        audioPlayer.numberOfLoops = -1
+        audioPlayer.prepareToPlay()
+        audioPlayer.volume = AVAudioSession.sharedInstance().outputVolume
     }
     
     @IBAction func btnAbout() {
@@ -129,6 +154,12 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                     do {
                         try managedObjectContext.save()
                         self.soundButton.setTitle(soundName, forState: UIControlState.Normal)
+                        self.initAudioPlayer()
+                        self.audioPlayer.stop()
+                        self.audioPlayer.play()
+                        runAfterDelay(5) {
+                            self.audioPlayer.stop()
+                        }
                     } catch {
                         print(error)
                         return
@@ -173,4 +204,9 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
             }
         }
     }
+}
+
+func runAfterDelay(delay: NSTimeInterval, block: dispatch_block_t) {
+    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
+    dispatch_after(time, dispatch_get_main_queue(), block)
 }
