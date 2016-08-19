@@ -182,7 +182,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 if setting == nil {
                     setting = NSEntityDescription.insertNewObjectForEntityForName("Setting", inManagedObjectContext: managedObjectContext) as? Setting
                     setting!.playOnLaunch = NSNumber(bool: true)
-                    setting!.showTimer = NSNumber(bool: true)
+                    setting!.showTimer = NSNumber(bool: false)
                     setting!.timerDefault = 5
                     setting!.fadeTime = 60
                     setting!.soundName = "White Noise"
