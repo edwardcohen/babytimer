@@ -30,7 +30,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         loadSetting()
     }
     
@@ -157,9 +157,6 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                         self.initAudioPlayer()
                         self.audioPlayer.stop()
                         self.audioPlayer.play()
-                        runAfterDelay(5) {
-                            self.audioPlayer.stop()
-                        }
                     } catch {
                         print(error)
                         return
@@ -204,9 +201,4 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
             }
         }
     }
-}
-
-func runAfterDelay(delay: NSTimeInterval, block: dispatch_block_t) {
-    let time = dispatch_time(DISPATCH_TIME_NOW, Int64(delay * Double(NSEC_PER_SEC)))
-    dispatch_after(time, dispatch_get_main_queue(), block)
 }
