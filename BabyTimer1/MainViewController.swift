@@ -303,6 +303,8 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                     self.audioPlayer.stop()
                 }
                 fadingStarted = false
+            } else {
+                self.audioPlayer.stop()
             }
         }
     }
@@ -316,8 +318,11 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     func update() {
         if(count > 0) {
             count = count - 1
-//            countDownLabel.text = String(format: "%02d:%02d", count/60, count%60)
-            countDownLabel.text = String(count)
+            if count >= 60 {
+                countDownLabel.text = String(format: "%02d:%02d", count/60, count%60)
+            } else {
+                countDownLabel.text = String(count)
+            }
         } else {
             fadingStarted = false
             updateState()
