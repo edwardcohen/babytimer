@@ -45,7 +45,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     var starList = [UIImageView]()
     
     var rotation: CGFloat = CGFloat(M_PI)
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -224,7 +224,9 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             self.moonButton.alpha = 0.27
             self.moonButton.transform = CGAffineTransformIdentity
             }, completion: { finish in
-                self.moonButton.setImage(UIImage(named: "MoonOff"), forState: UIControlState.Normal)
+                if finish {
+                    self.moonButton.setImage(UIImage(named: "MoonOff"), forState: UIControlState.Normal)
+                }
         })
         fader.stop()
         fader.fade(fromVolume: Double(AVAudioSession.sharedInstance().outputVolume), toVolume: 0, duration: setting.fadeTime.doubleValue, velocity: 0) { finished in
@@ -279,8 +281,8 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             audioPlayer.play()
         } else {
             moonButton.layer.removeAllAnimations()
-            self.moonButton.setImage(UIImage(named: "MoonOn"), forState: UIControlState.Normal)
             self.moonButton.alpha = 1.0
+            self.moonButton.transform = CGAffineTransformMakeScale(1.15, 1.15)
             UIView.animateWithDuration(0.5, animations: {
                 self.moonButton.alpha = 0.27
                 self.moonButton.transform = CGAffineTransformIdentity
@@ -309,12 +311,6 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         }
     }
 
-    func backgroundAction(sender: UITapGestureRecognizer) {
-        if (!brightMoon) {
-            updateState()
-        }
-    }
-    
     func update() {
         if(count > 0) {
             count = count - 1
