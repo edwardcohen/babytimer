@@ -1,0 +1,12 @@
+
+*.xcbkptlist
+
+*.xcscheme
+
+*.xcuserstate
+
+Goodnight Moon.xcodeproj/xcuserdata/developer.xcuserdatad/xcschemes/xcschememanagement.plist
+
+Goodnight Moon.xcworkspace/xcuserdata/developer.xcuserdatad/xcdebugger/Expressions.xcexplist
+
+Pods/Pods.xcodeproj/xcuserdata/developer.xcuserdatad/xcschemes/xcschememanagement.plist
