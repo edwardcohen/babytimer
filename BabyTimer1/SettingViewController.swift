@@ -23,7 +23,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     
     var setting: Setting?
     
-    var fadeTimes = [60: "1 Minute", 30: "30 Seconds", 15: "15 Seconds"]
+    var fadeTimes = [15: "15 Seconds", 30: "30 Seconds", 60: "1 Minute"]
     var timerDefaults = [5: "5 Minutes", 15: "15 Minutes"]
     let soundNames = ["White Noise", "Brown Noise", "Pink Noise", "Waterfall", "Ambient"]
 //    let soundNames = ["White Noise", "Waterfall", "Ambient"]
@@ -95,7 +95,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     @IBAction func buttonFadeTime() {
         let fadeTimeMenu = UIAlertController(title: nil, message: "Select Fade Time", preferredStyle: .ActionSheet)
 
-        let times = Array(fadeTimes.keys)
+        let times = Array(fadeTimes.keys.sort())
         for time in times {
             let timeAction = UIAlertAction(title: fadeTimes[time], style: .Default, handler: { action in
                 if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
