@@ -24,7 +24,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vhM-dr-Aba" userLabel="Setting Button">
-                                <rect key="frame" x="20" y="30" width="26" height="26"/>
+                                <rect key="frame" x="368" y="30" width="26" height="26"/>
                                 <state key="normal" backgroundImage="Setting"/>
                                 <connections>
                                     <action selector="btnSetting:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qom-Up-S70"/>
@@ -89,8 +89,8 @@
                             <constraint firstItem="Iyr-ad-EOY" firstAttribute="centerY" secondItem="3Xr-uV-dIV" secondAttribute="centerY" id="50X-IE-Xpo"/>
                             <constraint firstItem="P8j-Ud-u7I" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="60" id="6oJ-cb-Ife"/>
                             <constraint firstItem="hOU-hL-mMK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8MX-AP-JKI"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="vhM-dr-Aba" secondAttribute="trailing" id="APa-D4-f2t"/>
                             <constraint firstItem="3Xr-uV-dIV" firstAttribute="leading" secondItem="N6M-J8-c6K" secondAttribute="trailing" constant="-56" id="C7f-Rr-5Mc"/>
-                            <constraint firstItem="vhM-dr-Aba" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="Gtf-Ud-bXD"/>
                             <constraint firstAttribute="leadingMargin" secondItem="BEX-Tq-rvm" secondAttribute="leading" id="Hyl-RN-teN"/>
                             <constraint firstItem="P8j-Ud-u7I" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="IVC-nJ-DVh"/>
                             <constraint firstItem="AUy-HY-cjP" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" constant="20" id="M0F-In-a2C"/>
