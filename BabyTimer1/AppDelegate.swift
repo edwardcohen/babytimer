@@ -9,6 +9,7 @@
 import UIKit
 import Appsee
 import CoreData
+import Mixpanel
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -20,6 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         BuddyBuildSDK.setup()
         Appsee.start("580faca6704d44b6815c5985a3c96f62")
+        Mixpanel.sharedInstanceWithToken("590e9476af14a8596b1b8b207a21f56b")
         
         var performShortcutDelegate = true
         
