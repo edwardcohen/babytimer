@@ -25,8 +25,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     
     var fadeTimes = [15: "15 Seconds", 30: "30 Seconds", 60: "1 Minute"]
     var timerDefaults = [5: "5 Minutes", 15: "15 Minutes"]
-    let soundNames = ["White Noise", "Brown Noise", "Pink Noise", "Waterfall", "Ambient"]
-//    let soundNames = ["White Noise", "Waterfall", "Ambient"]
+    let soundNames = ["White Noise", "Brown Noise", "Pink Noise", "Waterfall"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
