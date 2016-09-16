@@ -45,7 +45,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     
     func requestProductInfo() {
         if SKPaymentQueue.canMakePayments() {
-            let productRequest = SKProductsRequest(productIdentifiers: Set(["Settings"]))
+            let productRequest = SKProductsRequest(productIdentifiers: Set(["settings"]))
             
             productRequest.delegate = self
             productRequest.start()
@@ -149,40 +149,40 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     @IBAction func switchShowTimer() {
         if productsArray.count==0 {
             showTimerSwitch.on = !showTimerSwitch.on
-            showErrorMessage("In-App purchase Error")
+            print("In-App purchase Error")
             return
         }
         
         if transactionInProgress {
+            showTimerSwitch.on = !showTimerSwitch.on
             return
         }
         
         selectedProductIndex = 0
         
         if purchasedProductIDs.contains(productsArray[selectedProductIndex].productIdentifier) {
-            if purchasedProductIDs.contains("Settings") {
-                if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-                    setting!.showTimer = NSNumber(bool: showTimerSwitch.on)
-                    do {
-                        try managedObjectContext.save()
-                    } catch {
-                        print(error)
-                        return
-                    }
+            if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+                setting!.showTimer = NSNumber(bool: showTimerSwitch.on)
+                do {
+                    try managedObjectContext.save()
+                } catch {
+                    print(error)
+                    return
                 }
-                timerDefaultButton.hidden = !showTimerSwitch.on
-                timerDefaultLabel.hidden = !showTimerSwitch.on
-            } else {
-                let payment = SKPayment(product: productsArray[selectedProductIndex])
-                SKPaymentQueue.defaultQueue().addPayment(payment)
-                transactionInProgress = true
             }
+            timerDefaultButton.hidden = !showTimerSwitch.on
+            timerDefaultLabel.hidden = !showTimerSwitch.on
+        } else {
+            showTimerSwitch.on = !showTimerSwitch.on
+            let payment = SKPayment(product: productsArray[selectedProductIndex])
+            SKPaymentQueue.defaultQueue().addPayment(payment)
+            transactionInProgress = true
         }
     }
     
     @IBAction func buttonFadeTime() {
         if productsArray.count==0 {
-            showErrorMessage("In-App purchase Error")
+            print("In-App purchase Error")
             return
         }
         
@@ -225,7 +225,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     
     @IBAction func buttonTimerDefault() {
         if productsArray.count==0 {
-            showErrorMessage("In-App purchase Error")
+            print("In-App purchase Error")
             return
         }
         
@@ -269,7 +269,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     
     @IBAction func buttonSound() {
         if productsArray.count==0 {
-            showErrorMessage("In-App purchase Error")
+            print("In-App purchase Error")
             return
         }
         
