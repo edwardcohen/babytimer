@@ -35,6 +35,11 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        showTimerSwitch.alpha = 0.5
+        timerDefaultButton.alpha = 0.5
+        fadeTimeButton.alpha = 0.5
+        soundButton.alpha = 0.5
 
         loadSetting()
         
@@ -62,6 +67,10 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 let purchased = NSUserDefaults.standardUserDefaults().boolForKey(product.productIdentifier)
                 if purchased {
                     purchasedProductIDs.append(product.productIdentifier)
+                    showTimerSwitch.alpha = 1.0
+                    timerDefaultButton.alpha = 1.0
+                    fadeTimeButton.alpha = 1.0
+                    soundButton.alpha = 1.0
                 }
                 
             }
@@ -81,6 +90,10 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 print("Transaction completed successfully.")
                 SKPaymentQueue.defaultQueue().finishTransaction(transaction)
                 purchasedProductIDs.append(productsArray[selectedProductIndex].productIdentifier)
+                showTimerSwitch.alpha = 1.0
+                timerDefaultButton.alpha = 1.0
+                fadeTimeButton.alpha = 1.0
+                soundButton.alpha = 1.0
                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: productsArray[selectedProductIndex].productIdentifier)
                 transactionInProgress = false
             case .Failed:
