@@ -23,7 +23,11 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     @IBOutlet var timerDefaultLabel: UILabel!
     @IBOutlet var timerDefaultButton: UIButton!
     @IBOutlet var fadeTimeButton: UIButton!
+    @IBOutlet var fadeTimeLabel:UILabel!
     @IBOutlet var soundButton: UIButton!
+    @IBOutlet var soundLabel: UILabel!
+    @IBOutlet var showTimerLabel: UILabel!
+    @IBOutlet var upgradeButton: UIButton!
     
     var audioPlayer: AVAudioPlayer!
     
@@ -35,13 +39,23 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        loadSetting()
+        
+        showTimerLabel.alpha = 0.5
+        timerDefaultLabel.alpha = 0.5
+        fadeTimeLabel.alpha = 0.5
+        soundLabel.alpha = 0.5
         
         showTimerSwitch.alpha = 0.5
         timerDefaultButton.alpha = 0.5
         fadeTimeButton.alpha = 0.5
         soundButton.alpha = 0.5
-
-        loadSetting()
+        
+        showTimerSwitch.enabled = false
+        timerDefaultButton.enabled = false
+        fadeTimeButton.enabled = false
+        soundButton.enabled = false
         
         requestProductInfo()
         
@@ -67,10 +81,21 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 let purchased = NSUserDefaults.standardUserDefaults().boolForKey(product.productIdentifier)
                 if purchased {
                     purchasedProductIDs.append(product.productIdentifier)
+                    
+                    showTimerLabel.alpha = 1.0
+                    timerDefaultLabel.alpha = 1.0
+                    fadeTimeLabel.alpha = 1.0
+                    soundLabel.alpha = 1.0
+                    
                     showTimerSwitch.alpha = 1.0
                     timerDefaultButton.alpha = 1.0
                     fadeTimeButton.alpha = 1.0
                     soundButton.alpha = 1.0
+                    
+                    showTimerSwitch.enabled = true
+                    timerDefaultButton.enabled = true
+                    fadeTimeButton.enabled = true
+                    soundButton.enabled = true
                 }
                 
             }
@@ -90,10 +115,22 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 print("Transaction completed successfully.")
                 SKPaymentQueue.defaultQueue().finishTransaction(transaction)
                 purchasedProductIDs.append(productsArray[selectedProductIndex].productIdentifier)
+                
+                showTimerLabel.alpha = 1.0
+                timerDefaultLabel.alpha = 1.0
+                fadeTimeLabel.alpha = 1.0
+                soundLabel.alpha = 1.0
+                
                 showTimerSwitch.alpha = 1.0
                 timerDefaultButton.alpha = 1.0
                 fadeTimeButton.alpha = 1.0
                 soundButton.alpha = 1.0
+                
+                showTimerSwitch.enabled = true
+                timerDefaultButton.enabled = true
+                fadeTimeButton.enabled = true
+                soundButton.enabled = true
+                
                 NSUserDefaults.standardUserDefaults().setBool(true, forKey: productsArray[selectedProductIndex].productIdentifier)
                 transactionInProgress = false
             case .Failed:
@@ -160,170 +197,104 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     }
 
     @IBAction func switchShowTimer() {
-        if productsArray.count==0 {
-            showTimerSwitch.on = !showTimerSwitch.on
-            print("In-App purchase Error")
-            return
-        }
-        
-        if transactionInProgress {
-            showTimerSwitch.on = !showTimerSwitch.on
-            return
-        }
-        
-        selectedProductIndex = 0
-        
-        if purchasedProductIDs.contains(productsArray[selectedProductIndex].productIdentifier) {
-            if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-                setting!.showTimer = NSNumber(bool: showTimerSwitch.on)
-                do {
-                    try managedObjectContext.save()
-                } catch {
-                    print(error)
-                    return
-                }
+        if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+            setting!.showTimer = NSNumber(bool: showTimerSwitch.on)
+            do {
+                try managedObjectContext.save()
+            } catch {
+                print(error)
+                return
             }
-            timerDefaultButton.hidden = !showTimerSwitch.on
-            timerDefaultLabel.hidden = !showTimerSwitch.on
-        } else {
-            showTimerSwitch.on = !showTimerSwitch.on
-            let payment = SKPayment(product: productsArray[selectedProductIndex])
-            SKPaymentQueue.defaultQueue().addPayment(payment)
-            transactionInProgress = true
         }
+        timerDefaultButton.hidden = !showTimerSwitch.on
+        timerDefaultLabel.hidden = !showTimerSwitch.on
     }
     
     @IBAction func buttonFadeTime() {
-        if productsArray.count==0 {
-            print("In-App purchase Error")
-            return
-        }
+        let fadeTimeMenu = UIAlertController(title: nil, message: "Select Fade Time", preferredStyle: .ActionSheet)
         
-        if transactionInProgress {
-            return
-        }
-        
-        selectedProductIndex = 0
-        
-        if purchasedProductIDs.contains(productsArray[selectedProductIndex].productIdentifier) {
-            let fadeTimeMenu = UIAlertController(title: nil, message: "Select Fade Time", preferredStyle: .ActionSheet)
-            
-            let times = Array(fadeTimes.keys.sort())
-            for time in times {
-                let timeAction = UIAlertAction(title: fadeTimes[time], style: .Default, handler: { action in
-                    if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-                        self.setting!.fadeTime = time
-                        do {
-                            try managedObjectContext.save()
-                            self.fadeTimeButton.setTitle(self.fadeTimes[self.setting!.fadeTime.integerValue], forState: UIControlState.Normal)
-                        } catch {
-                            print(error)
-                            return
-                        }
+        let times = Array(fadeTimes.keys.sort())
+        for time in times {
+            let timeAction = UIAlertAction(title: fadeTimes[time], style: .Default, handler: { action in
+                if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+                    self.setting!.fadeTime = time
+                    do {
+                        try managedObjectContext.save()
+                        self.fadeTimeButton.setTitle(self.fadeTimes[self.setting!.fadeTime.integerValue], forState: UIControlState.Normal)
+                    } catch {
+                        print(error)
+                        return
                     }
-                })
-                fadeTimeMenu.addAction(timeAction)
-            }
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-            fadeTimeMenu.addAction(cancelAction)
-            
-            presentViewController(fadeTimeMenu, animated: true, completion: nil)
-        } else {
-            let payment = SKPayment(product: productsArray[selectedProductIndex])
-            SKPaymentQueue.defaultQueue().addPayment(payment)
-            transactionInProgress = true
+                }
+            })
+            fadeTimeMenu.addAction(timeAction)
         }
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        fadeTimeMenu.addAction(cancelAction)
+        
+        presentViewController(fadeTimeMenu, animated: true, completion: nil)
     }
     
     @IBAction func buttonTimerDefault() {
-        if productsArray.count==0 {
-            print("In-App purchase Error")
-            return
-        }
+        let timerMenu = UIAlertController(title: nil, message: "Select Timer Default", preferredStyle: .ActionSheet)
         
-        if transactionInProgress {
-            return
-        }
-        
-        selectedProductIndex = 0
-        
-        if purchasedProductIDs.contains(productsArray[selectedProductIndex].productIdentifier) {
-            let timerMenu = UIAlertController(title: nil, message: "Select Timer Default", preferredStyle: .ActionSheet)
-            
-            let timers = Array(timerDefaults.keys)
-            for timer in timers {
-                let timerAction = UIAlertAction(title: timerDefaults[timer], style: .Default, handler: { action in
-                    if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-                        self.setting!.timerDefault = timer
-                        do {
-                            try managedObjectContext.save()
-                            self.timerDefaultButton.setTitle(self.timerDefaults[timer], forState: UIControlState.Normal)
-                        } catch {
-                            print(error)
-                            return
-                        }
+        let timers = Array(timerDefaults.keys)
+        for timer in timers {
+            let timerAction = UIAlertAction(title: timerDefaults[timer], style: .Default, handler: { action in
+                if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+                    self.setting!.timerDefault = timer
+                    do {
+                        try managedObjectContext.save()
+                        self.timerDefaultButton.setTitle(self.timerDefaults[timer], forState: UIControlState.Normal)
+                    } catch {
+                        print(error)
+                        return
                     }
-                })
-                timerMenu.addAction(timerAction)
-            }
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-            timerMenu.addAction(cancelAction)
-            
-            presentViewController(timerMenu, animated: true, completion: nil)
-        } else {
-            let payment = SKPayment(product: productsArray[selectedProductIndex])
-            SKPaymentQueue.defaultQueue().addPayment(payment)
-            transactionInProgress = true
+                }
+            })
+            timerMenu.addAction(timerAction)
         }
         
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        timerMenu.addAction(cancelAction)
+        
+        presentViewController(timerMenu, animated: true, completion: nil)
     }
     
     @IBAction func buttonSound() {
-        if productsArray.count==0 {
-            print("In-App purchase Error")
-            return
-        }
+        let soundMenu = UIAlertController(title: nil, message: "Select Noise Sound", preferredStyle: .ActionSheet)
         
-        if transactionInProgress {
-            return
-        }
-        
-        selectedProductIndex = 0
-        
-        if purchasedProductIDs.contains(productsArray[selectedProductIndex].productIdentifier) {
-            let soundMenu = UIAlertController(title: nil, message: "Select Noise Sound", preferredStyle: .ActionSheet)
-            
-            for soundName in soundNames {
-                let soundAction = UIAlertAction(title: soundName, style: .Default, handler: { action in
-                    if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-                        self.setting!.soundName = soundName
-                        do {
-                            try managedObjectContext.save()
-                            self.soundButton.setTitle(soundName, forState: UIControlState.Normal)
-                            self.initAudioPlayer()
-                            self.audioPlayer.stop()
-                            self.audioPlayer.play()
-                        } catch {
-                            print(error)
-                            return
-                        }
+        for soundName in soundNames {
+            let soundAction = UIAlertAction(title: soundName, style: .Default, handler: { action in
+                if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
+                    self.setting!.soundName = soundName
+                    do {
+                        try managedObjectContext.save()
+                        self.soundButton.setTitle(soundName, forState: UIControlState.Normal)
+                        self.initAudioPlayer()
+                        self.audioPlayer.stop()
+                        self.audioPlayer.play()
+                    } catch {
+                        print(error)
+                        return
                     }
-                })
-                soundMenu.addAction(soundAction)
-            }
-            
-            let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-            soundMenu.addAction(cancelAction)
-            
-            presentViewController(soundMenu, animated: true, completion: nil)
-        } else {
-            let payment = SKPayment(product: productsArray[selectedProductIndex])
-            SKPaymentQueue.defaultQueue().addPayment(payment)
-            transactionInProgress = true
+                }
+            })
+            soundMenu.addAction(soundAction)
         }
         
+        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        soundMenu.addAction(cancelAction)
+        
+        presentViewController(soundMenu, animated: true, completion: nil)
+    }
+    
+    @IBAction func buttonUpgrade() {
+        selectedProductIndex = 0
+        let payment = SKPayment(product: productsArray[selectedProductIndex])
+        SKPaymentQueue.defaultQueue().addPayment(payment)
+        transactionInProgress = true
     }
     
     func loadSetting() {
