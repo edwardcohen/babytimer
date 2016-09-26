@@ -82,6 +82,8 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 if purchased {
                     purchasedProductIDs.append(product.productIdentifier)
                     
+                    upgradeButton.alpha = 0.0
+                    
                     showTimerLabel.alpha = 1.0
                     timerDefaultLabel.alpha = 1.0
                     fadeTimeLabel.alpha = 1.0
@@ -115,6 +117,8 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 print("Transaction completed successfully.")
                 SKPaymentQueue.defaultQueue().finishTransaction(transaction)
                 purchasedProductIDs.append(productsArray[selectedProductIndex].productIdentifier)
+                
+                upgradeButton.alpha = 0.0
                 
                 showTimerLabel.alpha = 1.0
                 timerDefaultLabel.alpha = 1.0
