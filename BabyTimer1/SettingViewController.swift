@@ -73,7 +73,7 @@ class SettingViewController: UIViewController, SKProductsRequestDelegate, SKPaym
     
     func requestProductInfo() {
         if SKPaymentQueue.canMakePayments() {
-            let productRequest = SKProductsRequest(productIdentifiers: Set(["settings"]))
+            let productRequest = SKProductsRequest(productIdentifiers: Set(["settingz"]))
             
             productRequest.delegate = self
             productRequest.start()
@@ -127,11 +127,19 @@ class SettingViewController: UIViewController, SKProductsRequestDelegate, SKPaym
         }
     }
     
+    func request(_ request: SKRequest, didFailWithError error: Error) {
+        showErrorMessage(message: "Failed to load list of products.")
+        print("Error: \(error.localizedDescription)")
+        view.isUserInteractionEnabled = true
+        spinner.stopAnimating()
+        upgradeButton.alpha = 0.0
+    }
+    
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
             switch transaction.transactionState {
             case .purchased:
-                print("Transaction completed successfully.")
+                showErrorMessage(message: "Transaction completed successfully.")
                 SKPaymentQueue.default().finishTransaction(transaction)
                 purchasedProductIDs.append(productsArray[selectedProductIndex].productIdentifier)
                 
@@ -155,7 +163,7 @@ class SettingViewController: UIViewController, SKProductsRequestDelegate, SKPaym
                 UserDefaults.standard.set(true, forKey: productsArray[selectedProductIndex].productIdentifier)
                 transactionInProgress = false
             case .failed:
-                print("Transaction Failed")
+                showErrorMessage(message: "Transaction Failed")
                 SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
             default:
