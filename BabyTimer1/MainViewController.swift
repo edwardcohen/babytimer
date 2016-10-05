@@ -21,9 +21,9 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     var fadingStarted = false
     
     var count = 0
-    var timer = NSTimer()
+    var timer = Timer()
     
-    var flowTimer = NSTimer()
+    var flowTimer = Timer()
     
     var audioPlayer: AVAudioPlayer!
     var fader: iiFaderForAvAudioPlayer!
@@ -51,19 +51,19 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         
         loadSetting()
         
-        UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+        UIApplication.shared.beginReceivingRemoteControlEvents()
         
         initAudioPlayer()
         
-        let commandCenter = MPRemoteCommandCenter.sharedCommandCenter()
-        commandCenter.playCommand.enabled = true
+        let commandCenter = MPRemoteCommandCenter.shared()
+        commandCenter.playCommand.isEnabled = true
         commandCenter.playCommand.addTarget(self, action: #selector(MainViewController.playCommandSelector))
-        commandCenter.pauseCommand.enabled = true
+        commandCenter.pauseCommand.isEnabled = true
         commandCenter.pauseCommand.addTarget(self, action: #selector(MainViewController.pauseCommandSelector))
         
-        if motionManager.deviceMotionAvailable {
+        if motionManager.isDeviceMotionAvailable {
             motionManager.deviceMotionUpdateInterval = 0.05
-            motionManager.startDeviceMotionUpdatesToQueue(NSOperationQueue.mainQueue(), withHandler: { (data: CMDeviceMotion?, error: NSError?) -> Void in
+            motionManager.startDeviceMotionUpdates(to: OperationQueue.current!, withHandler: { (data: CMDeviceMotion?, error: Error?) -> Void in
                 self.rotation = CGFloat(atan2(data!.gravity.x, data!.gravity.z))
                 })
             }
@@ -90,7 +90,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 let session = AVAudioSession.sharedInstance()
                 try session.setCategory(AVAudioSessionCategoryPlayback)
                 do {
-                    try session.overrideOutputAudioPort(AVAudioSessionPortOverride.Speaker)
+                    try session.overrideOutputAudioPort(AVAudioSessionPortOverride.speaker)
                 } catch {
                     print(error)
                 }
@@ -126,20 +126,24 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
 
     @IBAction func btnSetting(sender: UIButton) {
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewControllerWithIdentifier("SettingViewController") as! SettingViewController
-        vc.modalPresentationStyle = UIModalPresentationStyle.Popover
-        vc.preferredContentSize = CGSizeMake(325, 420)
+        let vc = storyboard.instantiateViewController(withIdentifier: "SettingViewController") as! SettingViewController
+        vc.modalPresentationStyle = UIModalPresentationStyle.popover
+        vc.preferredContentSize = CGSize(width: 325, height: 420)
         let popover: UIPopoverPresentationController = vc.popoverPresentationController!
-        popover.permittedArrowDirections = .Any
+        popover.permittedArrowDirections = .any
         popover.delegate = self
         popover.sourceView = sender
         popover.sourceRect = CGRect(x: 20, y: 20, width: 1, height: 1)
-        presentViewController(vc, animated: true, completion: nil)
+        present(vc, animated: true, completion: nil)
     }
     
-    func popoverPresentationControllerDidDismissPopover(popoverPresentationController: UIPopoverPresentationController) {
+    func popoverPresentationControllerDidDismissPopover(_ popoverPresentationController: UIPopoverPresentationController) {
         loadSetting()
         initAudioPlayer()
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+        return .none
     }
     
     func timerAction(min: Int) {
@@ -148,7 +152,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         } else {
             countDownLabel.alpha = 1.0
             count = min * 60 + 1
-            timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+            timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
             timerStarted = true
             update()
         }
@@ -156,22 +160,22 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     }
     
     @IBAction func btnFive(sender: UIButton) {
-        timerAction(5)
+        timerAction(min: 5)
     }
     
     @IBAction func btnFifteen(sender: UIButton) {
-        timerAction(15)
+        timerAction(min: 15)
     }
     
     @IBAction func btnTimer(sender: UIButton) {
         self.fifteenButton.alpha = 1.0
         self.fiveButton.alpha = 1.0
         self.timerButton.alpha = 0.0
-        timerAction(setting.timerDefault.integerValue)
+        timerAction(min: setting.timerDefault.intValue)
     }
     
     func getStarPos() -> (posX: CGFloat, posY: CGFloat) {
-        let screenSize = UIScreen.mainScreen().bounds
+        let screenSize = UIScreen.main.bounds
         let randomXPos = CGFloat(arc4random_uniform(UInt32(screenSize.width)))
         let randomYPos = CGFloat(arc4random_uniform(UInt32(screenSize.height)/2))
         return (randomXPos, randomYPos)
@@ -194,19 +198,19 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         
         for star in starList {
             star.frame.origin.x += 1.0 * star.frame.height/20 * speed
-            if star.frame.origin.x > UIScreen.mainScreen().bounds.width {
+            if star.frame.origin.x > UIScreen.main.bounds.width {
                 star.frame.origin.x = 0
             } else if star.frame.origin.x < 0 {
-                star.frame.origin.x = UIScreen.mainScreen().bounds.width
+                star.frame.origin.x = UIScreen.main.bounds.width
             }
         }
     }
     
     func disappearStars() {
         flowTimer.invalidate()
-        UIView.animateWithDuration(0.5, animations: {
+        UIView.animate(withDuration: 0.5, animations: {
             for star in self.starList {
-                star.transform = CGAffineTransformMakeTranslation(0, -30-star.frame.origin.y)
+                star.transform = CGAffineTransform(translationX: 0, y: -30-star.frame.origin.y)
             }
         }, completion: nil
         )
@@ -220,12 +224,12 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         self.fiveButton.alpha = 0.0
         self.timerImage.alpha = 0.0
 
-        UIView.animateWithDuration(setting.fadeTime.doubleValue, delay: 0, options: UIViewAnimationOptions.AllowUserInteraction, animations: {
+        UIView.animate(withDuration: setting.fadeTime.doubleValue, delay: 0, options: UIViewAnimationOptions.allowUserInteraction, animations: {
             self.moonButton.alpha = 0.27
-            self.moonButton.transform = CGAffineTransformIdentity
+            self.moonButton.transform = CGAffineTransform.identity
             }, completion: { finish in
                 if finish {
-                    self.moonButton.setImage(UIImage(named: "MoonOff"), forState: UIControlState.Normal)
+                    self.moonButton.setImage(UIImage(named: "MoonOff"), for: UIControlState.normal)
                 }
         })
         fader.stop()
@@ -235,9 +239,9 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         }
         
         countDownLabel.alpha = 1.0
-        count = setting.fadeTime.integerValue
+        count = setting.fadeTime.intValue
         timer.invalidate()
-        timer = NSTimer.scheduledTimerWithTimeInterval(1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(update), userInfo: nil, repeats: true)
         timerStarted = true
         update()
 
@@ -253,10 +257,10 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         brightMoon = !brightMoon
         
         if (brightMoon) {
-            self.moonButton.setImage(UIImage(named: "MoonOn"), forState: UIControlState.Normal)
-            UIView.animateWithDuration(0.5, animations: {
+            self.moonButton.setImage(UIImage(named: "MoonOn"), for: UIControlState.normal)
+            UIView.animate(withDuration: 0.5, animations: {
                 self.moonButton.alpha = 1.0
-                self.moonButton.transform = CGAffineTransformMakeScale(1.15, 1.15)
+                self.moonButton.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
                 if self.setting.showTimer.boolValue {
                     self.timerButton.alpha = 1.0
                     self.timerImage.alpha = 1.0
@@ -270,11 +274,11 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 let star = UIImageView(image: UIImage(named: "Star"))
                 let (x,y) = getStarPos()
                 let size = 10+CGFloat(arc4random_uniform(10))
-                star.frame = CGRectMake(x, y, size, size)
+                star.frame = CGRect(x: x, y: y, width: size, height: size)
                 self.view.addSubview(star)
                 starList.append(star)
             }
-            flowTimer = NSTimer.scheduledTimerWithTimeInterval(0.05, target: self, selector: #selector(flowStars), userInfo: nil, repeats: true)
+            flowTimer = Timer.scheduledTimer(timeInterval: 0.05, target: self, selector: #selector(flowStars), userInfo: nil, repeats: true)
             fader.fade(fromVolume: 0, toVolume: Double(AVAudioSession.sharedInstance().outputVolume), duration: 1, velocity: 0) { finished in
                 self.audioPlayer.volume = AVAudioSession.sharedInstance().outputVolume
             }
@@ -282,10 +286,10 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         } else {
             moonButton.layer.removeAllAnimations()
             self.moonButton.alpha = 1.0
-            self.moonButton.transform = CGAffineTransformMakeScale(1.15, 1.15)
-            UIView.animateWithDuration(0.5, animations: {
+            self.moonButton.transform = CGAffineTransform(scaleX: 1.15, y: 1.15)
+            UIView.animate(withDuration: 0.5, animations: {
                 self.moonButton.alpha = 0.27
-                self.moonButton.transform = CGAffineTransformIdentity
+                self.moonButton.transform = CGAffineTransform.identity
                 self.countDownLabel.alpha = 0.0
                 self.timerButton.alpha = 0.0
                 self.fifteenButton.alpha = 0.0
@@ -294,7 +298,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 self.volumeView.alpha = 0.0
                 self.settingButton.alpha = 1.0
             }, completion: { finish in
-                self.moonButton.setImage(UIImage(named: "MoonOff"), forState: UIControlState.Normal)
+                self.moonButton.setImage(UIImage(named: "MoonOff"), for: UIControlState.normal)
             })
             disappearStars()
             
@@ -326,20 +330,20 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     }
 
     func adaptivePresentationStyleForPresentationController(controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .None
+        return .none
     }
     
     func loadSetting() {
-        if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-            let fetchRequest = NSFetchRequest(entityName: "Setting")
+        if let managedObjectContext = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Setting")
             
             do {
-                let settings = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Setting]
+                let settings = try managedObjectContext.fetch(fetchRequest) as! [Setting]
                 setting = settings.first
                 if setting == nil {
-                    setting = NSEntityDescription.insertNewObjectForEntityForName("Setting", inManagedObjectContext: managedObjectContext) as? Setting
-                    setting!.playOnLaunch = NSNumber(bool: true)
-                    setting!.showTimer = NSNumber(bool: false)
+                    setting = NSEntityDescription.insertNewObject(forEntityName: "Setting", into: managedObjectContext) as? Setting
+                    setting!.playOnLaunch = NSNumber(value: true)
+                    setting!.showTimer = NSNumber(value: false)
                     setting!.fadeTime = 60
                     setting!.timerDefault = 5
                     setting!.soundName = "White Noise"
@@ -355,7 +359,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         super.didReceiveMemoryWarning()
     }
     
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
 }

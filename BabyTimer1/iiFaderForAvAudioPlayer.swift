@@ -14,7 +14,7 @@ let iiFaderForAvAudioPlayer_defaultVelocity = 2.0
 
 public class iiFaderForAvAudioPlayer: NSObject {
     let player: AVAudioPlayer
-    private var timer: NSTimer?
+    private var timer: Timer?
     
     // The higher the number - the higher the quality of fade
     // and it will consume more CPU.
@@ -35,7 +35,7 @@ public class iiFaderForAvAudioPlayer: NSObject {
     }
     
     deinit {
-        callOnFinished(false)
+        callOnFinished(finished: false)
         stop()
     }
     
@@ -59,22 +59,22 @@ public class iiFaderForAvAudioPlayer: NSObject {
             duration: duration, velocity: velocity, onFinished: onFinished)
     }
     
-    func fade(fromVolume fromVolume: Double, toVolume: Double,
+    func fade(fromVolume: Double, toVolume: Double,
                          duration: Double = iiFaderForAvAudioPlayer_defaultFadeDurationSeconds,
                          velocity: Double = iiFaderForAvAudioPlayer_defaultVelocity, onFinished: ((Bool)->())? = nil) {
         
-        self.fromVolume = iiFaderForAvAudioPlayer.makeSureValueIsBetween0and1(fromVolume)
-        self.toVolume = iiFaderForAvAudioPlayer.makeSureValueIsBetween0and1(toVolume)
+        self.fromVolume = iiFaderForAvAudioPlayer.makeSureValueIsBetween0and1(value: fromVolume)
+        self.toVolume = iiFaderForAvAudioPlayer.makeSureValueIsBetween0and1(value: toVolume)
         self.fadeDurationSeconds = duration
         self.fadeVelocity = velocity
         
-        callOnFinished(false)
+        callOnFinished(finished: false)
         self.onFinished = onFinished
         
         player.volume = Float(self.fromVolume)
         
         if self.fromVolume == self.toVolume {
-            callOnFinished(true)
+            callOnFinished(finished: true)
             return
         }
         
@@ -96,8 +96,8 @@ public class iiFaderForAvAudioPlayer: NSObject {
         stopTimer()
         currentStep = 0
         
-        timer = NSTimer.scheduledTimerWithTimeInterval(1 / volumeAlterationsPerSecond, target: self,
-                                                       selector: #selector(iiFaderForAvAudioPlayer.timerFired(_:)), userInfo: nil, repeats: true)
+        timer = Timer.scheduledTimer(timeInterval: 1 / volumeAlterationsPerSecond, target: self,
+                                                       selector: #selector(iiFaderForAvAudioPlayer.timerFired), userInfo: nil, repeats: true)
     }
     
     private func stopTimer() {
@@ -107,29 +107,29 @@ public class iiFaderForAvAudioPlayer: NSObject {
         }
     }
     
-    func timerFired(timer: NSTimer) {
+    func timerFired(timer: Timer) {
         if shouldStopTimer {
             player.volume = Float(toVolume)
             stopTimer()
-            callOnFinished(true)
+            callOnFinished(finished: true)
             return
         }
         
         let currentTimeFrom0To1 = iiFaderForAvAudioPlayer.timeFrom0To1(
-            currentStep, fadeDurationSeconds: fadeDurationSeconds, volumeAlterationsPerSecond: volumeAlterationsPerSecond)
+            currentStep: currentStep, fadeDurationSeconds: fadeDurationSeconds, volumeAlterationsPerSecond: volumeAlterationsPerSecond)
         
         var volumeMultiplier: Double
         
         var newVolume: Double = 0
         
         if fadeIn {
-            volumeMultiplier = iiFaderForAvAudioPlayer.fadeInVolumeMultiplier(currentTimeFrom0To1,
+            volumeMultiplier = iiFaderForAvAudioPlayer.fadeInVolumeMultiplier(timeFrom0To1: currentTimeFrom0To1,
                                                                               velocity: fadeVelocity)
             
             newVolume = fromVolume + (toVolume - fromVolume) * volumeMultiplier
             
         } else {
-            volumeMultiplier = iiFaderForAvAudioPlayer.fadeOutVolumeMultiplier(currentTimeFrom0To1,
+            volumeMultiplier = iiFaderForAvAudioPlayer.fadeOutVolumeMultiplier(timeFrom0To1: currentTimeFrom0To1,
                                                                                velocity: fadeVelocity)
             
             newVolume = toVolume - (toVolume - fromVolume) * volumeMultiplier
@@ -151,19 +151,19 @@ public class iiFaderForAvAudioPlayer: NSObject {
         let totalSteps = fadeDurationSeconds * volumeAlterationsPerSecond
         var result = Double(currentStep) / totalSteps
         
-        result = makeSureValueIsBetween0and1(result)
+        result = makeSureValueIsBetween0and1(value: result)
         
         return result
     }
     
     // Graph: https://www.desmos.com/calculator/wnstesdf0h
     public class func fadeOutVolumeMultiplier(timeFrom0To1: Double, velocity: Double) -> Double {
-        let time = makeSureValueIsBetween0and1(timeFrom0To1)
+        let time = makeSureValueIsBetween0and1(value: timeFrom0To1)
         return pow(M_E, -velocity * time) * (1 - time)
     }
     
     public class func fadeInVolumeMultiplier(timeFrom0To1: Double, velocity: Double) -> Double {
-        let time = makeSureValueIsBetween0and1(timeFrom0To1)
+        let time = makeSureValueIsBetween0and1(value: timeFrom0To1)
         return pow(M_E, velocity * (time - 1)) * time
     }
     

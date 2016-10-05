@@ -11,12 +11,13 @@ import CoreData
 import AVFoundation
 import StoreKit
 
-class SettingViewController: UIViewController, UIPopoverPresentationControllerDelegate, SKProductsRequestDelegate, SKPaymentTransactionObserver {
+class SettingViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTransactionObserver {
     var purchasedProductIDs = [String]()
     var productsArray = [SKProduct]()
     var selectedProductIndex: Int!
     var transactionInProgress = false
     
+    @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var aboutButton: UIButton!
     @IBOutlet var playOnLaunchSwitch: UISwitch!
     @IBOutlet var showTimerSwitch: UISwitch!
@@ -40,6 +41,10 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        spinner.hidesWhenStopped = true
+        spinner.center = view.center
+        view.addSubview(spinner)
+
         loadSetting()
         
         showTimerLabel.alpha = 0.5
@@ -52,14 +57,18 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
         fadeTimeButton.alpha = 0.5
         soundButton.alpha = 0.5
         
-        showTimerSwitch.enabled = false
-        timerDefaultButton.enabled = false
-        fadeTimeButton.enabled = false
-        soundButton.enabled = false
+        showTimerSwitch.isEnabled = false
+        timerDefaultButton.isEnabled = false
+        fadeTimeButton.isEnabled = false
+        soundButton.isEnabled = false
         
         requestProductInfo()
         
-        SKPaymentQueue.defaultQueue().addTransactionObserver(self)
+        SKPaymentQueue.default().add(self)
+    }
+    
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
     }
     
     func requestProductInfo() {
@@ -68,17 +77,21 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
             
             productRequest.delegate = self
             productRequest.start()
+            spinner.startAnimating()
+            view.isUserInteractionEnabled = false
         } else {
-            print("Cannot perform In App Purchases.")
+            showErrorMessage(message: "Cannot perform In App Purchases.")
         }
     }
     
-    func productsRequest(request: SKProductsRequest, didReceiveResponse response: SKProductsResponse) {
+    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+        spinner.stopAnimating()
+        view.isUserInteractionEnabled = true
         if response.products.count != 0 {
             for product in response.products {
                 productsArray.append(product)
                 
-                let purchased = NSUserDefaults.standardUserDefaults().boolForKey(product.productIdentifier)
+                let purchased = UserDefaults.standard.bool(forKey: product.productIdentifier)
                 if purchased {
                     purchasedProductIDs.append(product.productIdentifier)
                     
@@ -94,15 +107,19 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                     fadeTimeButton.alpha = 1.0
                     soundButton.alpha = 1.0
                     
-                    showTimerSwitch.enabled = true
-                    timerDefaultButton.enabled = true
-                    fadeTimeButton.enabled = true
-                    soundButton.enabled = true
+                    showTimerSwitch.isEnabled = true
+                    timerDefaultButton.isEnabled = true
+                    fadeTimeButton.isEnabled = true
+                    soundButton.isEnabled = true
                 }
                 
             }
         } else {
-            print("There are no products.")
+            let alertDialog = UIAlertController(title: "Error", message: "There are no in-app purchase products", preferredStyle: UIAlertControllerStyle.alert)
+            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+            alertDialog.addAction(okAction)
+            present(alertDialog, animated: true, completion: nil)
+            upgradeButton.alpha = 0.0
         }
         
         if response.invalidProductIdentifiers.count != 0 {
@@ -110,12 +127,12 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
         }
     }
     
-    func paymentQueue(queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
             switch transaction.transactionState {
-            case .Purchased:
+            case .purchased:
                 print("Transaction completed successfully.")
-                SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+                SKPaymentQueue.default().finishTransaction(transaction)
                 purchasedProductIDs.append(productsArray[selectedProductIndex].productIdentifier)
                 
                 upgradeButton.alpha = 0.0
@@ -130,16 +147,16 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 fadeTimeButton.alpha = 1.0
                 soundButton.alpha = 1.0
                 
-                showTimerSwitch.enabled = true
-                timerDefaultButton.enabled = true
-                fadeTimeButton.enabled = true
-                soundButton.enabled = true
+                showTimerSwitch.isEnabled = true
+                timerDefaultButton.isEnabled = true
+                fadeTimeButton.isEnabled = true
+                soundButton.isEnabled = true
                 
-                NSUserDefaults.standardUserDefaults().setBool(true, forKey: productsArray[selectedProductIndex].productIdentifier)
+                UserDefaults.standard.set(true, forKey: productsArray[selectedProductIndex].productIdentifier)
                 transactionInProgress = false
-            case .Failed:
+            case .failed:
                 print("Transaction Failed")
-                SKPaymentQueue.defaultQueue().finishTransaction(transaction)
+                SKPaymentQueue.default().finishTransaction(transaction)
                 transactionInProgress = false
             default:
                 print(transaction.transactionState.rawValue)
@@ -153,7 +170,7 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 let session = AVAudioSession.sharedInstance()
                 try session.setCategory(AVAudioSessionCategoryPlayback)
                 do {
-                    try session.overrideOutputAudioPort(AVAudioSessionPortOverride.Speaker)
+                    try session.overrideOutputAudioPort(AVAudioSessionPortOverride.speaker)
                 } catch {
                     print(error)
                 }
@@ -171,26 +188,26 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     
     func showErrorMessage(message: String) {
         let alertController = UIAlertController(title: "Error",
-                                                message: message, preferredStyle: UIAlertControllerStyle.Alert)
+                                                message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "OK", style:
-            UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alertController, animated: true, completion:
+            UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion:
             nil)
     }
     
     @IBAction func btnAbout() {
         let message = "Goodnig.ht was made by a Dad to help put his newborn son to sleep. We’ve optimized the experience to help put your child to sleep instantaneously. Goodnight!"
         let alertController = UIAlertController(title: "About",
-                                                message: message, preferredStyle: UIAlertControllerStyle.Alert)
+                                                message: message, preferredStyle: UIAlertControllerStyle.alert)
         alertController.addAction(UIAlertAction(title: "OK", style:
-            UIAlertActionStyle.Default, handler: nil))
-        self.presentViewController(alertController, animated: true, completion:
+            UIAlertActionStyle.default, handler: nil))
+        self.present(alertController, animated: true, completion:
             nil)
     }
     
     @IBAction func switchPlayOnLaunch() {
-        if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-            setting!.playOnLaunch = NSNumber(bool: playOnLaunchSwitch.on)
+        if let managedObjectContext = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext {
+            setting!.playOnLaunch = NSNumber(value: playOnLaunchSwitch.isOn)
             do {
                 try managedObjectContext.save()
             } catch {
@@ -201,8 +218,8 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
     }
 
     @IBAction func switchShowTimer() {
-        if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-            setting!.showTimer = NSNumber(bool: showTimerSwitch.on)
+        if let managedObjectContext = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext {
+            setting!.showTimer = NSNumber(value: showTimerSwitch.isOn)
             do {
                 try managedObjectContext.save()
             } catch {
@@ -210,21 +227,21 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
                 return
             }
         }
-        timerDefaultButton.hidden = !showTimerSwitch.on
-        timerDefaultLabel.hidden = !showTimerSwitch.on
+        timerDefaultButton.isHidden = !showTimerSwitch.isOn
+        timerDefaultLabel.isHidden = !showTimerSwitch.isOn
     }
     
     @IBAction func buttonFadeTime() {
-        let fadeTimeMenu = UIAlertController(title: nil, message: "Select Fade Time", preferredStyle: .ActionSheet)
+        let fadeTimeMenu = UIAlertController(title: nil, message: "Select Fade Time", preferredStyle: .actionSheet)
         
-        let times = Array(fadeTimes.keys.sort())
+        let times = Array(fadeTimes.keys.sorted())
         for time in times {
-            let timeAction = UIAlertAction(title: fadeTimes[time], style: .Default, handler: { action in
-                if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-                    self.setting!.fadeTime = time
+            let timeAction = UIAlertAction(title: fadeTimes[time], style: .default, handler: { action in
+                if let managedObjectContext = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext {
+                    self.setting!.fadeTime = time as NSNumber!
                     do {
                         try managedObjectContext.save()
-                        self.fadeTimeButton.setTitle(self.fadeTimes[self.setting!.fadeTime.integerValue], forState: UIControlState.Normal)
+                        self.fadeTimeButton.setTitle(self.fadeTimes[self.setting!.fadeTime.intValue], for: UIControlState.normal)
                     } catch {
                         print(error)
                         return
@@ -234,23 +251,23 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
             fadeTimeMenu.addAction(timeAction)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         fadeTimeMenu.addAction(cancelAction)
         
-        presentViewController(fadeTimeMenu, animated: true, completion: nil)
+        present(fadeTimeMenu, animated: true, completion: nil)
     }
     
     @IBAction func buttonTimerDefault() {
-        let timerMenu = UIAlertController(title: nil, message: "Select Timer Default", preferredStyle: .ActionSheet)
+        let timerMenu = UIAlertController(title: nil, message: "Select Timer Default", preferredStyle: .actionSheet)
         
         let timers = Array(timerDefaults.keys)
         for timer in timers {
-            let timerAction = UIAlertAction(title: timerDefaults[timer], style: .Default, handler: { action in
-                if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-                    self.setting!.timerDefault = timer
+            let timerAction = UIAlertAction(title: timerDefaults[timer], style: .default, handler: { action in
+                if let managedObjectContext = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext {
+                    self.setting!.timerDefault = timer as NSNumber!
                     do {
                         try managedObjectContext.save()
-                        self.timerDefaultButton.setTitle(self.timerDefaults[timer], forState: UIControlState.Normal)
+                        self.timerDefaultButton.setTitle(self.timerDefaults[timer], for: UIControlState.normal)
                     } catch {
                         print(error)
                         return
@@ -260,22 +277,22 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
             timerMenu.addAction(timerAction)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         timerMenu.addAction(cancelAction)
         
-        presentViewController(timerMenu, animated: true, completion: nil)
+        present(timerMenu, animated: true, completion: nil)
     }
     
     @IBAction func buttonSound() {
-        let soundMenu = UIAlertController(title: nil, message: "Select Noise Sound", preferredStyle: .ActionSheet)
+        let soundMenu = UIAlertController(title: nil, message: "Select Noise Sound", preferredStyle: .actionSheet)
         
         for soundName in soundNames {
-            let soundAction = UIAlertAction(title: soundName, style: .Default, handler: { action in
-                if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-                    self.setting!.soundName = soundName
+            let soundAction = UIAlertAction(title: soundName, style: .default, handler: { action in
+                if let managedObjectContext = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext {
+                    self.setting!.soundName = soundName as NSString!
                     do {
                         try managedObjectContext.save()
-                        self.soundButton.setTitle(soundName, forState: UIControlState.Normal)
+                        self.soundButton.setTitle(soundName, for: UIControlState.normal)
                         self.initAudioPlayer()
                         self.audioPlayer.stop()
                         self.audioPlayer.play()
@@ -288,42 +305,42 @@ class SettingViewController: UIViewController, UIPopoverPresentationControllerDe
             soundMenu.addAction(soundAction)
         }
         
-        let cancelAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: nil)
         soundMenu.addAction(cancelAction)
         
-        presentViewController(soundMenu, animated: true, completion: nil)
+        present(soundMenu, animated: true, completion: nil)
     }
     
     @IBAction func buttonUpgrade() {
         selectedProductIndex = 0
         let payment = SKPayment(product: productsArray[selectedProductIndex])
-        SKPaymentQueue.defaultQueue().addPayment(payment)
+        SKPaymentQueue.default().add(payment)
         transactionInProgress = true
     }
     
     func loadSetting() {
-        if let managedObjectContext = (UIApplication.sharedApplication().delegate as? AppDelegate)?.managedObjectContext {
-            let fetchRequest = NSFetchRequest(entityName: "Setting")
+        if let managedObjectContext = (UIApplication.shared.delegate as? AppDelegate)?.managedObjectContext {
+            let fetchRequest = NSFetchRequest<NSFetchRequestResult>(entityName: "Setting")
             
             do {
-                let settings = try managedObjectContext.executeFetchRequest(fetchRequest) as! [Setting]
+                let settings = try managedObjectContext.fetch(fetchRequest) as! [Setting]
                 setting = settings.first
                 if setting == nil {
-                    setting = NSEntityDescription.insertNewObjectForEntityForName("Setting", inManagedObjectContext: managedObjectContext) as? Setting
-                    setting!.playOnLaunch = NSNumber(bool: true)
-                    setting!.showTimer = NSNumber(bool: false)
+                    setting = NSEntityDescription.insertNewObject(forEntityName: "Setting", into: managedObjectContext) as? Setting
+                    setting!.playOnLaunch = NSNumber(value: true)
+                    setting!.showTimer = NSNumber(value: false)
                     setting!.timerDefault = 5
                     setting!.fadeTime = 60
                     setting!.soundName = "White Noise"
                 }
                 
-                playOnLaunchSwitch.on = setting!.playOnLaunch.boolValue
-                showTimerSwitch.on = setting!.showTimer.boolValue
-                timerDefaultButton.hidden = !showTimerSwitch.on
-                timerDefaultLabel.hidden = !showTimerSwitch.on
-                timerDefaultButton.setTitle(timerDefaults[setting!.timerDefault.integerValue], forState: UIControlState.Normal)
-                fadeTimeButton.setTitle(fadeTimes[setting!.fadeTime.integerValue], forState: UIControlState.Normal)
-                soundButton.setTitle(String(setting!.soundName), forState: UIControlState.Normal)
+                playOnLaunchSwitch.isOn = setting!.playOnLaunch.boolValue
+                showTimerSwitch.isOn = setting!.showTimer.boolValue
+                timerDefaultButton.isHidden = !showTimerSwitch.isOn
+                timerDefaultLabel.isHidden = !showTimerSwitch.isOn
+                timerDefaultButton.setTitle(timerDefaults[setting!.timerDefault.intValue], for: UIControlState.normal)
+                fadeTimeButton.setTitle(fadeTimes[setting!.fadeTime.intValue], for: UIControlState.normal)
+                soundButton.setTitle(String(setting!.soundName), for: UIControlState.normal)
             } catch {
                 print(error)
                 return

@@ -1,17 +1,3 @@
-PODS:
-  - Appsee (2.2)
-  - Mixpanel (3.0.0):
-    - Mixpanel/Mixpanel (= 3.0.0)
-  - Mixpanel/Mixpanel (3.0.0)
-
-DEPENDENCIES:
-  - Appsee
-  - Mixpanel
-
-SPEC CHECKSUMS:
-  Appsee: c95173e65acaab0ffc8a082c70633c9f5f45d5f0
-  Mixpanel: ac92056ee35a961362513ba11049e67cffcaa1f1
-
-PODFILE CHECKSUM: f92c802e92ff1ca8df0519eecb84b3348630a3b0
+PODFILE CHECKSUM: 5b3b97ae088662fd81110bb10e3b73345c232d72
 
 COCOAPODS: 1.0.1
