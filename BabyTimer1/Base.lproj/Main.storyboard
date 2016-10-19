@@ -191,7 +191,7 @@
                                     <action selector="buttonTimerDefault" destination="3kl-3c-dh9" eventType="touchUpInside" id="Bap-W8-FfR"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="e4L-SQ-5c6">
+                            <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="e4L-SQ-5c6">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="m4C-as-4nD"/>
                                 </constraints>

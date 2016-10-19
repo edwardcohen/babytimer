@@ -9,13 +9,14 @@
 import UIKit
 import CoreData
 import AVFoundation
-import StoreKit
+//import StoreKit
 
-class SettingViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTransactionObserver {
-    var purchasedProductIDs = [String]()
-    var productsArray = [SKProduct]()
-    var selectedProductIndex: Int!
-    var transactionInProgress = false
+class SettingViewController: UIViewController {
+//class SettingViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTransactionObserver {
+//    var purchasedProductIDs = [String]()
+//    var productsArray = [SKProduct]()
+//    var selectedProductIndex: Int!
+//    var transactionInProgress = false
     
     @IBOutlet var spinner: UIActivityIndicatorView!
     @IBOutlet var aboutButton: UIButton!
@@ -47,130 +48,130 @@ class SettingViewController: UIViewController, SKProductsRequestDelegate, SKPaym
 
         loadSetting()
         
-        showTimerLabel.alpha = 0.5
-        timerDefaultLabel.alpha = 0.5
-        fadeTimeLabel.alpha = 0.5
-        soundLabel.alpha = 0.5
+//        showTimerLabel.alpha = 0.5
+//        timerDefaultLabel.alpha = 0.5
+//        fadeTimeLabel.alpha = 0.5
+//        soundLabel.alpha = 0.5
+//        
+//        showTimerSwitch.alpha = 0.5
+//        timerDefaultButton.alpha = 0.5
+//        fadeTimeButton.alpha = 0.5
+//        soundButton.alpha = 0.5
+//        
+//        showTimerSwitch.isEnabled = false
+//        timerDefaultButton.isEnabled = false
+//        fadeTimeButton.isEnabled = false
+//        soundButton.isEnabled = false
         
-        showTimerSwitch.alpha = 0.5
-        timerDefaultButton.alpha = 0.5
-        fadeTimeButton.alpha = 0.5
-        soundButton.alpha = 0.5
+//        requestProductInfo()
         
-        showTimerSwitch.isEnabled = false
-        timerDefaultButton.isEnabled = false
-        fadeTimeButton.isEnabled = false
-        soundButton.isEnabled = false
-        
-        requestProductInfo()
-        
-        SKPaymentQueue.default().add(self)
+//        SKPaymentQueue.default().add(self)
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
     
-    func requestProductInfo() {
-        if SKPaymentQueue.canMakePayments() {
-            let productRequest = SKProductsRequest(productIdentifiers: Set(["settingz"]))
-            
-            productRequest.delegate = self
-            productRequest.start()
-            spinner.startAnimating()
-            view.isUserInteractionEnabled = false
-        } else {
-            showErrorMessage(message: "Cannot perform In App Purchases.")
-        }
-    }
+//    func requestProductInfo() {
+//        if SKPaymentQueue.canMakePayments() {
+//            let productRequest = SKProductsRequest(productIdentifiers: Set(["settingz"]))
+//            
+//            productRequest.delegate = self
+//            productRequest.start()
+//            spinner.startAnimating()
+//            view.isUserInteractionEnabled = false
+//        } else {
+//            showErrorMessage(message: "Cannot perform In App Purchases.")
+//        }
+//    }
     
-    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-        spinner.stopAnimating()
-        view.isUserInteractionEnabled = true
-        if response.products.count != 0 {
-            for product in response.products {
-                productsArray.append(product)
-                
-                let purchased = UserDefaults.standard.bool(forKey: product.productIdentifier)
-                if purchased {
-                    purchasedProductIDs.append(product.productIdentifier)
-                    
-                    upgradeButton.alpha = 0.0
-                    
-                    showTimerLabel.alpha = 1.0
-                    timerDefaultLabel.alpha = 1.0
-                    fadeTimeLabel.alpha = 1.0
-                    soundLabel.alpha = 1.0
-                    
-                    showTimerSwitch.alpha = 1.0
-                    timerDefaultButton.alpha = 1.0
-                    fadeTimeButton.alpha = 1.0
-                    soundButton.alpha = 1.0
-                    
-                    showTimerSwitch.isEnabled = true
-                    timerDefaultButton.isEnabled = true
-                    fadeTimeButton.isEnabled = true
-                    soundButton.isEnabled = true
-                }
-                
-            }
-        } else {
-            let alertDialog = UIAlertController(title: "Error", message: "There are no in-app purchase products", preferredStyle: UIAlertControllerStyle.alert)
-            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
-            alertDialog.addAction(okAction)
-            present(alertDialog, animated: true, completion: nil)
-            upgradeButton.alpha = 0.0
-        }
-        
-        if response.invalidProductIdentifiers.count != 0 {
-            print(response.invalidProductIdentifiers.description)
-        }
-    }
-    
-    func request(_ request: SKRequest, didFailWithError error: Error) {
-        showErrorMessage(message: "Failed to load list of products.")
-        print("Error: \(error.localizedDescription)")
-        view.isUserInteractionEnabled = true
-        spinner.stopAnimating()
-        upgradeButton.alpha = 0.0
-    }
-    
-    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-        for transaction in transactions {
-            switch transaction.transactionState {
-            case .purchased:
-                showErrorMessage(message: "Transaction completed successfully.")
-                SKPaymentQueue.default().finishTransaction(transaction)
-                purchasedProductIDs.append(productsArray[selectedProductIndex].productIdentifier)
-                
-                upgradeButton.alpha = 0.0
-                
-                showTimerLabel.alpha = 1.0
-                timerDefaultLabel.alpha = 1.0
-                fadeTimeLabel.alpha = 1.0
-                soundLabel.alpha = 1.0
-                
-                showTimerSwitch.alpha = 1.0
-                timerDefaultButton.alpha = 1.0
-                fadeTimeButton.alpha = 1.0
-                soundButton.alpha = 1.0
-                
-                showTimerSwitch.isEnabled = true
-                timerDefaultButton.isEnabled = true
-                fadeTimeButton.isEnabled = true
-                soundButton.isEnabled = true
-                
-                UserDefaults.standard.set(true, forKey: productsArray[selectedProductIndex].productIdentifier)
-                transactionInProgress = false
-            case .failed:
-                showErrorMessage(message: "Transaction Failed")
-                SKPaymentQueue.default().finishTransaction(transaction)
-                transactionInProgress = false
-            default:
-                print(transaction.transactionState.rawValue)
-            }
-        }
-    }
+//    func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
+//        spinner.stopAnimating()
+//        view.isUserInteractionEnabled = true
+//        if response.products.count != 0 {
+//            for product in response.products {
+//                productsArray.append(product)
+//                
+//                let purchased = UserDefaults.standard.bool(forKey: product.productIdentifier)
+//                if purchased {
+//                    purchasedProductIDs.append(product.productIdentifier)
+//                    
+//                    upgradeButton.alpha = 0.0
+//                    
+//                    showTimerLabel.alpha = 1.0
+//                    timerDefaultLabel.alpha = 1.0
+//                    fadeTimeLabel.alpha = 1.0
+//                    soundLabel.alpha = 1.0
+//                    
+//                    showTimerSwitch.alpha = 1.0
+//                    timerDefaultButton.alpha = 1.0
+//                    fadeTimeButton.alpha = 1.0
+//                    soundButton.alpha = 1.0
+//                    
+//                    showTimerSwitch.isEnabled = true
+//                    timerDefaultButton.isEnabled = true
+//                    fadeTimeButton.isEnabled = true
+//                    soundButton.isEnabled = true
+//                }
+//                
+//            }
+//        } else {
+//            let alertDialog = UIAlertController(title: "Error", message: "There are no in-app purchase products", preferredStyle: UIAlertControllerStyle.alert)
+//            let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+//            alertDialog.addAction(okAction)
+//            present(alertDialog, animated: true, completion: nil)
+//            upgradeButton.alpha = 0.0
+//        }
+//        
+//        if response.invalidProductIdentifiers.count != 0 {
+//            print(response.invalidProductIdentifiers.description)
+//        }
+//    }
+//    
+//    func request(_ request: SKRequest, didFailWithError error: Error) {
+//        showErrorMessage(message: "Failed to load list of products.")
+//        print("Error: \(error.localizedDescription)")
+//        view.isUserInteractionEnabled = true
+//        spinner.stopAnimating()
+//        upgradeButton.alpha = 0.0
+//    }
+//    
+//    func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+//        for transaction in transactions {
+//            switch transaction.transactionState {
+//            case .purchased:
+//                showErrorMessage(message: "Transaction completed successfully.")
+//                SKPaymentQueue.default().finishTransaction(transaction)
+//                purchasedProductIDs.append(productsArray[selectedProductIndex].productIdentifier)
+//                
+//                upgradeButton.alpha = 0.0
+//                
+//                showTimerLabel.alpha = 1.0
+//                timerDefaultLabel.alpha = 1.0
+//                fadeTimeLabel.alpha = 1.0
+//                soundLabel.alpha = 1.0
+//                
+//                showTimerSwitch.alpha = 1.0
+//                timerDefaultButton.alpha = 1.0
+//                fadeTimeButton.alpha = 1.0
+//                soundButton.alpha = 1.0
+//                
+//                showTimerSwitch.isEnabled = true
+//                timerDefaultButton.isEnabled = true
+//                fadeTimeButton.isEnabled = true
+//                soundButton.isEnabled = true
+//                
+//                UserDefaults.standard.set(true, forKey: productsArray[selectedProductIndex].productIdentifier)
+//                transactionInProgress = false
+//            case .failed:
+//                showErrorMessage(message: "Transaction Failed")
+//                SKPaymentQueue.default().finishTransaction(transaction)
+//                transactionInProgress = false
+//            default:
+//                print(transaction.transactionState.rawValue)
+//            }
+//        }
+//    }
     
     func initAudioPlayer() {
         if let sound = NSDataAsset(name: setting!.soundName as String) {
@@ -320,10 +321,10 @@ class SettingViewController: UIViewController, SKProductsRequestDelegate, SKPaym
     }
     
     @IBAction func buttonUpgrade() {
-        selectedProductIndex = 0
-        let payment = SKPayment(product: productsArray[selectedProductIndex])
-        SKPaymentQueue.default().add(payment)
-        transactionInProgress = true
+//        selectedProductIndex = 0
+//        let payment = SKPayment(product: productsArray[selectedProductIndex])
+//        SKPaymentQueue.default().add(payment)
+//        transactionInProgress = true
     }
     
     func loadSetting() {
