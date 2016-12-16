@@ -12,6 +12,7 @@ import MediaPlayer
 import CoreMotion
 import CoreData
 import MediaPlayer
+import GoogleMobileAds
 
 class MainViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     var setting: Setting!
@@ -46,8 +47,20 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     
     var rotation: CGFloat = CGFloat(M_PI)
     
+    var bannerView:GADBannerView?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if InAppHelper.shared.isRemoveAdPurchased() == false {
+            bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
+            bannerView?.frame.origin.x = 0
+            bannerView?.frame.origin.y = 20
+            self.view.addSubview(bannerView!)
+            bannerView?.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+            bannerView?.rootViewController = self
+            bannerView?.load(GADRequest())
+        }
         
         loadSetting()
         
@@ -283,6 +296,9 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 self.audioPlayer.volume = AVAudioSession.sharedInstance().outputVolume
             }
             audioPlayer.play()
+            if InAppHelper.shared.isRemoveAdPurchased() == false {
+                bannerView?.isHidden = false
+            }
         } else {
             moonButton.layer.removeAllAnimations()
             self.moonButton.alpha = 1.0
@@ -311,6 +327,9 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
                 fadingStarted = false
             } else {
                 self.audioPlayer.stop()
+            }
+            if InAppHelper.shared.isRemoveAdPurchased() == false {
+                bannerView?.isHidden = true
             }
         }
     }
