@@ -9,7 +9,8 @@
 import UIKit
 import CoreData
 import AVFoundation
-//import StoreKit
+import StoreKit
+import SVProgressHUD
 
 class SettingViewController: UIViewController {
 //class SettingViewController: UIViewController, SKProductsRequestDelegate, SKPaymentTransactionObserver {
@@ -30,6 +31,9 @@ class SettingViewController: UIViewController {
     @IBOutlet var soundLabel: UILabel!
     @IBOutlet var showTimerLabel: UILabel!
     @IBOutlet var upgradeButton: UIButton!
+    @IBOutlet weak var removeAdsButton: UIButton!
+    @IBOutlet weak var restorePurchacesButton: UIButton!
+    
     
     var audioPlayer: AVAudioPlayer!
     
@@ -66,6 +70,11 @@ class SettingViewController: UIViewController {
 //        requestProductInfo()
         
 //        SKPaymentQueue.default().add(self)
+        
+        if InAppHelper.shared.isRemoveAdPurchased() {
+            restorePurchacesButton.isHidden = true
+            removeAdsButton.isHidden = true
+        }
     }
     
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
@@ -355,5 +364,99 @@ class SettingViewController: UIViewController {
                 return
             }
         }
+    }
+    
+    @IBAction func removeAds(_ sender: Any) {
+        let productIdentifiers: Set<ProductIdentifier> = [InAppHelper.shared.getRemoveAdProductId()]
+        InAppManager.shared.productIdentifiers = productIdentifiers
+        InAppManager.shared.delegate = self
+        if InAppManager.canMakePayments() == true {
+            SVProgressHUD.show()
+            InAppManager.shared.requestProducts(completionHandler: { (success, products) in
+                if success && products != nil {
+                    InAppManager.shared.buyProduct(product: products!.first!)
+                    return
+                } else {
+                    
+                }
+                SVProgressHUD.dismiss()
+            })
+        } else {
+            let alert : UIAlertController = UIAlertController.init(title: "Failed", message: "Can not make payments. Please try after some time", preferredStyle: .alert)
+            let okAction : UIAlertAction = UIAlertAction.init(title: "Ok", style: .cancel, handler: { (UIAlertAction) in
+                return
+            })
+            alert.addAction(okAction)
+            if let presenter = alert.popoverPresentationController {
+                presenter.sourceView = self.view
+                presenter.sourceRect = self.view.bounds
+            }
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+    @IBAction func restorePurchases(_ sender: Any) {
+        if InAppManager.canMakePayments() == true {
+            InAppManager.shared.delegate = self
+            InAppManager.shared.restorePurchases()
+            SVProgressHUD.show()
+        } else {
+            let alert : UIAlertController = UIAlertController.init(title: "Failed", message: "Failed to Restore the Purchases", preferredStyle: .alert)
+            let okAction : UIAlertAction = UIAlertAction.init(title: "Ok", style: UIAlertActionStyle.cancel, handler: { (UIAlertAction) in
+                return
+            })
+            alert.addAction(okAction)
+            self.present(alert, animated: true, completion: nil)
+        }
+    }
+    
+}
+
+//    MARK: - InAppManagerDelegate
+
+extension SettingViewController : InAppManagerDelegate {
+    
+    func completeTranscation(transaction: SKPaymentTransaction) {
+        SVProgressHUD.dismiss()
+        InAppHelper.shared.setRemoveAdPurchased()
+        removeAdsButton.isHidden = true
+        restorePurchacesButton.isHidden = true
+        let alert = UIAlertController(title: "Purchase Complete", message: "Thank you", preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: {(UIAlertAction) in
+        })
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    func restoreTransaction(transaction: SKPaymentTransaction) {
+        if let productIdentifier = transaction.original?.payment.productIdentifier {
+            UserDefaults.standard.set(true, forKey: productIdentifier)
+            if productIdentifier == InAppHelper.shared.getRemoveAdProductId() {
+                InAppHelper.shared.setRemoveAdPurchased()
+                removeAdsButton.isHidden = true
+                restorePurchacesButton.isHidden = true
+                let alert : UIAlertController = UIAlertController.init(title: "Congratulations", message: "Your Purchase is Successfully Restored", preferredStyle: UIAlertControllerStyle.alert)
+                let okAction : UIAlertAction = UIAlertAction.init(title: "Ok", style: UIAlertActionStyle.cancel, handler: { (UIAlertAction) in
+                    
+                })
+                alert.addAction(okAction)
+                self.present(alert, animated: true, completion: nil)
+            }
+        }
+        SVProgressHUD.dismiss()
+    }
+    
+    func failedRestoringPurchaseWithError(errorString: String) {
+        SVProgressHUD.dismiss()
+    }
+    
+    func failedTransaction(transaction: SKPaymentTransaction) {
+        SVProgressHUD.dismiss()
+        let alert = UIAlertController(title: "Transaction is Failed", message: transaction.error?.localizedDescription, preferredStyle: .alert)
+        let okAction = UIAlertAction(title: "Ok", style: .default, handler: {(UIAlertAction) in
+            
+        })
+        alert.addAction(okAction)
+        self.present(alert, animated: true, completion: nil)
     }
 }

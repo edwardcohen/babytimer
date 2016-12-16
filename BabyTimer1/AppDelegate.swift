@@ -10,6 +10,8 @@ import UIKit
 //import Appsee
 import CoreData
 //import Mixpanel
+import GoogleMobileAds
+import SVProgressHUD
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,6 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         BuddyBuildSDK.setup()
 //        Appsee.start("580faca6704d44b6815c5985a3c96f62")
 //        Mixpanel.sharedInstance(withToken: "590e9476af14a8596b1b8b207a21f56b")
+        
+        registerDefaults()
+        SVProgressHUD.setDefaultMaskType(.clear)
+        
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-3940256099942544~1458002511")
+
         
         var performShortcutDelegate = true
         
@@ -151,6 +159,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 abort()
             }
         }
+    }
+    
+    func registerDefaults(){
+        UserDefaults.standard.register(defaults: ["RemoveAds":false])
     }
 }
 
