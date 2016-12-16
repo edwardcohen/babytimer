@@ -57,7 +57,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             bannerView?.frame.origin.x = 0
             bannerView?.frame.origin.y = 20
             self.view.addSubview(bannerView!)
-            bannerView?.adUnitID = "ca-app-pub-3940256099942544/2934735716"
+            bannerView?.adUnitID = "ca-app-pub-6922191625271813/4946961086"
             bannerView?.rootViewController = self
             bannerView?.load(GADRequest())
         }
