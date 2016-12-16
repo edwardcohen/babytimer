@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         registerDefaults()
         SVProgressHUD.setDefaultMaskType(.clear)
         
-        GADMobileAds.configure(withApplicationID: "ca-app-pub-3940256099942544~1458002511")
+        GADMobileAds.configure(withApplicationID: "ca-app-pub-6922191625271813~1993494687")
 
         
         var performShortcutDelegate = true
