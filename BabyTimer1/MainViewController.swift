@@ -59,7 +59,9 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             self.view.addSubview(bannerView!)
             bannerView?.adUnitID = "ca-app-pub-6922191625271813/4946961086"
             bannerView?.rootViewController = self
-            bannerView?.load(GADRequest())
+            let request = GADRequest()
+            request.testDevices = [kDFPSimulatorID,"7502c5097d88a639c6281f7e4cd7c8a3"]
+            bannerView?.load(request)
         }
         
         loadSetting()
