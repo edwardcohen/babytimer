@@ -374,8 +374,10 @@ class SettingViewController: UIViewController {
             SVProgressHUD.show()
             InAppManager.shared.requestProducts(completionHandler: { (success, products) in
                 if success && products != nil {
-                    InAppManager.shared.buyProduct(product: products!.first!)
-                    return
+                    if (products?.count)! > 0 {
+                        InAppManager.shared.buyProduct(product: products!.first!)
+                        return
+                    }
                 } else {
                     
                 }
