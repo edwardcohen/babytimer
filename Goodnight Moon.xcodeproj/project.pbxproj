@@ -25,6 +25,7 @@
 		C3033421129CD9FCFBDB43B6 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E0890E4BFCD8738CB60E6030 /* AssetsLibrary.framework */; };
 		C8277EAC1E03CCB8003F488B /* InAppManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8277EAB1E03CCB8003F488B /* InAppManager.swift */; };
 		C8277EAE1E03D126003F488B /* InAppHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8277EAD1E03D126003F488B /* InAppHelper.swift */; };
+		C88FCD071E05BB850087BC3E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C88FCD061E05BB850087BC3E /* GoogleService-Info.plist */; };
 		DC1BB9B3F6F6FE4B4383947E /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 746C804EBF89D0876D551453 /* CoreVideo.framework */; };
 		DD55241EC5DC087192B34394 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D5C5BB73C3A2FA28C726C01 /* CoreText.framework */; };
 		ED763CB4E0F1283DA3426B1B /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E75E94BEAF968A60BC750DC /* CoreTelephony.framework */; };
@@ -54,6 +55,7 @@
 		BBC37A8FA2AE76305B70464B /* BuddyBuildSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = BuddyBuildSDK.framework; sourceTree = "<group>"; };
 		C8277EAB1E03CCB8003F488B /* InAppManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppManager.swift; sourceTree = "<group>"; };
 		C8277EAD1E03D126003F488B /* InAppHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppHelper.swift; sourceTree = "<group>"; };
+		C88FCD061E05BB850087BC3E /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D20969AD4F08A984BB47F98F /* Bridging-Header.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		E0890E4BFCD8738CB60E6030 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		E0AB2C2AA2AA71EEFDD97179 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -102,6 +104,7 @@
 		1E3404B41CEA9E44002805BD /* BabyTime */ = {
 			isa = PBXGroup;
 			children = (
+				C88FCD061E05BB850087BC3E /* GoogleService-Info.plist */,
 				C8277EAF1E03ED3C003F488B /* InApp */,
 				1E3404B51CEA9E44002805BD /* AppDelegate.swift */,
 				1E3404B71CEA9E44002805BD /* MainViewController.swift */,
@@ -226,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1E3404C01CEA9E44002805BD /* LaunchScreen.storyboard in Resources */,
+				C88FCD071E05BB850087BC3E /* GoogleService-Info.plist in Resources */,
 				1E3404BD1CEA9E44002805BD /* Assets.xcassets in Resources */,
 				1E3404BB1CEA9E44002805BD /* Main.storyboard in Resources */,
 			);

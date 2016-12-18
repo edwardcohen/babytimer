@@ -47,21 +47,19 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
     
     var rotation: CGFloat = CGFloat(M_PI)
     
-    var bannerView:GADBannerView?
+
+    @IBOutlet weak var nativeExpressAdView: GADNativeExpressAdView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         if InAppHelper.shared.isRemoveAdPurchased() == false {
-            bannerView = GADBannerView(adSize: kGADAdSizeSmartBannerPortrait)
-            bannerView?.frame.origin.x = 0
-            bannerView?.frame.origin.y = 20
-            self.view.addSubview(bannerView!)
-            bannerView?.adUnitID = "ca-app-pub-6922191625271813/4946961086"
-            bannerView?.rootViewController = self
+            nativeExpressAdView.adUnitID = "ca-app-pub-6922191625271813/2741871089"
+            nativeExpressAdView.rootViewController = self
+            
             let request = GADRequest()
-            request.testDevices = [kDFPSimulatorID,"7502c5097d88a639c6281f7e4cd7c8a3"]
-            bannerView?.load(request)
+            request.testDevices = [kGADSimulatorID]
+            nativeExpressAdView.load(request)
         }
         
         loadSetting()
@@ -299,7 +297,9 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             }
             audioPlayer.play()
             if InAppHelper.shared.isRemoveAdPurchased() == false {
-                bannerView?.isHidden = false
+                nativeExpressAdView.isHidden = false
+            } else {
+                nativeExpressAdView.isHidden = true
             }
         } else {
             moonButton.layer.removeAllAnimations()
@@ -330,9 +330,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
             } else {
                 self.audioPlayer.stop()
             }
-            if InAppHelper.shared.isRemoveAdPurchased() == false {
-                bannerView?.isHidden = true
-            }
+            nativeExpressAdView.isHidden = true
         }
     }
 

@@ -12,6 +12,7 @@ import CoreData
 //import Mixpanel
 import GoogleMobileAds
 import SVProgressHUD
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -27,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         registerDefaults()
         SVProgressHUD.setDefaultMaskType(.clear)
-        
+        FIRApp.configure()
         GADMobileAds.configure(withApplicationID: "ca-app-pub-6922191625271813~1993494687")
 
         
