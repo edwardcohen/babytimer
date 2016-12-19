@@ -14,7 +14,7 @@ class InAppHelper {
     static let shared = InAppHelper()
     
     func getRemoveAdProductId() -> String {
-        return "custimizable"
+        return "zelig.BabyTime.RemoveAds"
     }
     
     func isRemoveAdPurchased() -> Bool {
