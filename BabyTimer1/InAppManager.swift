@@ -131,8 +131,9 @@ extension InAppManager : SKPaymentTransactionObserver {
             case .failed:
                 failedTransaction(transaction: transaction)
             case .restored:
-             restoreTranscation(transaction: transaction)
+                restoreTranscation(transaction: transaction)
             default:
+                failedTransaction(transaction: transaction)
                 break
             }
         }

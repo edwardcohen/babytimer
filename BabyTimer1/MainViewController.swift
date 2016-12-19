@@ -141,12 +141,12 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         let storyboard : UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(withIdentifier: "SettingViewController") as! SettingViewController
         vc.modalPresentationStyle = UIModalPresentationStyle.popover
-        vc.preferredContentSize = CGSize(width: 325, height: 420)
+        vc.preferredContentSize = CGSize(width: 320, height: 360)
         let popover: UIPopoverPresentationController = vc.popoverPresentationController!
-        popover.permittedArrowDirections = .any
+        popover.permittedArrowDirections = .up
         popover.delegate = self
         popover.sourceView = sender
-        popover.sourceRect = CGRect(x: 20, y: 20, width: 1, height: 1)
+        popover.sourceRect = CGRect(x: sender.frame.size.width * 0.5, y: sender.frame.size.height * 0.5, width: 0, height: 0)
         present(vc, animated: true, completion: nil)
     }
     
