@@ -144,6 +144,7 @@ class MainViewController: UIViewController, UIPopoverPresentationControllerDeleg
         vc.preferredContentSize = CGSize(width: 320, height: 360)
         let popover: UIPopoverPresentationController = vc.popoverPresentationController!
         popover.permittedArrowDirections = .up
+        popover.backgroundColor = UIColor(colorLiteralRed: 209.0/255.0, green: 205.0/255.0, blue: 230.0/255.0, alpha: 1.0)
         popover.delegate = self
         popover.sourceView = sender
         popover.sourceRect = CGRect(x: sender.frame.size.width * 0.5, y: sender.frame.size.height * 0.5, width: 0, height: 0)

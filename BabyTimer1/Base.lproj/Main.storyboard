@@ -227,8 +227,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IFG-ET-KoG">
-                                <rect key="frame" x="16" y="305" width="144" height="34"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <rect key="frame" x="16" y="307" width="129" height="32"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                 <state key="normal" title="About Goodnig.ht">
                                     <color key="titleColor" red="0.13725490200000001" green="0.13725490200000001" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -241,13 +241,13 @@
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Bbk-xy-qjE">
                                         <rect key="frame" x="16" y="32" width="288" height="21"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="17"/>
+                                        <fontDescription key="fontDescription" type="system" weight="light" pointSize="17"/>
                                         <color key="textColor" red="0.074509803920000006" green="0.1137254902" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xIK-GP-24l">
-                                        <rect key="frame" x="16" y="305" width="144" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <rect key="frame" x="16" y="307" width="129" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <state key="normal" title="About Goodnig.ht">
                                             <color key="titleColor" red="0.13725490200000001" green="0.13725490200000001" blue="0.13725490200000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -256,8 +256,8 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="M0g-FL-z3Z">
-                                        <rect key="frame" x="165" y="305" width="152" height="34"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                        <rect key="frame" x="168" y="307" width="136" height="32"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <state key="normal" title="Restore Purchases">
                                             <color key="titleColor" red="0.074509803920000006" green="0.1137254902" blue="0.46666666670000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
@@ -266,7 +266,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PuT-tf-Nt1">
-                                        <rect key="frame" x="70" y="241" width="180" height="34"/>
+                                        <rect key="frame" x="70" y="243" width="180" height="34"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="180" id="m5e-eA-M3Q"/>
                                         </constraints>
@@ -279,11 +279,11 @@
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" red="0.81960784313725488" green="0.80201965570449829" blue="0.90137225389480591" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
-                                    <constraint firstItem="M0g-FL-z3Z" firstAttribute="leading" secondItem="xIK-GP-24l" secondAttribute="trailing" constant="5" id="0FQ-cC-dzH"/>
                                     <constraint firstItem="M0g-FL-z3Z" firstAttribute="top" secondItem="PuT-tf-Nt1" secondAttribute="bottom" constant="30" id="2Vg-5i-8na"/>
                                     <constraint firstAttribute="bottom" secondItem="xIK-GP-24l" secondAttribute="bottom" constant="21" id="6tc-PJ-Ndd"/>
+                                    <constraint firstAttribute="trailing" secondItem="M0g-FL-z3Z" secondAttribute="trailing" constant="16" id="KEs-zi-A9Y"/>
                                     <constraint firstItem="Bbk-xy-qjE" firstAttribute="top" secondItem="kxi-2u-X3C" secondAttribute="top" constant="32" id="ON8-ZV-ymo"/>
                                     <constraint firstItem="Bbk-xy-qjE" firstAttribute="leading" secondItem="kxi-2u-X3C" secondAttribute="leading" constant="16" id="OQv-Rw-Mwl"/>
                                     <constraint firstItem="xIK-GP-24l" firstAttribute="leading" secondItem="kxi-2u-X3C" secondAttribute="leading" constant="16" id="SaM-gU-qus"/>
@@ -350,7 +350,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 </activityIndicatorView>
             </objects>
-            <point key="canvasLocation" x="1792.8" y="314.84257871064472"/>
+            <point key="canvasLocation" x="1792" y="314.84257871064472"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Imh-CA-KsT">
